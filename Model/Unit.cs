@@ -1,17 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.IO;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace SpejderApplikation.Model
 {
-    internal class Unit
+    public class Unit
     {
         private int _unitID { get; set; }
         public string UnitName { get; set; }
         public string Link { get; set; }
-        public Blob Picture { get; set; }
+        public byte[] Picture { get; set; }
+        public Unit(int unitID, string unitName, string link, byte[] picture)
+        {
+            _unitID = unitID;
+            UnitName = unitName;
+            Link = link;
+            Picture = picture;
+        }
+        public Unit() : this(0, "Enhed", null, null) { }
+
+        private static byte[] GetDefaultPicture()
+        {
+            string filePath = Directory.GetCurrentDirectory();
+            string fileName = "\\KFUM.png"; // har et basis KFUM mærke i projektets mappe
+            if (File.Exists(filePath) == true)
+            {
+                return File.ReadAllBytes(string.Concat(filePath, fileName));
+            }
+            else
+            {
+                return new byte[0];
+            }
     }
 }

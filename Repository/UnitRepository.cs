@@ -1,4 +1,5 @@
-﻿using SpejderApplikation.Model;
+﻿using Microsoft.Data.SqlClient;
+using SpejderApplikation.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,31 +8,105 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Repository
 {
-    internal class UnitRepository : IRepository<Unit>
+    public class UnitRepository : IRepository<Unit>
     {
-        public int AddType<Type>(Type type)
+        private readonly string _connectionString;
+        public UnitRepository()
         {
-            throw new NotImplementedException();
+            _connectionString = ConfigurationSettings.ConnectionString;
         }
 
-        public void DeleteType<Type>(int id)
+        public int AddType(Unit entity)
         {
-            throw new NotImplementedException();
+            string query = ""; //indtast SQL query her.
+            int unitId = 0;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                //command.Parameters.AddWithValue(<query variable>, <type.variable>);
+                //en command.Parameter pr variabel
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            return unitId;
         }
 
-        public void EditType<Type>(Type type)
+        public void DeleteType(int id)
         {
-            throw new NotImplementedException();
+            string query = ""; //indtast SQL query her.
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                //command.Parameters.AddWithValue(<query variable>, id);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void EditType(Unit entity)
+        {
+            string query = ""; //indtast SQL query her.
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                //command.Parameters.AddWithValue(<query variable>, id);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
         }
 
         public IEnumerable<Unit> GetAll()
         {
-            throw new NotImplementedException();
+            var entities = new List<Unit>();
+            string query = ""; // indtast SQL query her.
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        entities.Add(new Unit(
+
+                            (int)reader[""],
+                            (string)reader[""],
+                            (string)reader[""],
+                            (byte[])reader[""]));
+                    }
+                }
+            }
+
+            return entities;
         }
 
-        public Type GetByID<Type>(int id)
+        public Unit GetByID(int id)
         {
-            throw new NotImplementedException();
+            Unit entity = new Unit();
+            string query = "";// indtast SQL query her.
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                //command.Parameters.AddWithValue(<query variable>, id);
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        entity = new Unit();
+                    }
+                }
+            }
+            if (entity == null)
+                return default;
+            else
+                return entity;
         }
     }
 }
