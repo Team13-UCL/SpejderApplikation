@@ -12,6 +12,6 @@ namespace SpejderApplikation.Model
         private int _badgeID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Blob Picture { get; set; }
+        public byte[] Picture { get; set; }
     }
 }

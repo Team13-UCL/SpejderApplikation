@@ -7,8 +7,28 @@
       "RelativeMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|solutionrelative:viewmodel\\scoutsmeeting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\2. semester\\spejderapplikation\\viewmodel\\scoutsprogramviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|solutionrelative:viewmodel\\scoutsprogramviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\2. semester\\spejderapplikation\\model\\meeting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|solutionrelative:model\\meeting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\2. semester\\spejderapplikation\\model\\activity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|solutionrelative:model\\activity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\2. semester\\spejderapplikation\\model\\badge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|solutionrelative:model\\badge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\2. semester\\spejderapplikation\\model\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|solutionrelative:model\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\2. semester\\spejderapplikation\\repository\\unitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{54E2F13D-87B0-4C86-BC45-75F487B808A2}|SpejderApplikation.csproj|solutionrelative:repository\\unitrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,8 +38,73 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Badge.cs",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\Model\\Badge.cs",
+              "RelativeDocumentMoniker": "Model\\Badge.cs",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\Model\\Badge.cs",
+              "RelativeToolTip": "Model\\Badge.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-12T07:53:45.014Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Activity.cs",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\Model\\Activity.cs",
+              "RelativeDocumentMoniker": "Model\\Activity.cs",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\Model\\Activity.cs",
+              "RelativeToolTip": "Model\\Activity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-12T06:22:42.906Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Meeting.cs",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\Model\\Meeting.cs",
+              "RelativeDocumentMoniker": "Model\\Meeting.cs",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\Model\\Meeting.cs",
+              "RelativeToolTip": "Model\\Meeting.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-12T06:22:36.714Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UnitRepository.cs",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\Repository\\UnitRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\UnitRepository.cs",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\Repository\\UnitRepository.cs",
+              "RelativeToolTip": "Repository\\UnitRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-12T06:11:59.063Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ScoutsProgramViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\ViewModel\\ScoutsProgramViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\ScoutsProgramViewModel.cs",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\ViewModel\\ScoutsProgramViewModel.cs",
+              "RelativeToolTip": "ViewModel\\ScoutsProgramViewModel.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAwB8AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-12T05:46:59.744Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -28,14 +113,14 @@
               "RelativeDocumentMoniker": "ViewModel\\ScoutsMeeting.cs",
               "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\ViewModel\\ScoutsMeeting.cs",
               "RelativeToolTip": "ViewModel\\ScoutsMeeting.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAAAAAAAAIwDEAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-08T13:05:29.635Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "Unit.cs",
               "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\Model\\Unit.cs",
               "RelativeDocumentMoniker": "Model\\Unit.cs",
