@@ -44,7 +44,7 @@ namespace SpejderApplikation.Repository
                 {
                     while (reader.Read())
                     {
-                        entities.Add(new ScoutsMeeting();
+                        entities.Add(new ScoutsMeeting());
                     }
                 }
             }

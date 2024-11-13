@@ -9,7 +9,7 @@ namespace SpejderApplikation.Model
 {
     internal class Badge
     {
-        private int _badgeID { get; set; }
+        private int _badgeID;
         public string Name { get; set; }
         public string Description { get; set; }
         public byte[] Picture { get; set; }

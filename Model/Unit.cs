@@ -37,5 +37,6 @@ namespace SpejderApplikation.Model
             {
                 return new byte[0];
             }
+        }
     }
 }

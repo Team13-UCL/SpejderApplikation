@@ -12,5 +12,16 @@ namespace SpejderApplikation.Model
         public string ActivityDescription { get; set; }
         public string Preparation { get; set; }
         public string Notes { get; set; }
+        public Activity(int ID, string description, string preparation, string notes)
+        {
+            _activityID = ID;
+            ActivityDescription = description;
+            Preparation = preparation;
+            Notes = notes;
+        }
+        public Activity()
+        {
+            
+        }
     }
 }

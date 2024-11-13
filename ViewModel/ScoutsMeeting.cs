@@ -49,22 +49,34 @@ namespace SpejderApplikation.ViewModel
         {
             // opret ny Meeting, med forud indtastet Unit hardcoded til sprint 1
         }
-        public void UpdateMeeting()
+        public Meeting UpdateMeeting()
         {
             if (dbMeeting.Date != Date)
-            { 
-                //opdater meeting database
+            {
+                return dbMeeting;
             }
+            else return null;
             if(dbBadge.Picture != Badge || dbBadge.Name != BadgeName)
             {
                 // opdater Badge database
             }
-            if(dbActivity.ActivityDescription != Activity ||
-                dbActivity.Preparation != Preparation ||
-                dbActivity.Notes != Notes)
+            
+        }
+        public Activity UpdateActivity()
+        {
+            if (dbActivity.ActivityDescription != Activity || dbActivity.Preparation != Preparation || dbActivity.Notes != Notes)
             {
-                // opdater Activity database
+                return dbActivity;
             }
+            else return null;
+        }
+        public Badge UpdateBadge()
+        {
+            if (dbBadge.Picture != Badge || dbBadge.Name != BadgeName)
+            {
+                return dbBadge;
+            }
+            else return null;
         }
     }
 }
