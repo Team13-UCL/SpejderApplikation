@@ -1,18 +1,18 @@
 ﻿SpejderApplikation
-1.0.0.0
+
 
 winexe
 C#
 .cs
-C:\Users\nbjer\Source\Repos\Team13-UCL\SpejderApplikation\obj\Debug\net8.0-windows\
+C:\Users\nbjer\Source\Repos\Team13-UCL\SpejderApplikation\obj\Release\net8.0-windows\
 SpejderApplikation
 none
 false
-TRACE;DEBUG;NET;NET8_0;NETCOREAPP
+TRACE;RELEASE;NET;NET8_0;NETCOREAPP
 C:\Users\nbjer\Source\Repos\Team13-UCL\SpejderApplikation\App.xaml
 11407045341
 
-18-1990771402
+16161081256
 222-1804378797
 MainWindow.xaml;
 
