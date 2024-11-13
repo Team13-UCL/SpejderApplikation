@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SpejderApplikation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eb421b6277efc0e389bd15b57188f0404bc75ff6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d499ccbc6ca18a9e49f4e50cdb4c008a85b2fa7")]
 [assembly: System.Reflection.AssemblyProductAttribute("SpejderApplikation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SpejderApplikation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
