@@ -4,11 +4,16 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikation\obj\Debug\net8.0-windows\
+=======
+C:\Users\Hedwi\Source\Repos\Team13-UCL\SpejderApplikation\obj\Debug\net8.0-windows\
+>>>>>>> 95dd4e64c99718528aad52f02d28efc1c8ad3fe3
 SpejderApplikation
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
+<<<<<<< HEAD
 C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikation\App.xaml
 11407045341
 
@@ -17,4 +22,14 @@ C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikatio
 MainWindow.xaml;
 
 False
+=======
+C:\Users\Hedwi\Source\Repos\Team13-UCL\SpejderApplikation\App.xaml
+11407045341
+
+16-1373491014
+198-1431420039
+MainWindow.xaml;
+
+True
+>>>>>>> 95dd4e64c99718528aad52f02d28efc1c8ad3fe3
 

@@ -45,11 +45,7 @@ namespace SpejderApplikation {
         /// InitializeComponent
         /// </summary>
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-<<<<<<< HEAD
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "8.0.10.0")]
-=======
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "8.0.11.0")]
->>>>>>> 95dd4e64c99718528aad52f02d28efc1c8ad3fe3
         public void InitializeComponent() {
             
             #line 5 "..\..\..\App.xaml"
@@ -64,11 +60,7 @@ namespace SpejderApplikation {
         /// </summary>
         [System.STAThreadAttribute()]
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-<<<<<<< HEAD
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "8.0.10.0")]
-=======
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "8.0.11.0")]
->>>>>>> 95dd4e64c99718528aad52f02d28efc1c8ad3fe3
         public static void Main() {
             SpejderApplikation.App app = new SpejderApplikation.App();
             app.InitializeComponent();
