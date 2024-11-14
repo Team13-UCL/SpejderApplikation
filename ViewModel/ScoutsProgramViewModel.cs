@@ -13,11 +13,8 @@ namespace SpejderApplikation.ViewModel
     internal class ScoutsProgramViewModel : ViewModelBase
     {
         IRepository<ScoutsMeeting> ScoutMeetingRepo;
-        IRepository<Unit> UnitRepo;
-        IRepository<Meeting> MeetingRepo;
-        // Repository for resten af repo klasserne.
 
-        ObservableCollection<ScoutsMeeting> Meetings { get; set; }
+        public ObservableCollection<ScoutsMeeting> Meetings { get; set; }
         private ScoutsMeeting _selectedMeeting;
         public ScoutsMeeting SelectedMeeting 
         {
@@ -28,6 +25,11 @@ namespace SpejderApplikation.ViewModel
                 OnPropertyChanged();
             }
         }
+        public ScoutsProgramViewModel(IRepository<ScoutsMeeting> repository)
+        {
+            this.ScoutMeetingRepo = repository ?? throw new ArgumentNullException(nameof(repository));
+            Meetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll());
+        }
         public void NewMeeting()
         {
             SelectedMeeting = new ScoutsMeeting();
@@ -35,9 +37,9 @@ namespace SpejderApplikation.ViewModel
         }
         public void EditMeeting()
         {
-            Meeting meeting = SelectedMeeting.UpdateMeeting();
-            MeetingRepo.EditType(meeting);
-            SelectedMeeting.UpdateActivity();
+            //Meeting meeting = SelectedMeeting.UpdateMeeting();
+            //MeetingRepo.EditType(meeting);
+            //SelectedMeeting.UpdateActivity();
         }
         public void DeleteMeeting()
         {

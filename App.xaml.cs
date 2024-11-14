@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System.Configuration;
-using System.Data;
 using System.Windows;
+using SpejderApplikation.Repository;
+using SpejderApplikation.ViewModel;
+using SpejderApplikation.View;
 
 namespace SpejderApplikation
 {
@@ -17,10 +18,9 @@ namespace SpejderApplikation
 
 
             string ConnectionString = configuration.GetConnectionString("DefaultConnection");
-            //Connection.Initialize(ConnectionString);
+            Connection.Initialize(ConnectionString);
 
-            //var regionRepo = new RegionRepo();
-            //var CurrentUser = new CurrentUser();
+            var ScoutsProgram = new ScoutsProgramView();
             //CurrentUser.Initialize("Region Syd", regionRepo);
         }
         private IConfiguration LoadConfiguration()

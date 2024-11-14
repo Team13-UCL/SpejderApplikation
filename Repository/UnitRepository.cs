@@ -13,7 +13,7 @@ namespace SpejderApplikation.Repository
         private readonly string _connectionString;
         public UnitRepository()
         {
-            _connectionString = ConfigurationSettings.ConnectionString;
+            _connectionString = Connection.ConnectionString;
         }
 
         public int AddType(Unit entity)

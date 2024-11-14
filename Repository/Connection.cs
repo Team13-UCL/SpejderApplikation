@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Repository
 {
-    public static class ConfigurationSettings
+    public static class Connection
     {
         public static string ConnectionString { get; private set; }
 

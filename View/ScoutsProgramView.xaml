@@ -1,0 +1,184 @@
+﻿<Window x:Class="SpejderApplikation.View.ScoutsProgramView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpejderApplikation.View"
+        mc:Ignorable="d"
+        Title="ScoutsProgramView" Height="450" Width="800">
+    <Grid Margin="10">
+        <!-- Define two rows: one for the badges and one for buttons, checkbox, and search -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Badge Icons Row -->
+        <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Grid.Row="0"
+                Width="604">
+            <!-- Placeholder rectangles for scout badge icons -->
+            <Button Width="65"
+                Height="65"
+                Margin="5"
+                Background="Transparent"
+                BorderBrush="Transparent">
+                <!--="OnFamilyScoutClick">-->
+                <Image Source="pack://application:,,,/Images/FamilieSpejder.png"
+                   Stretch="Uniform" />
+            </Button>
+            <Button Width="65"
+                Height="65"
+                Margin="5"
+                Background="Transparent"
+                BorderBrush="Transparent">
+                <!--="OnBeaverScoutClick">-->
+                <Image Source="pack://application:,,,/Images/BæverSpejder.png"
+                   Stretch="Uniform" />
+            </Button>
+            <Button Width="65"
+                Height="65"
+                Margin="5"
+                Background="Transparent"
+                BorderBrush="Transparent">
+                <!--="OnWolfScoutClick"-->
+                <Image Source="pack://application:,,,/Images/UlveSpejder.png"
+                   Stretch="Uniform" />
+            </Button>
+            <Button Width="65"
+                Height="65"
+                Margin="5"
+                Background="Transparent"
+                BorderBrush="Transparent">
+                <!--Click="OnJuniorScoutClick">-->
+                <Image Source="pack://application:,,,/Images/JuniorSpejder.png"
+                   Stretch="Uniform" />
+            </Button>
+            <Button Width="65"
+                Height="65"
+                Margin="5"
+                Background="Transparent"
+                BorderBrush="Transparent">
+                <!--Click="OnTroopScoutClick">-->
+                <Image Source="pack://application:,,,/Images/TropSpejder.png"
+                   Stretch="Uniform" />
+            </Button>
+            <Button Width="65"
+                Height="65"
+                Margin="5"
+                Background="Transparent"
+                BorderBrush="Transparent">
+                <!--Click="OnSeniorScoutClick">-->
+                <Image Source="pack://application:,,,/Images/SeniorSpejder.png"
+                   Stretch="Uniform" />
+            </Button>
+            <Button Width="65"
+                Height="65"
+                Margin="5"
+                Background="Transparent"
+                BorderBrush="Transparent">
+                <!--Click="OnRoverScoutClick">-->
+                <Image Source="pack://application:,,,/Images/RoverSpejder.png"
+                   Stretch="Uniform" />
+            </Button>
+        </StackPanel>
+
+        <!-- Second Row: Logo, Checkbox, Buttons, and Search -->
+        <StackPanel Orientation="Horizontal"
+                Grid.Row="1"
+                Margin="0,10">
+            <!-- Placeholder for Logo -->
+
+            <!-- Checkbox -->
+            <CheckBox Content="Vis gamle møder"
+                  VerticalAlignment="Center"
+                  Margin="10,0" />
+
+            <!-- Task Buttons -->
+            <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="20,0">
+                <Button Content="Opret opgave"
+                    Width="90"
+                    Background="LightGreen"
+                    Margin="5,0"
+                    Height="25" />
+                <Button Content="Rediger opgave"
+                    Width="90"
+                    Background="Gold"
+                    Margin="5,0"
+                    Height="25" />
+                <Button Content="Slet Opgave"
+                    Width="90"
+                    Background="LightCoral"
+                    Margin="5,0"
+                    Height="25" />
+                <Button Content="Gem I database"
+                    Width="90"
+                    Background="LightBlue"
+                    Margin="5,0"
+                    Height="25" />
+            </StackPanel>
+
+            <!-- Search Button -->
+            <Button Content="Søg"
+                Width="60"
+                Background="LightPink"
+                Margin="10,0"
+                Height="25" />
+        </StackPanel>
+
+        <!-- DataGrid Section -->
+        <DataGrid Grid.Row="2"
+              x:Name="ScoutDataGrid"
+              AutoGenerateColumns="False"
+              HeadersVisibility="Column"
+              CanUserAddRows="False"
+              RowHeight="40"
+              Margin="0,10,0,0"
+              ItemsSource="{Binding Meetings}"
+              SelectedItem="{Binding SelectedMeeting}">
+            
+            <DataGrid.Columns>
+                <!-- Define columns as per your wireframe -->
+                <DataGridTextColumn Header="Dato"
+                                Binding="{Binding Date}"
+                                Width="100" />
+                <DataGridTextColumn Header="Tid"
+                                Binding="{Binding Time}"
+                                Width="100" />
+                <DataGridTemplateColumn Header="Mærke billede"
+                                    Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="40"
+                                   Height="40"
+                                   Fill="LightGray" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Tema/mærke"
+                                Binding="{Binding Theme}"
+                                Width="100" />
+                <DataGridTextColumn Header="Aktivitet"
+                                Binding="{Binding Activity}"
+                                Width="100" />
+                <DataGridTextColumn Header="Husk"
+                                Binding="{Binding Reminder}"
+                                Width="100" />
+                <DataGridCheckBoxColumn Header="Afbud"
+                                    Binding="{Binding Absent}"
+                                    Width="80" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <ComboBox HorizontalAlignment="Left"
+              Margin="698,14,0,0"
+              VerticalAlignment="Top"
+              Width="72" />
+        <Image Margin="-16,-6,677,47"
+           Source="/Images/KFUMSpejderne.png"
+           Stretch="Fill" />
+    </Grid>
+</Window>

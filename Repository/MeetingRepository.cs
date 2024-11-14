@@ -13,7 +13,7 @@ namespace SpejderApplikation.Repository
         private readonly string _connectionString;
         public MeetingRepository()
         {
-            _connectionString = ConfigurationSettings.ConnectionString;
+            _connectionString = Connection.ConnectionString;
         }
 
         public int AddType(Meeting entity)

@@ -26,8 +26,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent"
-                    Click="OnFamilyScoutClick">
+                    BorderBrush="Transparent">
+                <!--="OnFamilyScoutClick">-->
                 <Image Source="pack://application:,,,/Images/FamilieSpejder.png"
                        Stretch="Uniform" />
             </Button>
@@ -35,8 +35,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent"
-                    Click="OnBeaverScoutClick">
+                    BorderBrush="Transparent">
+                <!--="OnBeaverScoutClick">-->
                 <Image Source="pack://application:,,,/Images/BæverSpejder.png"
                        Stretch="Uniform" />
             </Button>
@@ -44,8 +44,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent"
-                    Click="OnWolfScoutClick">
+                    BorderBrush="Transparent">
+                <!--="OnWolfScoutClick"-->
                 <Image Source="pack://application:,,,/Images/UlveSpejder.png"
                        Stretch="Uniform" />
             </Button>
@@ -53,8 +53,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent"
-                    Click="OnJuniorScoutClick">
+                    BorderBrush="Transparent">
+                <!--Click="OnJuniorScoutClick">-->
                 <Image Source="pack://application:,,,/Images/JuniorSpejder.png"
                        Stretch="Uniform" />
             </Button>
@@ -62,8 +62,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent"
-                    Click="OnTroopScoutClick">
+                    BorderBrush="Transparent">
+                <!--Click="OnTroopScoutClick">-->
                 <Image Source="pack://application:,,,/Images/TropSpejder.png"
                        Stretch="Uniform" />
             </Button>
@@ -71,8 +71,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent"
-                    Click="OnSeniorScoutClick">
+                    BorderBrush="Transparent">
+                <!--Click="OnSeniorScoutClick">-->
                 <Image Source="pack://application:,,,/Images/SeniorSpejder.png"
                        Stretch="Uniform" />
             </Button>
@@ -80,8 +80,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent"
-                    Click="OnRoverScoutClick">
+                    BorderBrush="Transparent">
+                <!--Click="OnRoverScoutClick">-->
                 <Image Source="pack://application:,,,/Images/RoverSpejder.png"
                        Stretch="Uniform" />
             </Button>

@@ -63,3 +63,9 @@ C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikatio
 C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikation\obj\Debug\net8.0-windows\SpejderApplikation.pdb
 C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikation\obj\Debug\net8.0-windows\SpejderApplikation.genruntimeconfig.cache
 C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikation\obj\Debug\net8.0-windows\ref\SpejderApplikation.dll
+C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikation\obj\Debug\net8.0-windows\View\ScoutsProgramView.g.cs
+C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikation\obj\Debug\net8.0-windows\View\ScoutsProgramView.baml
+C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikation\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
+C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikation\bin\Debug\net8.0-windows\System.Text.Encodings.Web.dll
+C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikation\bin\Debug\net8.0-windows\System.Text.Json.dll
+C:\Users\pibm9\Documents\Datamatiker\Programmering\2. semester\SpejderApplikation\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll

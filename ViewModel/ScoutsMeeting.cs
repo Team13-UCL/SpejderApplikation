@@ -1,20 +1,42 @@
 ﻿using SpejderApplikation.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace SpejderApplikation.ViewModel
 {
     internal class ScoutsMeeting
     {
-        private Meeting dbMeeting;
-        private Unit dbUnit;
-        private Badge dbBadge;
-        private Activity dbActivity;
+        public int meetingID { get; set; }
+        public int activityID { get; set; }
+        public int badgeID { get; set; }
         public DateOnly Date { get; set; }
-        public byte[] Badge { get; set; } //billede
+        public TimeOnly Start { get; set; }
+        public TimeOnly Stop { get; set; }
+        public string Time { get { return $"{Start:HH:mm} - {Stop:HH:mm}"; } }
+        public byte[] BadgeData { get; set; } //billede
+        public ImageSource Picture
+        {
+            get
+            {
+                if (BadgeData == null) return null;
+
+                using (var ms = new MemoryStream(BadgeData))
+                {
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = ms;
+                    image.EndInit();
+                    return image;
+                }
+            }
+        }
         public string BadgeName { get; set; }
         public string Activity { get; set; }
         public string Preparation { get; set; }
@@ -26,20 +48,13 @@ namespace SpejderApplikation.ViewModel
                             int meetingID, int unitID, int badgeID, int activityID)
         {
             Date = date;
-            dbMeeting.Date = date;
-            Badge = badge;
-            dbBadge.Picture = badge;
+            BadgeData = badge;
             BadgeName = badgeName;
-            dbBadge.Name = badgeName;
             Activity = activity;
-            dbActivity.ActivityDescription = activity;
             Preparation = preparation;
-            dbActivity.Preparation = preparation;
             Notes = notes;
-            dbActivity.Notes = notes;
             // Responsibility hvor hører det til? det er på WF, men ikke i DCD
             Unit = unit;
-            dbUnit.UnitName = Unit;
             
             // ved ikke lige hvordan jeg indkorporerer ID for de forskellige objekter.
             // Men det skal bruges til at opdatere de forskellige.
@@ -49,34 +64,34 @@ namespace SpejderApplikation.ViewModel
         {
             // opret ny Meeting, med forud indtastet Unit hardcoded til sprint 1
         }
-        public Meeting UpdateMeeting()
-        {
-            if (dbMeeting.Date != Date)
-            {
-                return dbMeeting;
-            }
-            else return null;
-            if(dbBadge.Picture != Badge || dbBadge.Name != BadgeName)
-            {
-                // opdater Badge database
-            }
+        //public Meeting UpdateMeeting()
+        //{
+        //    if (dbMeeting.Date != Date)
+        //    {
+        //        return dbMeeting;
+        //    }
+        //    else return null;
+        //    if(dbBadge.Picture != Badge || dbBadge.Name != BadgeName)
+        //    {
+        //        // opdater Badge database
+        //    }
             
-        }
-        public Activity UpdateActivity()
-        {
-            if (dbActivity.ActivityDescription != Activity || dbActivity.Preparation != Preparation || dbActivity.Notes != Notes)
-            {
-                return dbActivity;
-            }
-            else return null;
-        }
-        public Badge UpdateBadge()
-        {
-            if (dbBadge.Picture != Badge || dbBadge.Name != BadgeName)
-            {
-                return dbBadge;
-            }
-            else return null;
-        }
+        //}
+        //public Activity UpdateActivity()
+        //{
+        //    if (dbActivity.ActivityDescription != Activity || dbActivity.Preparation != Preparation || dbActivity.Notes != Notes)
+        //    {
+        //        return dbActivity;
+        //    }
+        //    else return null;
+        //}
+        //public Badge UpdateBadge()
+        //{
+        //    if (dbBadge.Picture != Badge || dbBadge.Name != BadgeName)
+        //    {
+        //        return dbBadge;
+        //    }
+        //    else return null;
+        //}
     }
 }
