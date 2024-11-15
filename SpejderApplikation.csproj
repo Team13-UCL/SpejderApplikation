@@ -9,12 +9,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\BæverSpejder.png" />
+    <None Remove="Images\FamilieSpejder.png" />
+    <None Remove="Images\JuniorSpejder.png" />
+    <None Remove="Images\KFUMSpejderne.png" />
+    <None Remove="Images\RoverSpejder.png" />
+    <None Remove="Images\SeniorSpejder.png" />
+    <None Remove="Images\TropSpejder.png" />
+    <None Remove="Images\UlveSpejder.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
+    <Resource Include="Images\BæverSpejder.png" />
+    <Resource Include="Images\FamilieSpejder.png" />
+    <Resource Include="Images\JuniorSpejder.png" />
+    <Resource Include="Images\KFUMSpejderne.png" />
+    <Resource Include="Images\RoverSpejder.png" />
+    <Resource Include="Images\SeniorSpejder.png" />
+    <Resource Include="Images\TropSpejder.png" />
+    <Resource Include="Images\UlveSpejder.png" />
   </ItemGroup>
 
 </Project>

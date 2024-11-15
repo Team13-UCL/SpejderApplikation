@@ -2188,19 +2188,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pibm9\\.nuget\\packages\\": {}
+    "C:\\Users\\nbjer\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\SpejderApplikation.csproj",
+      "projectUniqueName": "C:\\Users\\nbjer\\Source\\Repos\\Team13-UCL\\SpejderApplikation\\SpejderApplikation.csproj",
       "projectName": "SpejderApplikation",
-      "projectPath": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\SpejderApplikation.csproj",
-      "packagesPath": "C:\\Users\\pibm9\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\2. semester\\SpejderApplikation\\obj\\",
+      "projectPath": "C:\\Users\\nbjer\\Source\\Repos\\Team13-UCL\\SpejderApplikation\\SpejderApplikation.csproj",
+      "packagesPath": "C:\\Users\\nbjer\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\nbjer\\Source\\Repos\\Team13-UCL\\SpejderApplikation\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\pibm9\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\nbjer\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2259,7 +2259,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

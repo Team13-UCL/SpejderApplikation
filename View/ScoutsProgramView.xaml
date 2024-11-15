@@ -26,7 +26,7 @@
                 Background="Transparent"
                 BorderBrush="Transparent">
                 <!--="OnFamilyScoutClick">-->
-                <Image Source="pack://application:,,,/Images/FamilieSpejder.png"
+                <Image x:Name="FamilieSpejder" Source="pack://application:,,,/Images/FamilieSpejder.png"
                    Stretch="Uniform" />
             </Button>
             <Button Width="65"
@@ -35,7 +35,7 @@
                 Background="Transparent"
                 BorderBrush="Transparent">
                 <!--="OnBeaverScoutClick">-->
-                <Image Source="pack://application:,,,/Images/BæverSpejder.png"
+                <Image x:Name="BæverSpejder" Source="pack://application:,,,/Images/BæverSpejder.png"
                    Stretch="Uniform" />
             </Button>
             <Button Width="65"
@@ -44,7 +44,7 @@
                 Background="Transparent"
                 BorderBrush="Transparent">
                 <!--="OnWolfScoutClick"-->
-                <Image Source="pack://application:,,,/Images/UlveSpejder.png"
+                <Image x:Name="UlveSpejder" Source="pack://application:,,,/Images/UlveSpejder.png"
                    Stretch="Uniform" />
             </Button>
             <Button Width="65"
@@ -53,7 +53,7 @@
                 Background="Transparent"
                 BorderBrush="Transparent">
                 <!--Click="OnJuniorScoutClick">-->
-                <Image Source="pack://application:,,,/Images/JuniorSpejder.png"
+                <Image x:Name="JuniorSpejder" Source="pack://application:,,,/Images/JuniorSpejder.png"
                    Stretch="Uniform" />
             </Button>
             <Button Width="65"
@@ -62,7 +62,7 @@
                 Background="Transparent"
                 BorderBrush="Transparent">
                 <!--Click="OnTroopScoutClick">-->
-                <Image Source="pack://application:,,,/Images/TropSpejder.png"
+                <Image x:Name="TropSpejder" Source="pack://application:,,,/Images/TropSpejder.png"
                    Stretch="Uniform" />
             </Button>
             <Button Width="65"
@@ -71,7 +71,7 @@
                 Background="Transparent"
                 BorderBrush="Transparent">
                 <!--Click="OnSeniorScoutClick">-->
-                <Image Source="pack://application:,,,/Images/SeniorSpejder.png"
+                <Image x:Name="SeniorSpejder" Source="pack://application:,,,/Images/SeniorSpejder.png"
                    Stretch="Uniform" />
             </Button>
             <Button Width="65"
@@ -80,7 +80,7 @@
                 Background="Transparent"
                 BorderBrush="Transparent">
                 <!--Click="OnRoverScoutClick">-->
-                <Image Source="pack://application:,,,/Images/RoverSpejder.png"
+                <Image x:Name="RoverSpejder" Source="pack://application:,,,/Images/RoverSpejder.png"
                    Stretch="Uniform" />
             </Button>
         </StackPanel>
