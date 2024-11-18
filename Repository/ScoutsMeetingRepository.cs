@@ -1,10 +1,12 @@
 ﻿using Microsoft.Data.SqlClient;
+using SpejderApplikation.Model;
 using SpejderApplikation.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,11 +40,7 @@ namespace SpejderApplikation.Repository
             var entities = new List<ScoutsMeeting>();
             string filePath = Directory.GetCurrentDirectory();
             string fileName = "\\KFUM.png"; // har et basis KFUM mærke i projektets mappe
-            string query = "SELECT Meeting.MeetingID,\r\n\tMeeting.Date,\r\n\tActivity.ActivityID,\r\n\t" +
-                "Activity.ActivityDescription,\r\n\tBadge.BadgeID,\r\n\tBadge.Picture,\r\n\tBadge.BadgeName" +
-                "\r\n\r\nFROM MEETING\r\nINNER JOIN ActivityMeeting\r\nON Meeting.MeetingID = ActivityMeeting.MeetingID" +
-                "\r\nInner Join Activity\r\nON ActivityMeeting.ActivityID = Activity.ActivityID\r\nINNER JOIN BadgeMeeting" +
-                "\r\nON Meeting.MeetingID = BadgeMeeting.MeetingID\r\nINNER JOIN Badge\r\nON BadgeMeeting.BadgeID = Badge.BadgeID"; // indtast SQL query her.
+            string query = "SELECT Meeting.MeetingID, Meeting.Date, Meeting.Start, Meeting.Stop, Activity.ActivityID, Activity.ActivityDescription,	Activity.Remember, Badge.BadgeID, Badge.Picture, Badge.BadgeName, Unit.UnitID, Unit.UnitName FROM MEETING INNER JOIN ActivityMeeting ON Meeting.MeetingID = ActivityMeeting.MeetingID Inner Join Activity ON ActivityMeeting.ActivityID = Activity.ActivityID INNER JOIN BadgeMeeting ON Meeting.MeetingID = BadgeMeeting.MeetingID INNER JOIN Badge ON BadgeMeeting.BadgeID = Badge.BadgeID INNER JOIN UnitMeeting ON Meeting.MeetingID = UnitMeeting.meetingID INNER JOIN Unit ON UnitMeeting.unitID = Unit.UnitID"; // indtast SQL query her.
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -70,12 +68,11 @@ namespace SpejderApplikation.Repository
                             picture,
                             (string)reader["BadgeName"],
                             (string)reader["ActivityDescription"],
-                            null, // Activity.preparation
+                            (string)reader["Remember"], // Activity.preparation
                             null, // Activity.Notes
-                            null, // Responsibility
-                            null, // Unit
+                            (string)reader["UnitName"], // Unit
                             (int)reader["MeetingID"],
-                            0, // UnitID
+                            (int)reader["UnitID"], // UnitID
                             (int)reader["BadgeID"],
                             (int)reader["ActivityID"]));
                         //{

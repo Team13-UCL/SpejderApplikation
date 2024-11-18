@@ -14,26 +14,27 @@ namespace SpejderApplikation.ViewModel
     {
         IRepository<ScoutsMeeting> ScoutMeetingRepo;
 
-        public ObservableCollection<ScoutsMeeting> Meetings { get; set; }
+        public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
+        //public ObservableCollection<Meeting> Meetings { get; set; }
         private ScoutsMeeting _selectedMeeting;
         public ScoutsMeeting SelectedMeeting 
         {
             get {  return _selectedMeeting; }
             set 
             { 
-                SelectedMeeting = value;
+                _selectedMeeting = value;
                 OnPropertyChanged();
             }
         }
         public ScoutsProgramViewModel(IRepository<ScoutsMeeting> repository)
         {
             this.ScoutMeetingRepo = repository ?? throw new ArgumentNullException(nameof(repository));
-            Meetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll());
+            ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll());
         }
         public void NewMeeting()
         {
             SelectedMeeting = new ScoutsMeeting();
-            Meetings.Add(SelectedMeeting);
+            ScoutMeetings.Add(SelectedMeeting);
         }
         public void EditMeeting()
         {

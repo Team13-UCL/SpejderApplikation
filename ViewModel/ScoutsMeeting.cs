@@ -1,6 +1,7 @@
 ﻿using SpejderApplikation.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,11 @@ namespace SpejderApplikation.ViewModel
 {
     internal class ScoutsMeeting
     {
+        public ObservableCollection<object> Mark {  get; set; }
         public int meetingID { get; set; }
         public int activityID { get; set; }
         public int badgeID { get; set; }
+        public int unitID { get; set; }
         public DateOnly Date { get; set; }
         public TimeOnly Start { get; set; }
         public TimeOnly Stop { get; set; }
@@ -41,10 +44,9 @@ namespace SpejderApplikation.ViewModel
         public string Activity { get; set; }
         public string Preparation { get; set; }
         public string Notes { get; set; }
-        public string Responsibility { get; set; }
         public string Unit { get; set; }
         public ScoutsMeeting(DateOnly date, byte[] badge, string badgeName, 
-                            string activity, string preparation, string notes, string responsibility, string unit,
+                            string activity, string preparation, string notes, string unit,
                             int meetingID, int unitID, int badgeID, int activityID)
         {
             Date = date;
@@ -53,8 +55,14 @@ namespace SpejderApplikation.ViewModel
             Activity = activity;
             Preparation = preparation;
             Notes = notes;
-            // Responsibility hvor hører det til? det er på WF, men ikke i DCD
             Unit = unit;
+            this.badgeID = badgeID;
+            this.activityID = activityID;
+            this.meetingID = meetingID;
+            this.unitID = unitID;
+            Mark = new ObservableCollection<object>();
+            Mark.Add(badge);
+            Mark.Add(badgeName);
             
             // ved ikke lige hvordan jeg indkorporerer ID for de forskellige objekter.
             // Men det skal bruges til at opdatere de forskellige.
