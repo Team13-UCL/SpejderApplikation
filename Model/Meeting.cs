@@ -12,6 +12,8 @@ namespace SpejderApplikation.Model
         public DateOnly Date { get; set; }
         public TimeOnly Start { get; set; }
         public TimeOnly Stop { get; set; }
+
+        public TimeOnly hej { get; set; }
         public Meeting(int id, DateOnly date, TimeOnly start, TimeOnly stop)
         {
             _meetingID = id;
