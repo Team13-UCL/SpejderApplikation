@@ -15,7 +15,36 @@ namespace SpejderApplikation.ViewModel
         IRepository<ScoutsMeeting> ScoutMeetingRepo;
 
         public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
-        //public ObservableCollection<Meeting> Meetings { get; set; }
+        private DateOnly _date;
+        public DateOnly Date 
+        {
+            get { return _date; }
+            set
+            {
+                _date = value;
+                OnPropertyChanged();
+            } 
+        }
+        private TimeOnly _start;
+        public TimeOnly Start 
+        {
+            get { return _start; }
+            set 
+            { 
+                _start = value;
+                OnPropertyChanged();
+            }
+        }
+        private TimeOnly _stop;
+        public TimeOnly Stop 
+        {
+            get { return _stop; }
+            set
+            {
+                _stop = value;
+                OnPropertyChanged();
+            }
+        }
         private ScoutsMeeting _selectedMeeting;
         public ScoutsMeeting SelectedMeeting 
         {
@@ -24,8 +53,16 @@ namespace SpejderApplikation.ViewModel
             { 
                 _selectedMeeting = value;
                 OnPropertyChanged();
+                UpdatePanel();
             }
         }
+        private void UpdatePanel()
+        {
+            Date = SelectedMeeting.Date;
+            Start = SelectedMeeting.Start;
+            Stop = SelectedMeeting.Stop;
+        }
+
         public ScoutsProgramViewModel(IRepository<ScoutsMeeting> repository)
         {
             this.ScoutMeetingRepo = repository ?? throw new ArgumentNullException(nameof(repository));

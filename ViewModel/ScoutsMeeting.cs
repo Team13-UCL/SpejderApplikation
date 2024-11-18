@@ -45,11 +45,13 @@ namespace SpejderApplikation.ViewModel
         public string Preparation { get; set; }
         public string Notes { get; set; }
         public string Unit { get; set; }
-        public ScoutsMeeting(DateOnly date, byte[] badge, string badgeName, 
+        public ScoutsMeeting(DateOnly date, TimeOnly start, TimeOnly stop, byte[] badge, string badgeName, 
                             string activity, string preparation, string notes, string unit,
                             int meetingID, int unitID, int badgeID, int activityID)
         {
             Date = date;
+            Start = start;
+            Stop = stop;
             BadgeData = badge;
             BadgeName = badgeName;
             Activity = activity;

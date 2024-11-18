@@ -51,6 +51,8 @@ namespace SpejderApplikation.Repository
                     while (reader.Read())
                     {
                         DateTime dateTime = (DateTime)reader["Date"];
+                        TimeSpan start = (TimeSpan)reader["Start"];
+                        TimeSpan stop = (TimeSpan)reader["Stop"];
                         Byte[] picture;
                         if (reader["Picture"] != null)
                         { picture = reader["Picture"] as byte[]; }
@@ -65,6 +67,8 @@ namespace SpejderApplikation.Repository
 
 
                         entities.Add(new ScoutsMeeting(DateOnly.FromDateTime(dateTime),
+                            TimeOnly.FromTimeSpan(start),
+                            TimeOnly.FromTimeSpan(stop),
                             picture,
                             (string)reader["BadgeName"],
                             (string)reader["ActivityDescription"],
