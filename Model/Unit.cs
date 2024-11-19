@@ -25,6 +25,7 @@ namespace SpejderApplikation.Model
         }
         public Unit() : this(0, "Enhed", null, null) { }
 
+        // Hjælpefunktion til at hente standardbilledet KFUM.PNG, hvilket er KFUMS logo
         private static byte[] GetDefaultPicture()
         {
             string filePath = Directory.GetCurrentDirectory();

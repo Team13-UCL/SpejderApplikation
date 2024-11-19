@@ -27,7 +27,7 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _date = value;
-                OnPropertyChanged();
+                OnPropertyChanged(); // Afgørende for at UI opdateres når værdier ændres
             } 
         }
         private TimeOnly _start;
@@ -83,7 +83,7 @@ namespace SpejderApplikation.ViewModel
 
 
         private ScoutsMeeting _selectedMeeting;
-        public ScoutsMeeting SelectedMeeting 
+        public ScoutsMeeting SelectedMeeting //Holder styr på hvilket møde der er valgt i UI
         {
             get {  return _selectedMeeting; }
             set 
@@ -91,7 +91,7 @@ namespace SpejderApplikation.ViewModel
                 _selectedMeeting = value;
                 OnPropertyChanged();
                 UpdatePanel(_selectedMeeting.meetingID, _selectedMeeting.badgeID, _selectedMeeting.unitID, _selectedMeeting.activityID);
-            }
+            } //UpdatePanel opdatere properties ved ændringer
         }
         private void UpdatePanel(int meeting, int badge, int unit, int activity)
         {
@@ -102,7 +102,7 @@ namespace SpejderApplikation.ViewModel
             BadgeName = SelectedBadge.Name;
             BadgeDescription = SelectedBadge.Description;
             BadgeLink = SelectedBadge.Link;
-        }
+        } // Overvej en til at håndtere null?
 
         public ScoutsProgramViewModel(IRepository<ScoutsMeeting> repository, IRepository<Meeting> meetingRepo, IRepository<Badge> BadgeRepo)
         {
@@ -112,7 +112,7 @@ namespace SpejderApplikation.ViewModel
             Meetings = new ObservableCollection<Meeting>(MeetingRepo.GetAll());
             this.BadgeRepo = BadgeRepo ?? throw new ArgumentNullException(nameof(BadgeRepo));
 
-        }
+        } // ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
         {
             SelectedMeeting = new ScoutsMeeting();

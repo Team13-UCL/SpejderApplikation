@@ -12,9 +12,11 @@ namespace SpejderApplikation.Model
         private int _badgeID;
         public string Name { get; set; }
         public string Description { get; set; }
-        public byte[] Picture { get; set; }
+        public byte[] Picture { get; set; } // Byte-array til billeder af gemte mærker
         public string Link { get; set; }
+
         public Badge() { }
+
         public Badge(int id, string name, string description, byte[] picture, string link)
         {
             _badgeID = id;
@@ -23,9 +25,10 @@ namespace SpejderApplikation.Model
             Picture = picture;
             Link = link;
         }
+        // Kopi Konstruktor
         public Badge(Badge badge)
         {
-            if (badge == null) throw new ArgumentNullException(nameof(badge));
+            if (badge == null) throw new ArgumentNullException(nameof(badge)); // Fejlhåndtering af Null
             this._badgeID = badge._badgeID;
             this.Name = badge.Name;
             this.Description = badge.Description;
