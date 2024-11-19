@@ -173,14 +173,19 @@
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0.5">
-                <DatePicker Name="MeetingDP" Width="auto" Height="25" Text="{Binding SelectedMeeting.Date}"/>
-                <TextBox Name="StartTP" Width="auto" Height="25" Text="{Binding Start, FallbackValue=00:00:00}"/>
-                <TextBox Name="StopTP" Width="auto" Height="25" Text="{Binding Stop, FallbackValue=00:00:00}"/>
-                
+
+
+                <Button Content="Opret mærke" Width="135"/>
+
+
+                <DatePicker x:Name="MeetingDP" Width="auto" Height="25" Text="{Binding SelectedMeeting.Date}"/>
+                <TextBox x:Name="StartTP" Width="auto" Height="25" Text="{Binding Start, FallbackValue=00:00:00}"/>
+                <TextBox x:Name="StopTP" Width="auto" Height="25" Text="{Binding Stop, FallbackValue=00:00:00}"/>
+
 
             </StackPanel>
         </Grid>
-        
+
         <ComboBox HorizontalAlignment="Left"
               Margin="698,14,0,0"
               VerticalAlignment="Top"
