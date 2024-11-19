@@ -3,24 +3,23 @@ using SpejderApplikation.Model;
 using SpejderApplikation.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SpejderApplikation.Repository
 {
-    internal class ScoutsMeetingRepository : IRepository<ScoutsMeeting>
+    internal class BadgeRepository : IRepository<Badge>
     {
         private readonly string _connectionString;
-        public ScoutsMeetingRepository()
+        string filePath = Directory.GetCurrentDirectory();
+        string fileName = "\\KFUM.png"; // har et basis KFUM mærke i projektets mappe
+        public BadgeRepository()
         {
             _connectionString = Connection.ConnectionString;
         }
-
-        public int AddType(ScoutsMeeting entity)
+        public int AddType(Badge entity)
         {
             throw new NotImplementedException();
         }
@@ -30,17 +29,16 @@ namespace SpejderApplikation.Repository
             throw new NotImplementedException();
         }
 
-        public void EditType(ScoutsMeeting entity)
+        public void EditType(Badge entity)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ScoutsMeeting> GetAll()
+        public IEnumerable<Badge> GetAll()
         {
-            var entities = new List<ScoutsMeeting>();
-            string filePath = Directory.GetCurrentDirectory();
-            string fileName = "\\KFUM.png"; // har et basis KFUM mærke i projektets mappe
-            string query = "SELECT Meeting.MeetingID, Meeting.Date, Meeting.Start, Meeting.Stop, Activity.ActivityID, Activity.ActivityDescription,	Activity.Preparation, Badge.BadgeID, Badge.Picture, Badge.BadgeName, Unit.UnitID, Unit.UnitName FROM MEETING INNER JOIN ActivityMeeting ON Meeting.MeetingID = ActivityMeeting.MeetingID Inner Join Activity ON ActivityMeeting.ActivityID = Activity.ActivityID INNER JOIN BadgeMeeting ON Meeting.MeetingID = BadgeMeeting.MeetingID INNER JOIN Badge ON BadgeMeeting.BadgeID = Badge.BadgeID INNER JOIN UnitMeeting ON Meeting.MeetingID = UnitMeeting.meetingID INNER JOIN Unit ON UnitMeeting.unitID = Unit.UnitID"; // indtast SQL query her.
+            var entities = new List<Badge>();
+            
+            string query = "SELECT * FROM Badge"; // indtast SQL query her.
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -66,19 +64,11 @@ namespace SpejderApplikation.Repository
                         }
 
 
-                        entities.Add(new ScoutsMeeting(DateOnly.FromDateTime(dateTime),
-                            TimeOnly.FromTimeSpan(start),
-                            TimeOnly.FromTimeSpan(stop),
-                            picture,
-                            (string)reader["BadgeName"],
-                            (string)reader["ActivityDescription"],
-                            (string)reader["Preparation"], // Activity.preparation
-                            null, // Activity.Notes
-                            (string)reader["UnitName"], // Unit
-                            (int)reader["MeetingID"],
-                            (int)reader["UnitID"], // UnitID
-                            (int)reader["BadgeID"],
-                            (int)reader["ActivityID"]));
+                        entities.Add(new Badge((int)reader["BadgeID"],
+                                                (string)reader["BadgeName"],
+                                                (string)reader["Description"],
+                                                picture,
+                                                (string)reader["Link"]));
                         //{
                         //    meetingID = (int)reader["MeetingID"],
                         //    Date = (DateOnly)reader["Date"],
@@ -96,9 +86,33 @@ namespace SpejderApplikation.Repository
             return entities;
         }
 
-        public ScoutsMeeting GetByID(int id)
+        public Badge GetByID(int id)
         {
-            throw new NotImplementedException();
+            Badge entity = null;
+            string query = "SELECT * FROM Badge WHERE BadgeID = @BadgeID";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@BadgeID", id);
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        int badgeID = reader.IsDBNull(reader.GetOrdinal("BadgeID")) ? 0 : reader.GetInt32(reader.GetOrdinal("BadgeID"));
+                        string name = reader.IsDBNull(reader.GetOrdinal("BadgeName")) ? string.Empty : reader.GetString(reader.GetOrdinal("BadgeName"));
+                        string description = reader.IsDBNull(reader.GetOrdinal("Description")) ? string.Empty : reader.GetString(reader.GetOrdinal("Description"));
+                        Byte[] picture = reader.IsDBNull(reader.GetOrdinal("Picture")) ? new byte[0] : (byte[])reader["Picture"];
+                        string link = reader.IsDBNull(reader.GetOrdinal("Link")) ? string.Empty : reader.GetString(reader.GetOrdinal("Link"));
+
+                        entity = new Badge(badgeID, name, description, picture, link);
+                    }
+                }
+            }
+
+            return entity ?? new Badge(); // Returér en tom instans, hvis intet blev fundet.
         }
     }
 }

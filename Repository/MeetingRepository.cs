@@ -61,7 +61,7 @@ namespace SpejderApplikation.Repository
         public IEnumerable<Meeting> GetAll()
         {
             var entities = new List<Meeting>();
-            string query = ""; // indtast SQL query her.
+            string query = "SELECT * FROM MEETING"; // indtast SQL query her.
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -71,12 +71,15 @@ namespace SpejderApplikation.Repository
                 {
                     while (reader.Read())
                     {
+                        DateTime dateTime = (DateTime)reader["Date"];
+                        TimeSpan start = (TimeSpan)reader["Start"];
+                        TimeSpan stop = (TimeSpan)reader["Stop"];
                         entities.Add(new Meeting(
 
-                            (int)reader[""],
-                            (DateOnly)reader[""],
-                            (TimeOnly)reader[""],
-                            (TimeOnly)reader[""]));
+                            (int)reader["MeetingID"],
+                            DateOnly.FromDateTime(dateTime),
+                            TimeOnly.FromTimeSpan(start),
+                            TimeOnly.FromTimeSpan(stop)));
                     }
                 }
             }

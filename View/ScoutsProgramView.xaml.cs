@@ -24,7 +24,11 @@ namespace SpejderApplikation.View
         public ScoutsProgramView()
         {
             var SMRepo = new Repository.ScoutsMeetingRepository();
-            vm = new ScoutsProgramViewModel(SMRepo);
+            var MRepo = new Repository.MeetingRepository();
+            var BRepo = new Repository.BadgeRepository();
+            var ARepo = new Repository.ActivityRepository();
+            var URepo = new Repository.UnitRepository();
+            vm = new ScoutsProgramViewModel(SMRepo, MRepo, BRepo);
             InitializeComponent();
             DataContext = vm;
         }

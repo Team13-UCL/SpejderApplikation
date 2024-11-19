@@ -172,12 +172,47 @@
                         Width="1*" />
                 </DataGrid.Columns>
             </DataGrid>
-            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0.5">
-                <DatePicker Name="MeetingDP" Width="auto" Height="25" Text="{Binding SelectedMeeting.Date}"/>
-                <TextBox Name="StartTP" Width="auto" Height="25" Text="{Binding Start, FallbackValue=00:00:00}"/>
-                <TextBox Name="StopTP" Width="auto" Height="25" Text="{Binding Stop, FallbackValue=00:00:00}"/>
-                
-
+            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0.0">
+                <DatePicker Name="MeetingDP" Width="auto" Height="auto" Text="{Binding SelectedMeeting.Date}"/>
+                <TextBox Name="StartTP" Width="auto" Height="auto" Text="{Binding Start, FallbackValue=00:00:00, TargetNullValue=00:00:00}"/>
+                <TextBox Name="StopTP" Width="auto" Height="auto" Text="{Binding Stop, FallbackValue=00:00:00, TargetNullValue=00:00:00}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="NewDatebtn" Width="auto" Height="auto" Content="Ny møde" Grid.Column="0"/>
+                    <Button Name="UpdateDatebtn" Width="auto" Height="auto" Content="Rediger møde" Grid.Column="1"/>
+                    <Button Name="SaveDatebtn" Width="auto" Height="auto" Content="Gem opdatering" Grid.Column="2"/>
+                </Grid>
+                <TextBox Name="BadgeNametb" Width="auto" Height="auto" Text="{Binding BadgeName, TargetNullValue=Mærke}"/>
+                <TextBox Name="Descriptiontb" Width="auto" Height="auto" Text="{Binding BadgeDescription, TargetNullValue=Beskrivelse}"/>
+                <Button Name="Linkbtn" Width="auto" Height="auto" Content="{Binding BadgeLink, FallbackValue=Link, TargetNullValue=Link}"/>
+                <Grid Height="auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="NewBadgebtn" Width="auto" Content="Nyt mærke" Grid.Column="0"/>
+                    <Button Name="UpdateBadgebtn" Width="auto" Content="Rediger mærke" Grid.Column="1"/>
+                    <Button Name="SaveBadgebtn" Width="auto" Content="Gem opdatering" Grid.Column="2"/>
+                </Grid>
+                <TextBox Name="Activitytb" Width="auto" Height="auto" Text="aktivitet"/>
+                <TextBox Name="Preparationtb" Width="auto" Height="40" Text="Forberedelse"/>
+                <TextBox Name="Notestb" Width="auto" Height="auto" Text="Noter"/>
+                <Grid Height="auto">
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="NewActivitybtn" Content="Ny møde" Grid.Column="0"/>
+                    <Button Name="UpdateActivitybtn" Width="auto" Content="Rediger møde" Grid.Column="1"/>
+                    <Button Name="SaveActivitybtn" Width="auto" Content="Gem opdatering" Grid.Column="2"/>
+                </Grid>
+                <Label Content="Drop-down til valg af enhed" Width="auto" Height="auto"/>
             </StackPanel>
         </Grid>
         
@@ -188,5 +223,6 @@
         <Image Margin="-16,-6,677,47"
            Source="/Images/KFUMSpejderne.png"
            Stretch="Fill" />
+        
     </Grid>
 </Window>
