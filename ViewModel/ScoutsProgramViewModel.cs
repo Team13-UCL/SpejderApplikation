@@ -147,6 +147,7 @@ namespace SpejderApplikation.ViewModel
                 BadgeName = _selectedBadge.Name;
                 BadgeDescription = _selectedBadge.Description;
                 BadgeLink = _selectedBadge.Link;
+
             }
         }
 
@@ -174,6 +175,7 @@ namespace SpejderApplikation.ViewModel
             Meetings = new ObservableCollection<Meeting>(MeetingRepo.GetAll());
             this.BadgeRepo = BadgeRepo ?? throw new ArgumentNullException(nameof(BadgeRepo));
             this.ActivityRepo = ActivityRepo ?? throw new ArgumentNullException(nameof(ActivityRepo));
+            _imageHandling = new ImageHandling();
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
         {
@@ -192,13 +194,13 @@ namespace SpejderApplikation.ViewModel
         }
 
 
-        private string _url;
-        public string Url
+        private string link;
+        public string Link
         {
-            get { return _url; }
+            get { return link; }
             set
             {
-                _url = value;
+                link = value;
                 OnPropertyChanged();                
             }
         }
@@ -206,7 +208,7 @@ namespace SpejderApplikation.ViewModel
 
         private async Task DownloadImage()
         {
-            if (string.IsNullOrWhiteSpace(Url)) 
+            if (string.IsNullOrWhiteSpace(Link)) 
             {
                 MessageBox.Show("manglende hjemmeside");
                 return;
@@ -215,13 +217,18 @@ namespace SpejderApplikation.ViewModel
             try
             {
                 // Download the SVG image
-                string filePath = await _imageHandling.DownloadAndSaveImage(Url);
+                byte[] imageBytes = await _imageHandling.DownloadAndSaveImage(Link);
 
-                if (string.IsNullOrEmpty(filePath))
+
+                if (imageBytes == null || imageBytes.Length == 0)
                 {
                     MessageBox.Show("kunne ikke finde billedet");
                     return;
                 }
+
+                SelectedBadge.Picture = imageBytes; // Save the image bytes to the Picture property
+                SelectedScoutMeeting.BadgeData = imageBytes;
+
 
                 // Display the SVG image
                 //DownloadedImage.Source = _imageHandling.LoadSvg(filePath);
@@ -231,7 +238,7 @@ namespace SpejderApplikation.ViewModel
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
-        public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => !string.IsNullOrWhiteSpace(Url));
+        public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => !string.IsNullOrWhiteSpace(Link));
 
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen
         public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(), canExecute => SelectedMeeting != null); // Tildeles til Edit knappen

@@ -35,5 +35,7 @@ namespace SpejderApplikation.Model
             this.Picture = badge.Picture;
             this.Link = badge.Link;
         }
+
+
     }
 }

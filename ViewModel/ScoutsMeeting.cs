@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using SpejderApplikation.MVVM;
 
 namespace SpejderApplikation.ViewModel
 {
-    internal class ScoutsMeeting
+    internal class ScoutsMeeting : ViewModelBase
     {
         public ObservableCollection<object> Mark {  get; set; }
         public int meetingID { get; set; }
@@ -39,6 +40,7 @@ namespace SpejderApplikation.ViewModel
                     return image;
                 }
             }
+            
         }
         public string BadgeName { get; set; }
         public string Activity { get; set; }
