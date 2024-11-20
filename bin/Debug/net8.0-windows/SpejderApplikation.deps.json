@@ -9,7 +9,9 @@
       "SpejderApplikation/1.0.0": {
         "dependencies": {
           "Microsoft.Data.SqlClient": "5.2.2",
-          "Microsoft.Extensions.Configuration.Json": "9.0.0"
+          "Microsoft.Extensions.Configuration.Json": "9.0.0",
+          "SharpVectors": "1.8.4.2",
+          "SharpVectors.Wpf": "1.8.4.2"
         },
         "runtime": {
           "SpejderApplikation.dll": {}
@@ -344,6 +346,43 @@
           }
         }
       },
+      "SharpVectors/1.8.4.2": {
+        "runtime": {
+          "lib/net8.0-windows7.0/SharpVectors.Converters.Wpf.dll": {
+            "assemblyVersion": "1.8.4.2",
+            "fileVersion": "1.8.4.2"
+          },
+          "lib/net8.0-windows7.0/SharpVectors.Core.dll": {
+            "assemblyVersion": "1.8.4.2",
+            "fileVersion": "1.8.4.2"
+          },
+          "lib/net8.0-windows7.0/SharpVectors.Css.dll": {
+            "assemblyVersion": "1.8.4.2",
+            "fileVersion": "1.8.4.2"
+          },
+          "lib/net8.0-windows7.0/SharpVectors.Dom.dll": {
+            "assemblyVersion": "1.8.4.2",
+            "fileVersion": "1.8.4.2"
+          },
+          "lib/net8.0-windows7.0/SharpVectors.Model.dll": {
+            "assemblyVersion": "1.8.4.2",
+            "fileVersion": "1.8.4.2"
+          },
+          "lib/net8.0-windows7.0/SharpVectors.Rendering.Gdi.dll": {
+            "assemblyVersion": "1.8.4.2",
+            "fileVersion": "1.8.4.2"
+          },
+          "lib/net8.0-windows7.0/SharpVectors.Rendering.Wpf.dll": {
+            "assemblyVersion": "1.8.4.2",
+            "fileVersion": "1.8.4.2"
+          },
+          "lib/net8.0-windows7.0/SharpVectors.Runtime.Wpf.dll": {
+            "assemblyVersion": "1.8.4.2",
+            "fileVersion": "1.8.4.2"
+          }
+        }
+      },
+      "SharpVectors.Wpf/1.8.4.2": {},
       "System.ClientModel/1.0.0": {
         "dependencies": {
           "System.Memory.Data": "1.0.2",
@@ -648,6 +687,20 @@
       "sha512": "sha512-N4KeF3cpcm1PUHym1RmakkzfkEv3GRMyofVv40uXsQhCQeglr2OHNcUk2WOG51AKpGO8ynGpo9M/kFXSzghwug==",
       "path": "microsoft.sqlserver.server/1.0.0",
       "hashPath": "microsoft.sqlserver.server.1.0.0.nupkg.sha512"
+    },
+    "SharpVectors/1.8.4.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-x0ieFIl0MKEwxtYUFzOh7ch35gPkU8eEgfhwk8oE4cs8JejnZ2MVFgB5bILFNbatO934uby4c5MiV9k9olaoBg==",
+      "path": "sharpvectors/1.8.4.2",
+      "hashPath": "sharpvectors.1.8.4.2.nupkg.sha512"
+    },
+    "SharpVectors.Wpf/1.8.4.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PNxLkMBJnV8A+6yH9OqOlhLJegvWP/dvh0rAJp2l0kcrR+rB4R2tQ9vhUqka+UilH4atN8T6zvjDOizVyfz2Ng==",
+      "path": "sharpvectors.wpf/1.8.4.2",
+      "hashPath": "sharpvectors.wpf.1.8.4.2.nupkg.sha512"
     },
     "System.ClientModel/1.0.0": {
       "type": "package",

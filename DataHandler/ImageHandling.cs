@@ -15,22 +15,25 @@ namespace SpejderApplikation.DataHandler
 {
     class ImageHandling
     {
-        public async Task<string> GetOgImageUrl(string pageUrl)
+        public async Task<string> DownloadAndSaveImage(string pageUrl)
         {
             using HttpClient client = new HttpClient();
             string html = await client.GetStringAsync(pageUrl);
 
-            // Regex to find the og:image meta tag
+            // en regular expression til at finde URL'en til billedet, vi bruger regex for at vi kan finde matchende tekst i en streng
             var match = Regex.Match(html, "<meta property=\"og:image\" content=\"(.*?)\"");
-            return match.Success ? match.Groups[1].Value : null;
-        }
 
-        public async Task<string> DownloadSvgAsync(string imageUrl)
-        {
-            using HttpClient client = new HttpClient();
+            if (!match.Success)
+            {
+                return null;
+            }
+
+            string imageUrl = match.Groups[1].Value;
+
+            // Download SVG image
             byte[] svgBytes = await client.GetByteArrayAsync(imageUrl);
 
-            // Create a file in the same folder as the application
+            // laver en fil sammen med filnavnet
             string fileName = Path.GetFileName(new Uri(imageUrl).LocalPath);
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
 
@@ -42,54 +45,25 @@ namespace SpejderApplikation.DataHandler
         {
             try
             {
-                // Create settings for SVG rendering
+                // settings for wpf
                 WpfDrawingSettings settings = new WpfDrawingSettings
                 {
                     IncludeRuntime = true,
                     TextAsGeometry = true
                 };
 
-                // Read the SVG file and convert it to a Drawing
+                // læser svg fil og konvertere til tegning
                 FileSvgReader reader = new FileSvgReader(settings);
                 DrawingGroup drawing = reader.Read(filePath);
 
-                // Convert to DrawingImage
+                
                 return new DrawingImage(drawing);
             }
-            catch (Exception ex)
+            catch (Exception ex) 
             {
                 throw new InvalidOperationException($"Error displaying SVG: {ex.Message}");
             }
         }
-        private async void DownloadButton_Click(object sender, RoutedEventArgs e)
-        {
-            string url = UrlTextBox.Text;
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                MessageBox.Show("manglende hjemmeside");
-                return;
-            }
-
-            try
-            {
-                // Extract the image URL from the website
-                string imageUrl = await vm.GetOgImageUrl(url);
-                if (string.IsNullOrEmpty(imageUrl))
-                {
-                    MessageBox.Show("kunne ikke finde billedet");
-                    return;
-                }
-
-                // Download the SVG image
-                string filePath = await vm.DownloadSvgAsync(imageUrl);
-
-                // Display the SVG image
-                //DownloadedImage.Source = vm.LoadSvg(filePath);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}");
-            }
-        }
+        
     }
 }
