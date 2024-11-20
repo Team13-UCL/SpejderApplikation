@@ -27,7 +27,7 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _date = value;
-                OnPropertyChanged();
+                OnPropertyChanged(); // Afgørende for at UI opdateres når værdier ændres
             } 
         }
         private TimeOnly _start;
@@ -81,7 +81,6 @@ namespace SpejderApplikation.ViewModel
             }
         }
         private string _activity;
-
         public string Activity
         {
             get { return _activity; }
@@ -171,7 +170,7 @@ namespace SpejderApplikation.ViewModel
             Meetings = new ObservableCollection<Meeting>(MeetingRepo.GetAll());
             this.BadgeRepo = BadgeRepo ?? throw new ArgumentNullException(nameof(BadgeRepo));
             this.ActivityRepo = ActivityRepo ?? throw new ArgumentNullException(nameof(ActivityRepo));
-        }
+        }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
         {
             SelectedScoutMeeting = new ScoutsMeeting();

@@ -12,6 +12,8 @@ namespace SpejderApplikation.Model
         public DateOnly Date { get; set; }
         public TimeOnly Start { get; set; }
         public TimeOnly Stop { get; set; }
+        // DateOnly og TimeOnly bruges fordi vi gerne vil specifikere tidspunkt og dato, og en dato kan også have flere møder
+
         public Meeting(int id, DateOnly date, TimeOnly start, TimeOnly stop)
         {
             _meetingID = id;

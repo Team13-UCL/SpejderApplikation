@@ -7,12 +7,12 @@ using System.Windows.Input;
 
 namespace SpejderApplikation.MVVM
 {
-    public class RelayCommand : ICommand
+    public class RelayCommand : ICommand // Brugerhåndterning
     {
         private Action<object> execute;
         private Func<object, bool> canExecute;
 
-        public event EventHandler CanExecuteChanged
+        public event EventHandler CanExecuteChanged // Hvordan forklare man det?
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }

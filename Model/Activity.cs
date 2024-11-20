@@ -12,6 +12,8 @@ namespace SpejderApplikation.Model
         public string ActivityDescription { get; set; }
         public string Preparation { get; set; }
         public string Notes { get; set; }
+
+        // Activity Konstruktor der initialiser alle egenskaber fra properties over os.
         public Activity(int ID, string description, string preparation, string notes)
         {
             _activityID = ID;
@@ -19,6 +21,7 @@ namespace SpejderApplikation.Model
             Preparation = preparation;
             Notes = notes;
         }
+        // ???
         public Activity()
         {
             
