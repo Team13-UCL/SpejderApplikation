@@ -1,12 +1,15 @@
-﻿using SpejderApplikation.Model;
+﻿using SpejderApplikation.DataHandler;
+using SpejderApplikation.Model;
 using SpejderApplikation.MVVM;
 using SpejderApplikation.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SpejderApplikation.ViewModel
 {
@@ -17,6 +20,7 @@ namespace SpejderApplikation.ViewModel
         IRepository<Badge> BadgeRepo;
         IRepository<Activity> ActivityRepo;
         IRepository<Unit> UnitRepo;
+        private readonly ImageHandling _imageHandling;
 
         public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
         public ObservableCollection<Meeting> Meetings { get; set; }
@@ -186,8 +190,51 @@ namespace SpejderApplikation.ViewModel
         {
 
         }
-        public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedScoutMeeting != null); // tildeles til Delete knappen
-        public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(), canExecute => SelectedScoutMeeting != null); // Tildeles til Edit knappen
+
+
+        private string _url;
+        public string Url
+        {
+            get { return _url; }
+            set
+            {
+                _url = value;
+                OnPropertyChanged();                
+            }
+        }
+
+
+        private async Task DownloadImage()
+        {
+            if (string.IsNullOrWhiteSpace(Url)) 
+            {
+                MessageBox.Show("manglende hjemmeside");
+                return;
+            }
+
+            try
+            {
+                // Download the SVG image
+                string filePath = await _imageHandling.DownloadAndSaveImage(Url);
+
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    MessageBox.Show("kunne ikke finde billedet");
+                    return;
+                }
+
+                // Display the SVG image
+                //DownloadedImage.Source = _imageHandling.LoadSvg(filePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+        }
+        public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => !string.IsNullOrWhiteSpace(Url));
+
+        public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen
+        public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(), canExecute => SelectedMeeting != null); // Tildeles til Edit knappen
         public RelayCommand NewCommand => new RelayCommand(execute => NewMeeting()); // tildeles til "Nyt Møde" knappen.
     }
 }

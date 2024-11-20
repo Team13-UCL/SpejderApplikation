@@ -38,96 +38,48 @@
                 <Image x:Name="BæverSpejder" Source="pack://application:,,,/Images/BæverSpejder.png"
                    Stretch="Uniform" />
             </Button>
-            <Button Width="65"
-                Height="65"
-                Margin="5"
-                Background="Transparent"
-                BorderBrush="Transparent">
+            <Button Width="65" Height="65" Margin="5" Background="Transparent" BorderBrush="Transparent">
                 <!--="OnWolfScoutClick"-->
                 <Image x:Name="UlveSpejder" Source="pack://application:,,,/Images/UlveSpejder.png"
                    Stretch="Uniform" />
             </Button>
-            <Button Width="65"
-                Height="65"
-                Margin="5"
-                Background="Transparent"
-                BorderBrush="Transparent">
+            <Button Width="65" Height="65" Margin="5" Background="Transparent" BorderBrush="Transparent">
                 <!--Click="OnJuniorScoutClick">-->
                 <Image x:Name="JuniorSpejder" Source="pack://application:,,,/Images/JuniorSpejder.png"
                    Stretch="Uniform" />
             </Button>
-            <Button Width="65"
-                Height="65"
-                Margin="5"
-                Background="Transparent"
-                BorderBrush="Transparent">
+            <Button Width="65" Height="65" Margin="5" Background="Transparent" BorderBrush="Transparent">
                 <!--Click="OnTroopScoutClick">-->
-                <Image x:Name="TropSpejder" Source="pack://application:,,,/Images/TropSpejder.png"
-                   Stretch="Uniform" />
+                <Image x:Name="TropSpejder" Source="pack://application:,,,/Images/TropSpejder.png" Stretch="Uniform" />
             </Button>
-            <Button Width="65"
-                Height="65"
-                Margin="5"
-                Background="Transparent"
-                BorderBrush="Transparent">
+            <Button Width="65" Height="65" Margin="5" Background="Transparent" BorderBrush="Transparent">
                 <!--Click="OnSeniorScoutClick">-->
                 <Image x:Name="SeniorSpejder" Source="pack://application:,,,/Images/SeniorSpejder.png"
                    Stretch="Uniform" />
             </Button>
-            <Button Width="65"
-                Height="65"
-                Margin="5"
-                Background="Transparent"
-                BorderBrush="Transparent">
+            <Button Width="65" Height="65" Margin="5" Background="Transparent" BorderBrush="Transparent">
                 <!--Click="OnRoverScoutClick">-->
-                <Image x:Name="RoverSpejder" Source="pack://application:,,,/Images/RoverSpejder.png"
-                   Stretch="Uniform" />
+                <Image x:Name="RoverSpejder" Source="pack://application:,,,/Images/RoverSpejder.png" Stretch="Uniform" />
             </Button>
         </StackPanel>
 
         <!-- Second Row: Logo, Checkbox, Buttons, and Search -->
-        <StackPanel Orientation="Horizontal"
-                Grid.Row="1"
-                Margin="0,10">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,10">
             <!-- Placeholder for Logo -->
 
             <!-- Checkbox -->
-            <CheckBox Content="Vis gamle møder"
-                  VerticalAlignment="Center"
-                  Margin="10,0" />
+            <CheckBox Content="Vis gamle møder" VerticalAlignment="Center" Margin="10,0" />
 
             <!-- Task Buttons -->
-            <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    Margin="20,0">
-                <Button Content="Opret opgave"
-                    Width="90"
-                    Background="LightGreen"
-                    Margin="5,0"
-                    Height="25" />
-                <Button Content="Rediger opgave"
-                    Width="90"
-                    Background="Gold"
-                    Margin="5,0"
-                    Height="25" />
-                <Button Content="Slet Opgave"
-                    Width="90"
-                    Background="LightCoral"
-                    Margin="5,0"
-                    Height="25" />
-                <Button Content="Gem I database"
-                    Width="90"
-                    Background="LightBlue"
-                    Margin="5,0"
-                    Height="25" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,0">
+                <Button Content="Opret opgave" Width="90" Background="LightGreen" Margin="5,0" Height="25" />
+                <Button Content="Rediger opgave" Width="90" Background="Gold" Margin="5,0" Height="25" />
+                <Button Content="Slet Opgave" Width="90" Background="LightCoral" Margin="5,0" Height="25" />
+                <Button Content="Gem I database" Width="90" Background="LightBlue" Margin="5,0" Height="25" />
             </StackPanel>
 
             <!-- Search Button -->
-            <Button Content="Søg"
-                Width="60"
-                Background="LightPink"
-                Margin="10,0"
-                Height="25" />
+            <Button Content="Søg" Width="60" Background="LightPink" Margin="10,0" Height="25" />
         </StackPanel>
 
         <!-- DataGrid Section -->
@@ -136,42 +88,24 @@
                 <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0"
-      x:Name="ScoutDataGrid"
-      AutoGenerateColumns="False"
-      HeadersVisibility="Column"
-      CanUserAddRows="False"
-      RowHeight="40"
-      Margin="0,10,0,0"
-      ItemsSource="{Binding ScoutMeetings}"
-      SelectedItem="{Binding SelectedScoutMeeting}">
+            <DataGrid Grid.Column="0" x:Name="ScoutDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" RowHeight="40" Margin="0,10,0,0" ItemsSource="{Binding ScoutMeetings}" SelectedItem="{Binding SelectedScoutMeeting}">
 
                 <DataGrid.Columns>
                     <!-- Define columns as per your wireframe -->
-                    <DataGridTextColumn Header="Dato"
-                        Binding="{Binding Date}"
-                        Width="1*" />
-                    <DataGridTextColumn Header="Tid"
-                        Binding="{Binding Time}"
-                        Width="1*" />
-                    <DataGridTemplateColumn Header="Mærke"
-                            Width="1*">
+                    <DataGridTextColumn Header="Dato" Binding="{Binding Date}" Width="1*" />
+                    <DataGridTextColumn Header="Tid" Binding="{Binding Time}" Width="1*" />
+                    <DataGridTemplateColumn Header="Mærke" Width="1*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Rectangle Width="40"
-                           Height="40"
-                           Fill="LightGray" />
+                                <Rectangle Width="40" Height="40" Fill="LightGray" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Aktivitet"
-                        Binding="{Binding Activity}"
-                        Width="1*" />
-                    <DataGridTextColumn Header="Husk"
-                        Binding="{Binding Notes}"
-                        Width="1*" />
+                    <DataGridTextColumn Header="Aktivitet" Binding="{Binding Activity}" Width="1*" />
+                    <DataGridTextColumn Header="Husk" Binding="{Binding Notes}" Width="1*" />
                 </DataGrid.Columns>
             </DataGrid>
+
             <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0.0">
                 <DatePicker Name="MeetingDP" Width="auto" Height="auto" Text="{Binding SelectedMeeting.Date}"/>
                 <TextBox Name="StartTP" Width="auto" Height="auto" Text="{Binding Start, FallbackValue=00:00:00, TargetNullValue=00:00:00}"/>
@@ -194,9 +128,8 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <TextBox Name="Linktb" Text="{Binding Link, FallbackValue=Link, TargetNullValue=Link}"/>
-                    <Button Name="Picturebtn" Width="auto" Height="auto" Content="{Binding BadgeLink, FallbackValue=Picture, TargetNullValue=Picture}" Grid.Column="1"/>
+                    <Button Name="Picturebtn" Width="auto" Height="auto" Content="Billede" Grid.Column="1" Command="{Binding DownloadCommand}"/>
                 </Grid>
-
                 <Grid Height="auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -224,13 +157,8 @@
             </StackPanel>
         </Grid>
 
-        <ComboBox HorizontalAlignment="Left"
-              Margin="698,14,0,0"
-              VerticalAlignment="Top"
-              Width="72" />
-        <Image Margin="-16,-6,677,47"
-           Source="/Images/KFUMSpejderne.png"
-           Stretch="Fill" />
+        <ComboBox HorizontalAlignment="Left" Margin="698,14,0,0" VerticalAlignment="Top" Width="72" />
+        <Image Margin="-16,-6,677,47" Source="/Images/KFUMSpejderne.png" Stretch="Fill" />
 
     </Grid>
 </Window>
