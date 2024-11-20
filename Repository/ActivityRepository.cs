@@ -87,19 +87,23 @@ namespace SpejderApplikation.Repository
         public Activity GetByID(int id)
         {
             Activity entity = new Activity();
-            string query = "";// indtast SQL query her.
+            string query = "SELECT * FROM Activity WHERE ActivityID = @ActivityId";// indtast SQL query her.
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, id);
+                command.Parameters.AddWithValue("@Activityid", id);
                 connection.Open();
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        entity = new Activity();
+                        int ActivityID = reader.IsDBNull(reader.GetOrdinal("ActivityID")) ? 0 : reader.GetInt32(reader.GetOrdinal("ActivityID"));
+                        string Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? string.Empty : reader.GetString(reader.GetOrdinal("Notes"));
+                        string Activity = reader.IsDBNull(reader.GetOrdinal("ActivityDescription")) ? string.Empty : reader.GetString(reader.GetOrdinal("ActivityDescription"));
+                        string Preparation = reader.IsDBNull(reader.GetOrdinal("Preparation")) ? string.Empty : reader.GetString(reader.GetOrdinal("Preparation"));
+                        entity = new Activity(ActivityID, Activity, Preparation, Notes);
                     }
                 }
             }

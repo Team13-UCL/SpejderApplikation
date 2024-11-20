@@ -144,7 +144,7 @@
       RowHeight="40"
       Margin="0,10,0,0"
       ItemsSource="{Binding ScoutMeetings}"
-      SelectedItem="{Binding SelectedMeeting}">
+      SelectedItem="{Binding SelectedScoutMeeting}">
 
                 <DataGrid.Columns>
                     <!-- Define columns as per your wireframe -->
@@ -186,9 +186,17 @@
                     <Button Name="UpdateDatebtn" Width="auto" Height="auto" Content="Rediger møde" Grid.Column="1"/>
                     <Button Name="SaveDatebtn" Width="auto" Height="auto" Content="Gem opdatering" Grid.Column="2"/>
                 </Grid>
-                <TextBox Name="BadgeNametb" Width="auto" Height="auto" Text="{Binding BadgeName, TargetNullValue=Mærke}"/>
-                <TextBox Name="Descriptiontb" Width="auto" Height="auto" Text="{Binding BadgeDescription, TargetNullValue=Beskrivelse}"/>
-                <Button Name="Linkbtn" Width="auto" Height="auto" Content="{Binding BadgeLink, FallbackValue=Link, TargetNullValue=Link}"/>
+                <TextBox Name="BadgeNametb" Width="auto" Height="auto" Text="{Binding BadgeName, TargetNullValue=Mærke, FallbackValue=Mærke}"/>
+                <TextBox Name="Descriptiontb" Width="auto" Height="auto" Text="{Binding BadgeDescription, TargetNullValue=Beskrivelse, FallbackValue=Beskrivelse}"/>
+                <Grid Height="auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Name="Linktb" Text="{Binding Link, FallbackValue=Link, TargetNullValue=Link}"/>
+                    <Button Name="Picturebtn" Width="auto" Height="auto" Content="{Binding BadgeLink, FallbackValue=Picture, TargetNullValue=Picture}" Grid.Column="1"/>
+                </Grid>
+
                 <Grid Height="auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -199,9 +207,9 @@
                     <Button Name="UpdateBadgebtn" Width="auto" Content="Rediger mærke" Grid.Column="1"/>
                     <Button Name="SaveBadgebtn" Width="auto" Content="Gem opdatering" Grid.Column="2"/>
                 </Grid>
-                <TextBox Name="Activitytb" Width="auto" Height="auto" Text="aktivitet"/>
-                <TextBox Name="Preparationtb" Width="auto" Height="40" Text="Forberedelse"/>
-                <TextBox Name="Notestb" Width="auto" Height="auto" Text="Noter"/>
+                <TextBox x:Name="Activitytb" Width="auto" Height="auto" Text="{Binding Activity, FallbackValue=Aktivitet, TargetNullValue=Aktivitet}"/>
+                <TextBox Name="Preparationtb" Width="auto" Height="40" Text="{Binding Preparation, FallbackValue=Forberedelse, TargetNullValue=Forberedelse}"/>
+                <TextBox Name="Notestb" Width="auto" Height="auto" Text="{Binding Notes, FallbackValue=Noter, TargetNullValue=Noter}"/>
                 <Grid Height="auto">
                     <Grid.ColumnDefinitions >
                         <ColumnDefinition Width="1*"/>
@@ -215,7 +223,7 @@
                 <Label Content="Drop-down til valg af enhed" Width="auto" Height="auto"/>
             </StackPanel>
         </Grid>
-        
+
         <ComboBox HorizontalAlignment="Left"
               Margin="698,14,0,0"
               VerticalAlignment="Top"
@@ -223,6 +231,6 @@
         <Image Margin="-16,-6,677,47"
            Source="/Images/KFUMSpejderne.png"
            Stretch="Fill" />
-        
+
     </Grid>
 </Window>

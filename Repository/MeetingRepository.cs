@@ -90,19 +90,23 @@ namespace SpejderApplikation.Repository
         public Meeting GetByID(int id)
         {
             Meeting entity = new Meeting();
-            string query = "";// indtast SQL query her.
+            string query = "SELECT * FROM Meeting WHERE MeetingID = @MeetingID";// indtast SQL query her.
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, id);
+                command.Parameters.AddWithValue("@MeetingID", id);
                 connection.Open();
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        entity = new Meeting();
+                        //int MeetingID = reader.IsDBNull(reader.GetOrdinal("ActivityID")) ? 0 : reader.GetInt32(reader.GetOrdinal("ActivityID"));
+                        //DateTime Date = reader.IsDBNull(reader.GetOrdinal("Date")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("Date"));
+                        //TimeOnly Activity = reader.IsDBNull(reader.GetOrdinal("ActivityDescription")) ? DateTime.MinValue : reader.GetString(reader.GetOrdinal("ActivityDescription"));
+                        //TimeOnly Preparation = reader.IsDBNull(reader.GetOrdinal("Preparation")) ? string.Empty : reader.GetString(reader.GetOrdinal("Preparation"));
+                        //entity = new Meeting(MeetingID, Date, Start, Stop);
                     }
                 }
             }

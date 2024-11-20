@@ -80,43 +80,102 @@ namespace SpejderApplikation.ViewModel
                 OnPropertyChanged();
             }
         }
+        private string _activity;
 
-
-        private ScoutsMeeting _selectedMeeting;
-        public ScoutsMeeting SelectedMeeting 
+        public string Activity
         {
-            get {  return _selectedMeeting; }
+            get { return _activity; }
+            set { _activity = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _preparation;
+
+        public string Preparation
+        {
+            get { return _preparation; }
+            set { _preparation = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _notes;
+
+        public string Notes
+        {
+            get { return _notes; }
+            set { _notes = value;
+                OnPropertyChanged();
+            }
+        }
+        private Meeting _selectedMeeting;
+
+        public Meeting SelectedMeeting
+        {
+            get { return _selectedMeeting; }
             set 
             { 
                 _selectedMeeting = value;
-                OnPropertyChanged();
-                UpdatePanel(_selectedMeeting.meetingID, _selectedMeeting.badgeID, _selectedMeeting.unitID, _selectedMeeting.activityID);
+                Date = _selectedMeeting.Date;
+                Start = _selectedMeeting.Start;
+                Stop = _selectedMeeting.Stop;
             }
         }
-        private void UpdatePanel(int meeting, int badge, int unit, int activity)
+        private Activity _selectedActivity;
+
+        public Activity SelectedActivity
         {
-            Date = SelectedMeeting.Date;
-            Start = SelectedMeeting.Start;
-            Stop = SelectedMeeting.Stop;
-            Badge SelectedBadge = BadgeRepo.GetByID(badge);
-            BadgeName = SelectedBadge.Name;
-            BadgeDescription = SelectedBadge.Description;
-            BadgeLink = SelectedBadge.Link;
+            get { return _selectedActivity; }
+            set 
+            { 
+                _selectedActivity = value;
+                Activity = _selectedActivity.ActivityDescription;
+                Preparation = _selectedActivity.Preparation;
+                Notes = _selectedActivity.Notes;
+            }
+        }
+        private Badge _selectedBadge;
+
+        public Badge SelectedBadge
+        {
+            get { return _selectedBadge; }
+            set 
+            { 
+                _selectedBadge = value;
+                BadgeName = _selectedBadge.Name;
+                BadgeDescription = _selectedBadge.Description;
+                BadgeLink = _selectedBadge.Link;
+            }
         }
 
-        public ScoutsProgramViewModel(IRepository<ScoutsMeeting> repository, IRepository<Meeting> meetingRepo, IRepository<Badge> BadgeRepo)
+
+        private ScoutsMeeting _selectedScoutMeeting;
+        public ScoutsMeeting SelectedScoutMeeting 
+        {
+            get {  return _selectedScoutMeeting; }
+            set 
+            { 
+                _selectedScoutMeeting = value;
+                OnPropertyChanged();
+                SelectedMeeting = MeetingRepo.GetByID(SelectedScoutMeeting.meetingID);
+                SelectedActivity = ActivityRepo.GetByID(SelectedScoutMeeting.activityID);
+                SelectedBadge = BadgeRepo.GetByID(SelectedScoutMeeting.badgeID);
+
+            }
+        }
+
+        public ScoutsProgramViewModel(IRepository<ScoutsMeeting> repository, IRepository<Meeting> meetingRepo, IRepository<Badge> BadgeRepo, IRepository<Activity> ActivityRepo)
         {
             this.ScoutMeetingRepo = repository ?? throw new ArgumentNullException(nameof(repository));
             ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll());
             this.MeetingRepo = meetingRepo ?? throw new ArgumentNullException(nameof(meetingRepo));
             Meetings = new ObservableCollection<Meeting>(MeetingRepo.GetAll());
             this.BadgeRepo = BadgeRepo ?? throw new ArgumentNullException(nameof(BadgeRepo));
-
+            this.ActivityRepo = ActivityRepo ?? throw new ArgumentNullException(nameof(ActivityRepo));
         }
         public void NewMeeting()
         {
-            SelectedMeeting = new ScoutsMeeting();
-            ScoutMeetings.Add(SelectedMeeting);
+            SelectedScoutMeeting = new ScoutsMeeting();
+            ScoutMeetings.Add(SelectedScoutMeeting);
         }
         public void EditMeeting()
         {
@@ -128,8 +187,8 @@ namespace SpejderApplikation.ViewModel
         {
 
         }
-        public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen
-        public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(), canExecute => SelectedMeeting != null); // Tildeles til Edit knappen
+        public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedScoutMeeting != null); // tildeles til Delete knappen
+        public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(), canExecute => SelectedScoutMeeting != null); // Tildeles til Edit knappen
         public RelayCommand NewCommand => new RelayCommand(execute => NewMeeting()); // tildeles til "Nyt Møde" knappen.
     }
 }

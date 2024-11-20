@@ -28,7 +28,7 @@ namespace SpejderApplikation.View
             var BRepo = new Repository.BadgeRepository();
             var ARepo = new Repository.ActivityRepository();
             var URepo = new Repository.UnitRepository();
-            vm = new ScoutsProgramViewModel(SMRepo, MRepo, BRepo);
+            vm = new ScoutsProgramViewModel(SMRepo, MRepo, BRepo, ARepo);
             InitializeComponent();
             DataContext = vm;
         }
