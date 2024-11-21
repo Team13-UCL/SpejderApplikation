@@ -29,7 +29,7 @@ namespace SpejderApplikation.DataHandler
                 return null;
             }
 
-            string imageUrl = match.Groups[1].Value;
+            string imageUrl = match.Groups[1].Value; 
 
             // Download SVG image
             byte[] svgBytes = await client.GetByteArrayAsync(imageUrl);
@@ -38,33 +38,37 @@ namespace SpejderApplikation.DataHandler
             //string fileName = Path.GetFileName(new Uri(imageUrl).LocalPath);
             //string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
 
+<<<<<<< HEAD
             //await File.WriteAllBytesAsync(filePath, svgBytes);
+=======
+>>>>>>> e225ed1f29933edef5730349abec43496a2c32a0
             return svgBytes;
         }
+           
 
-        public DrawingImage LoadSvg(string filePath)
-        {
-            try
-            {
-                // settings for wpf
-                WpfDrawingSettings settings = new WpfDrawingSettings
-                {
-                    IncludeRuntime = true,
-                    TextAsGeometry = true
-                };
+        //public DrawingImage LoadSvg(string filePath)
+        //{
+        //    try
+        //    {
+        //        // settings for wpf
+        //        WpfDrawingSettings settings = new WpfDrawingSettings
+        //        {
+        //            IncludeRuntime = true,
+        //            TextAsGeometry = true
+        //        };
 
-                // læser svg fil og konvertere til tegning
-                FileSvgReader reader = new FileSvgReader(settings);
-                DrawingGroup drawing = reader.Read(filePath);
+        //        // læser svg fil og konvertere til tegning
+        //        FileSvgReader reader = new FileSvgReader(settings);
+        //        DrawingGroup drawing = reader.Read(filePath);
 
                 
-                return new DrawingImage(drawing);
-            }
-            catch (Exception ex) 
-            {
-                throw new InvalidOperationException($"Error displaying SVG: {ex.Message}");
-            }
-        }
+        //        return new DrawingImage(drawing);
+        //    }
+        //    catch (Exception ex) 
+        //    {
+        //        throw new InvalidOperationException($"Error displaying SVG: {ex.Message}");
+        //    }
+        //}
         
     }
 }
