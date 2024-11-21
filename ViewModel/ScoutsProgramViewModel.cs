@@ -23,7 +23,7 @@ namespace SpejderApplikation.ViewModel
         private readonly ImageHandling _imageHandling;
 
         public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
-        public ObservableCollection<Meeting> Meetings { get; set; }
+        public ObservableCollection<Unit> Units { get; set; }
         private DateOnly _date;
         public DateOnly Date 
         {
@@ -110,6 +110,52 @@ namespace SpejderApplikation.ViewModel
                 OnPropertyChanged();
             }
         }
+        private string _unitName;
+
+        public string UnitName
+        {
+            get { return _unitName; }
+            set 
+            { 
+                _unitName = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _unitDescription;
+
+        public string UnitDescription
+        {
+            get { return _unitDescription; }
+            set { _unitDescription = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _unitLink;
+
+        public string UnitLink
+        {
+            get { return _unitLink; }
+            set { _unitLink = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Unit _selectedUnit;
+
+        public Unit SelectedUnit
+        {
+            get { return _selectedUnit; }
+            set 
+            { 
+                _selectedUnit = value;
+                OnPropertyChanged();
+                UnitName = _selectedUnit.UnitName;
+                UnitLink = _selectedUnit.Link;
+                UnitDescription = _selectedUnit.Description;
+            }
+        }
+
         private Meeting _selectedMeeting;
 
         public Meeting SelectedMeeting
@@ -124,7 +170,6 @@ namespace SpejderApplikation.ViewModel
             }
         }
         private Activity _selectedActivity;
-
         public Activity SelectedActivity
         {
             get { return _selectedActivity; }
@@ -162,18 +207,20 @@ namespace SpejderApplikation.ViewModel
                 SelectedMeeting = MeetingRepo.GetByID(SelectedScoutMeeting.meetingID);
                 SelectedActivity = ActivityRepo.GetByID(SelectedScoutMeeting.activityID);
                 SelectedBadge = BadgeRepo.GetByID(SelectedScoutMeeting.badgeID);
+                SelectedUnit = UnitRepo.GetByID(_selectedScoutMeeting.unitID);
 
             }
         }
 
-        public ScoutsProgramViewModel(IRepository<ScoutsMeeting> repository, IRepository<Meeting> meetingRepo, IRepository<Badge> BadgeRepo, IRepository<Activity> ActivityRepo)
+        public ScoutsProgramViewModel(IRepository<ScoutsMeeting> repository, IRepository<Meeting> meetingRepo, IRepository<Badge> BadgeRepo, IRepository<Activity> ActivityRepo, IRepository<Unit> UnitRepo)
         {
             this.ScoutMeetingRepo = repository ?? throw new ArgumentNullException(nameof(repository));
             ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll());
             this.MeetingRepo = meetingRepo ?? throw new ArgumentNullException(nameof(meetingRepo));
-            Meetings = new ObservableCollection<Meeting>(MeetingRepo.GetAll());
             this.BadgeRepo = BadgeRepo ?? throw new ArgumentNullException(nameof(BadgeRepo));
             this.ActivityRepo = ActivityRepo ?? throw new ArgumentNullException(nameof(ActivityRepo));
+            this.UnitRepo = UnitRepo ?? throw new ArgumentNullException(nameof(UnitRepo));
+            _imageHandling = new ImageHandling();
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
         {
@@ -206,7 +253,7 @@ namespace SpejderApplikation.ViewModel
 
         private async Task DownloadImage()
         {
-            if (string.IsNullOrWhiteSpace(Url)) 
+            if (string.IsNullOrWhiteSpace(BadgeLink)) 
             {
                 MessageBox.Show("manglende hjemmeside");
                 return;
@@ -215,14 +262,15 @@ namespace SpejderApplikation.ViewModel
             try
             {
                 // Download the SVG image
-                string filePath = await _imageHandling.DownloadAndSaveImage(Url);
+                byte[] Picture = await _imageHandling.DownloadAndSaveImage(BadgeLink);
 
-                if (string.IsNullOrEmpty(filePath))
-                {
-                    MessageBox.Show("kunne ikke finde billedet");
-                    return;
-                }
+                //if (string.IsNullOrEmpty(filePath))
+                //{
+                //    MessageBox.Show("kunne ikke finde billedet");
+                //    return;
+                //}
 
+                SelectedScoutMeeting.BadgeData = Picture;
                 // Display the SVG image
                 //DownloadedImage.Source = _imageHandling.LoadSvg(filePath);
             }
@@ -231,7 +279,7 @@ namespace SpejderApplikation.ViewModel
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
-        public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => !string.IsNullOrWhiteSpace(Url));
+        public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);
 
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen
         public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(), canExecute => SelectedMeeting != null); // Tildeles til Edit knappen

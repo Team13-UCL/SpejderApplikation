@@ -89,8 +89,8 @@ namespace SpejderApplikation.Repository
 
         public Meeting GetByID(int id)
         {
-            Meeting entity = new Meeting();
-            string query = "SELECT * FROM Meeting WHERE MeetingID = @MeetingID";// indtast SQL query her.
+            Meeting entity = null; // Start with null to handle cases where no record is found.
+            string query = "SELECT * FROM Meeting WHERE MeetingID = @MeetingID";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -102,18 +102,29 @@ namespace SpejderApplikation.Repository
                 {
                     if (reader.Read())
                     {
-                        //int MeetingID = reader.IsDBNull(reader.GetOrdinal("ActivityID")) ? 0 : reader.GetInt32(reader.GetOrdinal("ActivityID"));
-                        //DateTime Date = reader.IsDBNull(reader.GetOrdinal("Date")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("Date"));
-                        //TimeOnly Activity = reader.IsDBNull(reader.GetOrdinal("ActivityDescription")) ? DateTime.MinValue : reader.GetString(reader.GetOrdinal("ActivityDescription"));
-                        //TimeOnly Preparation = reader.IsDBNull(reader.GetOrdinal("Preparation")) ? string.Empty : reader.GetString(reader.GetOrdinal("Preparation"));
-                        //entity = new Meeting(MeetingID, Date, Start, Stop);
+                        int meetingID = reader.IsDBNull(reader.GetOrdinal("MeetingID"))
+                                        ? 0
+                                        : reader.GetInt32(reader.GetOrdinal("MeetingID"));
+
+                        DateTime date = reader.IsDBNull(reader.GetOrdinal("Date"))
+                                        ? DateTime.MinValue
+                                        : reader.GetDateTime(reader.GetOrdinal("Date"));
+
+                        TimeSpan start = reader.IsDBNull(reader.GetOrdinal("Start"))
+                                         ? TimeSpan.Zero
+                                         : reader.GetTimeSpan(reader.GetOrdinal("Start"));
+
+                        TimeSpan stop = reader.IsDBNull(reader.GetOrdinal("Stop"))
+                                        ? TimeSpan.Zero
+                                        : reader.GetTimeSpan(reader.GetOrdinal("Stop"));
+
+                        // Creating the Meeting object with the retrieved data.
+                        entity = new Meeting(meetingID, DateOnly.FromDateTime(date), TimeOnly.FromTimeSpan(start), TimeOnly.FromTimeSpan(stop));
                     }
                 }
             }
-            if (entity == null)
-                return default;
-            else
-                return entity;
+
+            return entity; // If entity is null, the caller should handle the null value appropriately.
         }
     }
 }

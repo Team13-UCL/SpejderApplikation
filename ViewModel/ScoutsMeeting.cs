@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace SpejderApplikation.ViewModel
 {
-    internal class ScoutsMeeting
+    public class ScoutsMeeting
     {
         public ObservableCollection<object> Mark {  get; set; }
         public int meetingID { get; set; }

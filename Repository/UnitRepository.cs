@@ -76,6 +76,7 @@ namespace SpejderApplikation.Repository
                             (int)reader[""],
                             (string)reader[""],
                             (string)reader[""],
+                            (string)reader[""],
                             (byte[])reader[""]));
                     }
                 }
@@ -87,19 +88,24 @@ namespace SpejderApplikation.Repository
         public Unit GetByID(int id)
         {
             Unit entity = new Unit();
-            string query = "";// indtast SQL query her.
+            string query = "SELECT * FROM Unit WHERE UnitID = @UnitID";// indtast SQL query her.
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, id);
+                command.Parameters.AddWithValue("@UnitID", id);
                 connection.Open();
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
-                    {
-                        entity = new Unit();
+                    { // Anvender Ternary operatorer til at teste, om variablerne er null, og ellers returnerer værdi.
+                        int unitID = reader.IsDBNull(reader.GetOrdinal("UnitID")) ? 0 : (int)reader["UnitID"];
+                        string unitName = reader.IsDBNull(reader.GetOrdinal("UnitName")) ? string.Empty : (string)reader["UnitName"];
+                        string description = reader.IsDBNull(reader.GetOrdinal("Description")) ? string.Empty : (string)reader["Description"];
+                        string unitLink = reader.IsDBNull(reader.GetOrdinal("Link")) ? string.Empty : (string)reader["Link"];
+                        byte[] unitPicture = reader.IsDBNull(reader.GetOrdinal("Picture")) ? new byte[0] : (byte[])reader["Picture"];
+                        entity = new Unit(unitID, unitName, description, unitLink, unitPicture);
                     }
                 }
             }

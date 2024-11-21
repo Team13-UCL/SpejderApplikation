@@ -13,17 +13,19 @@ namespace SpejderApplikation.Model
     public class Unit
     {
         private int _unitID { get; set; }
+        public string Description { get; set; }
         public string UnitName { get; set; }
         public string Link { get; set; }
         public byte[] Picture { get; set; }
-        public Unit(int unitID, string unitName, string link, byte[] picture)
+        public Unit(int unitID, string unitName, string description, string link, byte[] picture)
         {
             _unitID = unitID;
             UnitName = unitName;
+            Description = description;
             Link = link;
             Picture = picture;
         }
-        public Unit() : this(0, "Enhed", null, null) { }
+        public Unit() : this(0, "Enhed", "", null, null) { }
 
         // Hjælpefunktion til at hente standardbilledet KFUM.PNG, hvilket er KFUMS logo
         private static byte[] GetDefaultPicture()

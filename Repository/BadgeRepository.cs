@@ -69,16 +69,6 @@ namespace SpejderApplikation.Repository
                                                 (string)reader["Description"],
                                                 picture,
                                                 (string)reader["Link"]));
-                        //{
-                        //    meetingID = (int)reader["MeetingID"],
-                        //    Date = (DateOnly)reader["Date"],
-                        //    activityID = (int)reader["ActivityID"],
-                        //    Activity = (string)reader["Activity"],
-                        //    badgeID = (int)reader["BadgeID"],
-                        //    Badge = (Byte[])reader["Picture"],
-                        //    BadgeName = (string)reader["BadgeName"],
-
-                        //});
                     }
                 }
             }

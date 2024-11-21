@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpejderApplikation.View"
         mc:Ignorable="d"
-        Title="ScoutsProgramView" Height="450" Width="800">
+        Title="ScoutsProgramView" Height="500" Width="800">
     <Grid Margin="10">
         <!-- Define two rows: one for the badges and one for buttons, checkbox, and search -->
         <Grid.RowDefinitions>
@@ -72,7 +72,7 @@
 
             <!-- Task Buttons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,0">
-                <Button Content="Opret opgave" Width="90" Background="LightGreen" Margin="5,0" Height="25" />
+                <Button Content="Opret opgave" Width="90" Background="LightGreen" Margin="5,0" Height="25" Command="{Binding NewCommand}" />
                 <Button Content="Rediger opgave" Width="90" Background="Gold" Margin="5,0" Height="25" />
                 <Button Content="Slet Opgave" Width="90" Background="LightCoral" Margin="5,0" Height="25" />
                 <Button Content="Gem I database" Width="90" Background="LightBlue" Margin="5,0" Height="25" />
@@ -85,10 +85,10 @@
         <!-- DataGrid Section -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" x:Name="ScoutDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" RowHeight="40" Margin="0,10,0,0" ItemsSource="{Binding ScoutMeetings}" SelectedItem="{Binding SelectedScoutMeeting}">
+            <DataGrid Grid.Column="0" x:Name="ScoutDataGrid" AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" RowHeight="40" ItemsSource="{Binding ScoutMeetings}" SelectedItem="{Binding SelectedScoutMeeting}">
 
                 <DataGrid.Columns>
                     <!-- Define columns as per your wireframe -->
@@ -106,8 +106,8 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0.0">
-                <DatePicker Name="MeetingDP" Width="auto" Height="auto" Text="{Binding SelectedMeeting.Date}"/>
+            <StackPanel Grid.Column="2" Orientation="Vertical">
+                <DatePicker Name="MeetingDP" Width="auto" Height="auto" Text="{Binding Date}"/>
                 <TextBox Name="StartTP" Width="auto" Height="auto" Text="{Binding Start, FallbackValue=00:00:00, TargetNullValue=00:00:00}"/>
                 <TextBox Name="StopTP" Width="auto" Height="auto" Text="{Binding Stop, FallbackValue=00:00:00, TargetNullValue=00:00:00}"/>
                 <Grid>
@@ -127,7 +127,7 @@
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Name="Linktb" Text="{Binding Link, FallbackValue=Link, TargetNullValue=Link}"/>
+                    <TextBox Name="Linktb" Text="{Binding BadgeLink, FallbackValue=Link, TargetNullValue=Link}"/>
                     <Button Name="Picturebtn" Width="auto" Height="auto" Content="Billede" Grid.Column="1" Command="{Binding DownloadCommand}"/>
                 </Grid>
                 <Grid Height="auto">
@@ -153,7 +153,16 @@
                     <Button Name="UpdateActivitybtn" Width="auto" Content="Rediger møde" Grid.Column="1"/>
                     <Button Name="SaveActivitybtn" Width="auto" Content="Gem opdatering" Grid.Column="2"/>
                 </Grid>
-                <Label Content="Drop-down til valg af enhed" Width="auto" Height="auto"/>
+                <TextBox Name="Unittb" Text="{Binding UnitName, TargetNullValue=Enhed, FallbackValue=Enhed}" Width="auto" Height="auto"/>
+                <TextBox Name="UnitDescriptiontb" Text="{Binding UnitDescription, FallbackValue=Beskrivelse, TargetNullValue=Beskrivelse}"/>
+                <Grid Height="auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Name="UnitLinktb" Text="{Binding UnitLink, FallbackValue=Link, TargetNullValue=Link}" Grid.Column="0"/>
+                    <Button Name="UnitLinkbtn" Content="Billede" Grid.Column="1"/>
+                </Grid>
             </StackPanel>
         </Grid>
 
