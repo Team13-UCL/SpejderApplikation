@@ -12,11 +12,7 @@ using SpejderApplikation.MVVM;
 
 namespace SpejderApplikation.ViewModel
 {
-<<<<<<< HEAD
-    public class ScoutsMeeting
-=======
-    internal class ScoutsMeeting : ViewModelBase
->>>>>>> e225ed1f29933edef5730349abec43496a2c32a0
+    internal class ScoutsMeeting
     {
         public ObservableCollection<object> Mark {  get; set; }
         public int meetingID { get; set; }

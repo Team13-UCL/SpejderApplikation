@@ -37,11 +37,7 @@ namespace SpejderApplikation.DataHandler
             //// laver en fil sammen med filnavnet
             //string fileName = Path.GetFileName(new Uri(imageUrl).LocalPath);
             //string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-
-<<<<<<< HEAD
             //await File.WriteAllBytesAsync(filePath, svgBytes);
-=======
->>>>>>> e225ed1f29933edef5730349abec43496a2c32a0
             return svgBytes;
         }
            
