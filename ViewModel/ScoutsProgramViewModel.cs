@@ -161,12 +161,22 @@ namespace SpejderApplikation.ViewModel
         public Meeting SelectedMeeting
         {
             get { return _selectedMeeting; }
-            set 
-            { 
+            set
+            {
                 _selectedMeeting = value;
-                Date = _selectedMeeting.Date;
-                Start = _selectedMeeting.Start;
-                Stop = _selectedMeeting.Stop;
+                if (_selectedMeeting != null)
+                {
+                    Date = _selectedMeeting.Date;
+                    Start = _selectedMeeting.Start;
+                    Stop = _selectedMeeting.Stop;
+                }
+                else
+                {
+                    Date = default;
+                    Start = default;
+                    Stop = default;
+                }
+                OnPropertyChanged();
             }
         }
         private Activity _selectedActivity;
@@ -230,10 +240,13 @@ namespace SpejderApplikation.ViewModel
         }
         public void EditMeeting()
         {
-            //Meeting meeting = SelectedMeeting.UpdateMeeting();
-            //MeetingRepo.EditType(meeting);
-            //SelectedMeeting.UpdateActivity();
+            if (SelectedScoutMeeting != null)
+            {
+                // Opdater databasen med de ændrede data
+                ScoutMeetingRepo.EditType(SelectedScoutMeeting);
+            }
         }
+
         public void DeleteMeeting()
         {
 

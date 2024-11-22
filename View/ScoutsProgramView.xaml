@@ -93,7 +93,8 @@
                 <DataGrid.Columns>
                     <!-- Define columns as per your wireframe -->
                     <DataGridTextColumn Header="Dato" Binding="{Binding Date}" Width="1*" />
-                    <DataGridTextColumn Header="Tid" Binding="{Binding Time}" Width="1*" />
+                    <DataGridTextColumn Header="Tid"
+                                        Binding="{Binding Time, Mode=TwoWay}" Width="1*" />
                     <DataGridTemplateColumn Header="Mærke" Width="1*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
