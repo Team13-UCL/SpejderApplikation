@@ -220,10 +220,7 @@ namespace SpejderApplikation.ViewModel
             this.MeetingRepo = meetingRepo ?? throw new ArgumentNullException(nameof(meetingRepo));
             this.BadgeRepo = BadgeRepo ?? throw new ArgumentNullException(nameof(BadgeRepo));
             this.ActivityRepo = ActivityRepo ?? throw new ArgumentNullException(nameof(ActivityRepo));
-<<<<<<< HEAD
             this.UnitRepo = UnitRepo ?? throw new ArgumentNullException(nameof(UnitRepo));
-=======
->>>>>>> e225ed1f29933edef5730349abec43496a2c32a0
             _imageHandling = new ImageHandling();
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
@@ -257,11 +254,7 @@ namespace SpejderApplikation.ViewModel
 
         private async Task DownloadImage()
         {
-<<<<<<< HEAD
             if (string.IsNullOrWhiteSpace(BadgeLink)) 
-=======
-            if (string.IsNullOrWhiteSpace(Link)) 
->>>>>>> e225ed1f29933edef5730349abec43496a2c32a0
             {
                 MessageBox.Show("manglende hjemmeside");
                 return;
@@ -270,7 +263,6 @@ namespace SpejderApplikation.ViewModel
             try
             {
                 // Download the SVG image
-<<<<<<< HEAD
                 byte[] Picture = await _imageHandling.DownloadAndSaveImage(BadgeLink);
 
                 //if (string.IsNullOrEmpty(filePath))
@@ -280,7 +272,6 @@ namespace SpejderApplikation.ViewModel
                 //}
 
                 SelectedScoutMeeting.BadgeData = Picture;
-=======
                 byte[] imageBytes = await _imageHandling.DownloadAndSaveImage(Link);
 
 
@@ -292,9 +283,6 @@ namespace SpejderApplikation.ViewModel
 
                 SelectedBadge.Picture = imageBytes; // Save the image bytes to the Picture property
                 SelectedScoutMeeting.BadgeData = imageBytes;
-
-
->>>>>>> e225ed1f29933edef5730349abec43496a2c32a0
                 // Display the SVG image
                 //DownloadedImage.Source = _imageHandling.LoadSvg(filePath);
             }
@@ -303,11 +291,8 @@ namespace SpejderApplikation.ViewModel
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
-<<<<<<< HEAD
         public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);
-=======
-        public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => !string.IsNullOrWhiteSpace(Link));
->>>>>>> e225ed1f29933edef5730349abec43496a2c32a0
+        
 
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen
         public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(), canExecute => SelectedMeeting != null); // Tildeles til Edit knappen

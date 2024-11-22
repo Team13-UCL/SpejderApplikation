@@ -18,43 +18,76 @@ namespace SpejderApplikation.Repository
 
         public int AddType(Meeting entity)
         {
-            string query = ""; //indtast SQL query her.
-            int entityID = 0;
+            string query = @"
+                INSERT INTO Meeting (Date, Start, Stop)
+                VALUES (@Date, @Start, @Stop);
+                SELECT SCOPE_IDENTITY();";
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, <type.variable>);
-                //en command.Parameter pr variabel
-                connection.Open();
-                command.ExecuteNonQuery();
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@Date", entity.Date.ToDateTime(TimeOnly.MinValue));
+                    command.Parameters.AddWithValue("@Start", entity.Start.ToTimeSpan());
+                    command.Parameters.AddWithValue("@Stop", entity.Stop.ToTimeSpan());
+
+                    connection.Open();
+                    return Convert.ToInt32(command.ExecuteScalar());
+                }
             }
-            return entityID;
+            catch (Exception ex)
+            {
+                // Log exception (implement logging if needed)
+                throw new Exception("An error occurred while adding a meeting.", ex);
+            }
         }
 
         public void DeleteType(int id)
         {
-            string query = ""; //indtast SQL query her.
+            string query = "DELETE FROM Meeting WHERE MeetingID = @MeetingID";
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, id);
-                connection.Open();
-                command.ExecuteNonQuery();
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@MeetingID", id);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while deleting the meeting.", ex);
             }
         }
 
         public void EditType(Meeting entity)
         {
-            string query = ""; //indtast SQL query her.
+            string query = @"
+                UPDATE Meeting
+                SET Date = @Date, Start = @Start, Stop = @Stop
+                WHERE MeetingID = @MeetingID";
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            try
             {
-                SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, id);
-                connection.Open();
-                command.ExecuteNonQuery();
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@MeetingID", entity.ID);
+                    command.Parameters.AddWithValue("@Date", entity.Date.ToDateTime(TimeOnly.MinValue));
+                    command.Parameters.AddWithValue("@Start", entity.Start.ToTimeSpan());
+                    command.Parameters.AddWithValue("@Stop", entity.Stop.ToTimeSpan());
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Der skete en fejl ved oprettetlese af møde", ex);
             }
         }
 
