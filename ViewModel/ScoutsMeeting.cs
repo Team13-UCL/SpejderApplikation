@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SpejderApplikation.MVVM;
+using SpejderApplikation.DataHandler;
 
 namespace SpejderApplikation.ViewModel
 {
@@ -30,17 +31,8 @@ namespace SpejderApplikation.ViewModel
             {
                 if (BadgeData == null) return null;
 
-                using (var ms = new MemoryStream(BadgeData))
-                {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.StreamSource = ms;
-                    image.EndInit();
-                    return image;
-                }
+                return ImageHandling.LoadSvg(BadgeData);
             }
-            
         }
         public string BadgeName { get; set; }
         public string Activity { get; set; }
