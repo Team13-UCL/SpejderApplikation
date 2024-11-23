@@ -87,7 +87,7 @@ namespace SpejderApplikation.Repository
         public Activity GetByID(int id)
         {
             Activity entity = new Activity();
-            string query = "SELECT * FROM Activity WHERE ActivityID = @ActivityId";// indtast SQL query her.
+            string query = "spSelectActivity @ActivityId";// indtast SQL query her.
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

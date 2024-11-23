@@ -40,7 +40,7 @@ namespace SpejderApplikation.Repository
             var entities = new List<ScoutsMeeting>();
             string filePath = Directory.GetCurrentDirectory();
             string fileName = "\\KFUM.png"; // har et basis KFUM mærke i projektets mappe
-            string query = "SELECT Meeting.MeetingID, Meeting.Date, Meeting.Start, Meeting.Stop, Activity.ActivityID, Activity.ActivityDescription,	Activity.Preparation, Badge.BadgeID, Badge.Picture, Badge.BadgeName, Unit.UnitID, Unit.UnitName FROM MEETING INNER JOIN ActivityMeeting ON Meeting.MeetingID = ActivityMeeting.MeetingID Inner Join Activity ON ActivityMeeting.ActivityID = Activity.ActivityID INNER JOIN BadgeMeeting ON Meeting.MeetingID = BadgeMeeting.MeetingID INNER JOIN Badge ON BadgeMeeting.BadgeID = Badge.BadgeID INNER JOIN UnitMeeting ON Meeting.MeetingID = UnitMeeting.meetingID INNER JOIN Unit ON UnitMeeting.unitID = Unit.UnitID"; // indtast SQL query her.
+            string query = "spGetAllScoutmeetings"; // indtast SQL query her.
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -70,10 +70,8 @@ namespace SpejderApplikation.Repository
                             TimeOnly.FromTimeSpan(start),
                             TimeOnly.FromTimeSpan(stop),
                             picture,
-                            (string)reader["BadgeName"],
                             (string)reader["ActivityDescription"],
-                            (string)reader["Preparation"], // Activity.preparation
-                            null, // Activity.Notes
+                            (string)reader["Notes"],
                             (string)reader["UnitName"], // Unit
                             (int)reader["MeetingID"],
                             (int)reader["UnitID"], // UnitID

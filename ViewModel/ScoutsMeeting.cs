@@ -14,7 +14,6 @@ namespace SpejderApplikation.ViewModel
 {
     internal class ScoutsMeeting
     {
-        public ObservableCollection<object> Mark {  get; set; }
         public int meetingID { get; set; }
         public int activityID { get; set; }
         public int badgeID { get; set; }
@@ -42,34 +41,26 @@ namespace SpejderApplikation.ViewModel
             }
             
         }
-        public string BadgeName { get; set; }
+        public string BadgeName { get; set; } //behøves ikke
         public string Activity { get; set; }
         public string Preparation { get; set; }
         public string Notes { get; set; }
         public string Unit { get; set; }
-        public ScoutsMeeting(DateOnly date, TimeOnly start, TimeOnly stop, byte[] badge, string badgeName, 
-                            string activity, string preparation, string notes, string unit,
+        public ScoutsMeeting(DateOnly date, TimeOnly start, TimeOnly stop, byte[] badge, 
+                            string activity, string notes, string unit,
                             int meetingID, int unitID, int badgeID, int activityID)
         {
             Date = date;
             Start = start;
             Stop = stop;
             BadgeData = badge;
-            BadgeName = badgeName;
             Activity = activity;
-            Preparation = preparation;
             Notes = notes;
             Unit = unit;
             this.badgeID = badgeID;
             this.activityID = activityID;
             this.meetingID = meetingID;
             this.unitID = unitID;
-            Mark = new ObservableCollection<object>();
-            Mark.Add(badge);
-            Mark.Add(badgeName);
-            
-            // ved ikke lige hvordan jeg indkorporerer ID for de forskellige objekter.
-            // Men det skal bruges til at opdatere de forskellige.
 
         }
         public ScoutsMeeting()

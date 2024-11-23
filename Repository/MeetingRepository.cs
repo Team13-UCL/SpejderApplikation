@@ -123,7 +123,7 @@ namespace SpejderApplikation.Repository
         public Meeting GetByID(int id)
         {
             Meeting entity = null; // Start with null to handle cases where no record is found.
-            string query = "SELECT * FROM Meeting WHERE MeetingID = @MeetingID";
+            string query = "spSelectMeeting @MeetingID";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

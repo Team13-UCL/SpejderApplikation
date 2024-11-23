@@ -79,7 +79,7 @@ namespace SpejderApplikation.Repository
         public Badge GetByID(int id)
         {
             Badge entity = null;
-            string query = "SELECT * FROM Badge WHERE BadgeID = @BadgeID";
+            string query = "spSelectBadge @BadgeID";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

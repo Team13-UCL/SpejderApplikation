@@ -88,7 +88,7 @@ namespace SpejderApplikation.Repository
         public Unit GetByID(int id)
         {
             Unit entity = new Unit();
-            string query = "SELECT * FROM Unit WHERE UnitID = @UnitID";// indtast SQL query her.
+            string query = "spSelectUnit @UnitID";// indtast SQL query her.
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

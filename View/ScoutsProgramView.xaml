@@ -107,7 +107,7 @@
             </DataGrid>
 
             <StackPanel Grid.Column="2" Orientation="Vertical">
-                <DatePicker Name="MeetingDP" Width="auto" Height="auto" Text="{Binding Date}"/>
+                <DatePicker Name="MeetingDP" Width="auto" Height="auto" Text="{Binding Date, Mode=TwoWay}"/>
                 <TextBox Name="StartTP" Width="auto" Height="auto" Text="{Binding Start, FallbackValue=00:00:00, TargetNullValue=00:00:00}"/>
                 <TextBox Name="StopTP" Width="auto" Height="auto" Text="{Binding Stop, FallbackValue=00:00:00, TargetNullValue=00:00:00}"/>
                 <Grid>
