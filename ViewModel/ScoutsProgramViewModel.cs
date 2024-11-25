@@ -249,7 +249,33 @@ namespace SpejderApplikation.ViewModel
 
         public void DeleteMeeting()
         {
+            if (SelectedScoutMeeting != null)
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    "Er du sikker på, at du vil slette mødet?",
+                    "Bekræft sletning",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
 
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Fjern fra databasen
+                    ScoutMeetingRepo.DeleteType(SelectedScoutMeeting);
+
+                    // Fjern fra ObservableCollection
+                    ScoutMeetings.Remove(SelectedScoutMeeting);
+
+                    // Nulstil SelectedScoutMeeting
+                    SelectedScoutMeeting = null;
+
+                    // Eventuel opdatering af UI
+                    MessageBox.Show("Mødet blev slettet.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ingen møde valgt til sletning.");
+            }
         }
 
 
@@ -306,7 +332,7 @@ namespace SpejderApplikation.ViewModel
         }
         public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);
 
-        public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen
+        public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), canExecute => SelectedScoutMeeting != null); // tildeles til Delete knappen
         public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(), canExecute => SelectedMeeting != null); // Tildeles til Edit knappen
         public RelayCommand NewCommand => new RelayCommand(execute => NewMeeting()); // tildeles til "Nyt Møde" knappen.
     }
