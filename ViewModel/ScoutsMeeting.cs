@@ -21,7 +21,7 @@ namespace SpejderApplikation.ViewModel
         public int unitID { get; set; }
         public TimeOnly Start { get; set; }
         public TimeOnly Stop { get; set; }
-        public string Time { get { return $"{Start:HH:mm} - {Stop:HH:mm}"; } }
+        //public string Time { get { return $"{Start:HH:mm} - {Stop:HH:mm}"; } }
         private byte[] _badgeData;
         public byte[] BadgeData
         {
@@ -54,7 +54,6 @@ namespace SpejderApplikation.ViewModel
             }
         }
 
-        public byte[] BadgeData { get; set; } //billede
         public ImageSource Picture
         {
             get
