@@ -13,7 +13,7 @@ using SpejderApplikation.DataHandler;
 
 namespace SpejderApplikation.ViewModel
 {
-    internal class ScoutsMeeting
+    internal class ScoutsMeeting : ViewModelBase
     {
         public ObservableCollection<object> Mark {  get; set; }
         public int meetingID { get; set; }
@@ -24,14 +24,30 @@ namespace SpejderApplikation.ViewModel
         public TimeOnly Start { get; set; }
         public TimeOnly Stop { get; set; }
         public string Time { get { return $"{Start:HH:mm} - {Stop:HH:mm}"; } }
-        public byte[] BadgeData { get; set; } //billede
+        private byte[] _badgeData;
+        public byte[] BadgeData
+        {
+            get => _badgeData;
+            set
+            {
+                if (_badgeData != value)
+                {
+                    _badgeData = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Picture)); // notificerer at Picture er ændret
+                }
+            }
+        } 
         public ImageSource Picture
         {
             get
             {
                 if (BadgeData == null) return null;
 
-                return ImageHandling.LoadSvg(BadgeData);
+                var imageHandling = new ImageHandling();
+                return imageHandling.LoadSvg(BadgeData);
+
+
             }
         }
         public string BadgeName { get; set; }
@@ -39,7 +55,7 @@ namespace SpejderApplikation.ViewModel
         public string Preparation { get; set; }
         public string Notes { get; set; }
         public string Unit { get; set; }
-        public ScoutsMeeting(DateOnly date, TimeOnly start, TimeOnly stop, byte[] badge, string badgeName, 
+        public ScoutsMeeting(DateOnly date, TimeOnly start, TimeOnly stop, byte[] badge, string badgeName,  
                             string activity, string preparation, string notes, string unit,
                             int meetingID, int unitID, int badgeID, int activityID)
         {

@@ -97,7 +97,7 @@
                     <DataGridTemplateColumn Header="Mærke" Width="1*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Width="40" Height="40"                       Source="{Binding Picture}" />
+                                <Image Width="40" Height="40" Source="{Binding Picture}"  />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

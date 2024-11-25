@@ -97,7 +97,18 @@ namespace SpejderApplikation.ViewModel
                 
             }
         }
-       
+
+        private ImageSource _picture;
+        public ImageSource Picture
+        {
+            get { return _picture; }
+            set
+            {
+                _picture = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _activity;
         public string Activity
         {
@@ -206,7 +217,8 @@ namespace SpejderApplikation.ViewModel
                 BadgeName = _selectedBadge.Name;
                 BadgeDescription = _selectedBadge.Description;
                 BadgeLink = _selectedBadge.Link;
-               
+                BadgeData = _selectedBadge.Picture;
+
 
             }
         }
@@ -224,6 +236,7 @@ namespace SpejderApplikation.ViewModel
                 SelectedActivity = ActivityRepo.GetByID(SelectedScoutMeeting.activityID);
                 SelectedBadge = BadgeRepo.GetByID(SelectedScoutMeeting.badgeID);
                 SelectedUnit = UnitRepo.GetByID(_selectedScoutMeeting.unitID);
+                OnPropertyChanged(nameof(SelectedScoutMeeting.Picture));
 
             }
         }
@@ -289,7 +302,8 @@ namespace SpejderApplikation.ViewModel
                 //den displayer med badgedata men skal måske os gemme i picture i badge????
                 SelectedBadge.Picture = imageBytes; // Save the image bytes to the Picture property in the Badge object
                 SelectedScoutMeeting.BadgeData = imageBytes;
-                               
+                
+
             }
             catch (Exception ex)
             {

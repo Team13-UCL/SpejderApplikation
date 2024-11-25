@@ -34,15 +34,12 @@ namespace SpejderApplikation.DataHandler
             // Download SVG image
             byte[] svgBytes = await client.GetByteArrayAsync(imageUrl);
 
-            //// laver en fil sammen med filnavnet
-            //string fileName = Path.GetFileName(new Uri(imageUrl).LocalPath);
-            //string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            //await File.WriteAllBytesAsync(filePath, svgBytes);
+            
             return svgBytes;
         }
 
 
-        public static DrawingImage LoadSvg(byte[] svgBytes)
+        public DrawingImage LoadSvg(byte[] svgBytes)
         {
             try
             {
