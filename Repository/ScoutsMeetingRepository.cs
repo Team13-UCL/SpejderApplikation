@@ -64,29 +64,25 @@ namespace SpejderApplikation.Repository
                         {
                             picture = new byte[0];
                         }
-
+                        string ActivityDescription = reader.IsDBNull(reader.GetOrdinal("ActivityDescription")) ? string.Empty : (string)reader["ActivityDescription"];
+                        string Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? string.Empty : (string)reader["Notes"];
+                        string UnitName = reader.IsDBNull(reader.GetOrdinal("UnitName")) ? string.Empty : (string)reader["UnitName"];
+                        int unitID = reader.IsDBNull(reader.GetOrdinal("UnitID")) ? 0 : (int)reader["UnitID"];
+                        int MeetingID = reader.IsDBNull(reader.GetOrdinal("MeetingID")) ? 0 : (int)reader["MeetingID"];
+                        int BadgeID = reader.IsDBNull(reader.GetOrdinal("BadgeID")) ? 0 : (int)reader["BadgeID"];
+                        int ActivityID = reader.IsDBNull(reader.GetOrdinal("ActivityID")) ? 0 : (int)reader["ActivityID"];
 
                         entities.Add(new ScoutsMeeting(DateOnly.FromDateTime(dateTime),
                             TimeOnly.FromTimeSpan(start),
                             TimeOnly.FromTimeSpan(stop),
                             picture,
-                            (string)reader["ActivityDescription"],
-                            (string)reader["Notes"],
-                            (string)reader["UnitName"], // Unit
-                            (int)reader["MeetingID"],
-                            (int)reader["UnitID"], // UnitID
-                            (int)reader["BadgeID"],
-                            (int)reader["ActivityID"]));
-                        //{
-                        //    meetingID = (int)reader["MeetingID"],
-                        //    Date = (DateOnly)reader["Date"],
-                        //    activityID = (int)reader["ActivityID"],
-                        //    Activity = (string)reader["Activity"],
-                        //    badgeID = (int)reader["BadgeID"],
-                        //    Badge = (Byte[])reader["Picture"],
-                        //    BadgeName = (string)reader["BadgeName"],
-
-                        //});
+                            ActivityDescription,
+                            Notes,
+                            UnitName,
+                            MeetingID,
+                            unitID,
+                            BadgeID,
+                            ActivityID));
                     }
                 }
             }
