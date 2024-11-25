@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SpejderApplikation.MVVM;
+using SpejderApplikation.DataHandler;
 
 namespace SpejderApplikation.ViewModel
 {
-    internal class ScoutsMeeting
+    internal class ScoutsMeeting : ViewModelBase
     {
         public int meetingID { get; set; }
         public int activityID { get; set; }
@@ -22,24 +23,31 @@ namespace SpejderApplikation.ViewModel
         public TimeOnly Start { get; set; }
         public TimeOnly Stop { get; set; }
         public string Time { get { return $"{Start:HH:mm} - {Stop:HH:mm}"; } }
-        public byte[] BadgeData { get; set; } //billede
+        private byte[] _badgeData;
+        public byte[] BadgeData
+        {
+            get => _badgeData;
+            set
+            {
+                if (_badgeData != value)
+                {
+                    _badgeData = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Picture)); // notificerer at Picture er ændret
+                }
+            }
+        } 
         public ImageSource Picture
         {
             get
             {
                 if (BadgeData == null) return null;
 
-                using (var ms = new MemoryStream(BadgeData))
-                {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.StreamSource = ms;
-                    image.EndInit();
-                    return image;
-                }
+                var imageHandling = new ImageHandling();
+                return imageHandling.LoadSvg(BadgeData);
+
+
             }
-            
         }
         public string BadgeName { get; set; } //behøves ikke
         public string Activity { get; set; }

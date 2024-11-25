@@ -34,37 +34,36 @@ namespace SpejderApplikation.DataHandler
             // Download SVG image
             byte[] svgBytes = await client.GetByteArrayAsync(imageUrl);
 
-            //// laver en fil sammen med filnavnet
-            //string fileName = Path.GetFileName(new Uri(imageUrl).LocalPath);
-            //string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            //await File.WriteAllBytesAsync(filePath, svgBytes);
+            
             return svgBytes;
         }
-           
 
-        //public DrawingImage LoadSvg(string filePath)
-        //{
-        //    try
-        //    {
-        //        // settings for wpf
-        //        WpfDrawingSettings settings = new WpfDrawingSettings
-        //        {
-        //            IncludeRuntime = true,
-        //            TextAsGeometry = true
-        //        };
 
-        //        // læser svg fil og konvertere til tegning
-        //        FileSvgReader reader = new FileSvgReader(settings);
-        //        DrawingGroup drawing = reader.Read(filePath);
+        public DrawingImage LoadSvg(byte[] svgBytes)
+        {
+            try
+            {
+                // settings for wpf
+                WpfDrawingSettings settings = new WpfDrawingSettings
+                {
+                    IncludeRuntime = true,
+                    TextAsGeometry = true
+                };
 
-                
-        //        return new DrawingImage(drawing);
-        //    }
-        //    catch (Exception ex) 
-        //    {
-        //        throw new InvalidOperationException($"Error displaying SVG: {ex.Message}");
-        //    }
-        //}
-        
+                // læser svg fil og konvertere til tegning
+                using (var stream = new MemoryStream(svgBytes))
+                {
+                    FileSvgReader reader = new FileSvgReader(settings);
+                    DrawingGroup drawing = reader.Read(stream);
+
+                    return new DrawingImage(drawing);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Error displaying SVG: {ex.Message}");
+            }
+        }
+
     }
 }

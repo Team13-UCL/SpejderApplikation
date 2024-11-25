@@ -10,6 +10,8 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.IO;
+using System.Windows.Media;
 
 namespace SpejderApplikation.ViewModel
 {
@@ -85,6 +87,29 @@ namespace SpejderApplikation.ViewModel
                 OnPropertyChanged();
             }
         }
+        private byte[] _badgeData;
+        public byte[] BadgeData
+        {
+            get { return _badgeData; }
+            set
+            {
+                _badgeData = value;
+                OnPropertyChanged();
+                
+            }
+        }
+
+        private ImageSource _picture;
+        public ImageSource Picture
+        {
+            get { return _picture; }
+            set
+            {
+                _picture = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _activity;
         public string Activity
         {
@@ -193,6 +218,8 @@ namespace SpejderApplikation.ViewModel
                 BadgeName = _selectedBadge.Name;
                 BadgeDescription = _selectedBadge.Description;
                 BadgeLink = _selectedBadge.Link;
+                BadgeData = _selectedBadge.Picture;
+
 
             }
         }
@@ -210,6 +237,7 @@ namespace SpejderApplikation.ViewModel
                 SelectedActivity = ActivityRepo.GetByID(SelectedScoutMeeting.activityID);
                 SelectedBadge = BadgeRepo.GetByID(SelectedScoutMeeting.badgeID);
                 SelectedUnit = UnitRepo.GetByID(_selectedScoutMeeting.unitID);
+                OnPropertyChanged(nameof(SelectedScoutMeeting.Picture));
 
             }
         }
@@ -265,34 +293,26 @@ namespace SpejderApplikation.ViewModel
             try
             {
                 // Download the SVG image
-                byte[] Picture = await _imageHandling.DownloadAndSaveImage(BadgeLink);
-
-                //if (string.IsNullOrEmpty(filePath))
-                //{
-                //    MessageBox.Show("kunne ikke finde billedet");
-                //    return;
-                //}
-
-                SelectedScoutMeeting.BadgeData = Picture;
-                byte[] imageBytes = await _imageHandling.DownloadAndSaveImage(Link);
-
-
+                byte[] imageBytes = await _imageHandling.DownloadAndSaveImage(BadgeLink);
+                                
                 if (imageBytes == null || imageBytes.Length == 0)
                 {
                     MessageBox.Show("kunne ikke finde billedet");
                     return;
                 }
 
-                SelectedBadge.Picture = imageBytes; // Save the image bytes to the Picture property
+                //den displayer med badgedata men skal måske os gemme i picture i badge????
+                SelectedBadge.Picture = imageBytes; // Save the image bytes to the Picture property in the Badge object
                 SelectedScoutMeeting.BadgeData = imageBytes;
-                // Display the SVG image
-                //DownloadedImage.Source = _imageHandling.LoadSvg(filePath);
+                
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
+
         public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);
 
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen
