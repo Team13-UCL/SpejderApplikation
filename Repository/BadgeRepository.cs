@@ -24,7 +24,7 @@ namespace SpejderApplikation.Repository
             throw new NotImplementedException();
         }
 
-        public void DeleteType(int id)
+        public void DeleteType(Badge badge)
         {
             throw new NotImplementedException();
         }

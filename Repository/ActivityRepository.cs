@@ -32,7 +32,7 @@ namespace SpejderApplikation.Repository
             return entityID;
         }
 
-        public void DeleteType(int id)
+        public void EditType(Activity entity)
         {
             string query = ""; //indtast SQL query her.
 
@@ -45,14 +45,15 @@ namespace SpejderApplikation.Repository
             }
         }
 
-        public void EditType(Activity entity)
+        public void DeleteType(Activity entity)
         {
-            string query = ""; //indtast SQL query her.
+            string query = "DELETE FROM Activity WHERE ActivityID = @ActivityID";  // Opdater med korrekt SQL query
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, id);
+                command.Parameters.AddWithValue("@ActivityID", entity._activityID);  // Brug ActivityID fra entity
+
                 connection.Open();
                 command.ExecuteNonQuery();
             }

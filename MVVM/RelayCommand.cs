@@ -19,7 +19,7 @@ namespace SpejderApplikation.MVVM
         }
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
-            this.execute = execute;
+            this.execute = execute ?? throw new ArgumentNullException(nameof(execute)); //Lidt hjælp til Null håndterning
             this.canExecute = canExecute;
         }
 

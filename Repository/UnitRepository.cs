@@ -32,7 +32,7 @@ namespace SpejderApplikation.Repository
             return unitId;
         }
 
-        public void DeleteType(int id)
+        public void DeleteType(Unit unit)
         {
             string query = ""; //indtast SQL query her.
 

@@ -84,7 +84,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,0">
                 <Button Content="Opret opgave" Width="90" Background="LightGreen" Margin="5,0" Height="25" Command="{Binding NewCommand}" />
                 <Button Content="Rediger opgave" Width="90" Background="Gold" Margin="5,0" Height="25" />
-                <Button Content="Slet Opgave" Width="90" Background="LightCoral" Margin="5,0" Height="25" />
+                <Button Content="Slet Opgave" Width="90" Background="LightCoral" Margin="5,0" Height="25" Command="{Binding DeleteCommand}" />
                 <Button Content="Gem I database" Width="90" Background="LightBlue" Margin="5,0" Height="25" />
             </StackPanel>
 
@@ -103,7 +103,8 @@
                 <DataGrid.Columns>
                     <!-- Define columns as per your wireframe -->
                     <DataGridTextColumn Header="Dato" Binding="{Binding Date}" Width="1*" />
-                    <DataGridTextColumn Header="Tid" Binding="{Binding Time}" Width="1*" />
+                    <DataGridTextColumn Header="Tid"
+                                        Binding="{Binding Time, Mode=TwoWay}" Width="1*" />
                     <DataGridTemplateColumn Header="Mærke" Width="1*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

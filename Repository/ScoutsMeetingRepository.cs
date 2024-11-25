@@ -22,10 +22,25 @@ namespace SpejderApplikation.Repository
 
         public int AddType(ScoutsMeeting entity)
         {
-            throw new NotImplementedException();
+            string query = "INSERT INTO ScoutsMeeting (MeetingID, ActivityID, BadgeID, UnitID) " +
+                           "VALUES (@MeetingID, @ActivityID, @BadgeID, @UnitID); " +
+                           "SELECT SCOPE_IDENTITY();"; 
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@MeetingID", entity.meetingID);
+                command.Parameters.AddWithValue("@ActivityID", entity.activityID);
+                command.Parameters.AddWithValue("@BadgeID", entity.badgeID);
+                command.Parameters.AddWithValue("@UnitID", entity.unitID);
+
+                connection.Open();
+                return Convert.ToInt32(command.ExecuteScalar());
+            }
         }
 
-        public void DeleteType(int id)
+
+        public void DeleteType(ScoutsMeeting scoutsMeeting)
         {
             throw new NotImplementedException();
         }
