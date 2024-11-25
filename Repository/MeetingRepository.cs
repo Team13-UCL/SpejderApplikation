@@ -43,7 +43,7 @@ namespace SpejderApplikation.Repository
             }
         }
 
-        public void DeleteType(int id)
+        public void DeleteType(Meeting entity)
         {
             string query = "DELETE FROM Meeting WHERE MeetingID = @MeetingID";
 
@@ -52,7 +52,7 @@ namespace SpejderApplikation.Repository
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@MeetingID", id);
+                    command.Parameters.AddWithValue("@MeetingID", entity._meetingID);  // Brug MeetingID fra entity
 
                     connection.Open();
                     command.ExecuteNonQuery();

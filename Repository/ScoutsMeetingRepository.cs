@@ -40,7 +40,7 @@ namespace SpejderApplikation.Repository
         }
 
 
-        public void DeleteType(int id)
+        public void DeleteType(ScoutsMeeting scoutsMeeting)
         {
             throw new NotImplementedException();
         }
