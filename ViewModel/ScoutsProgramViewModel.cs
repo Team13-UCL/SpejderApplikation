@@ -23,6 +23,7 @@ namespace SpejderApplikation.ViewModel
         private readonly ImageHandling _imageHandling;
 
         public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
+        public ObservableCollection<Badge> Badges { get; set; }
         public ObservableCollection<Unit> Units { get; set; }
         private DateOnly _date;
         public DateOnly Date 
@@ -222,6 +223,7 @@ namespace SpejderApplikation.ViewModel
             this.ActivityRepo = ActivityRepo ?? throw new ArgumentNullException(nameof(ActivityRepo));
             this.UnitRepo = UnitRepo ?? throw new ArgumentNullException(nameof(UnitRepo));
             _imageHandling = new ImageHandling();
+            Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll());
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
         {
