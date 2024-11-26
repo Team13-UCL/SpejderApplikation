@@ -16,36 +16,12 @@ namespace SpejderApplikation.Repository
             _connectionString = Connection.ConnectionString;
         }
 
-        public int AddType(Activity entity)
+        public void DeleteType(Activity entity)
         {
-            string query = ""; //indtast SQL query her.
-            int entityID = 0;
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, <type.variable>);
-                //en command.Parameter pr variabel
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-            return entityID;
+            throw new NotImplementedException();
         }
 
-        public void DeleteType(int id)
-        {
-            string query = ""; //indtast SQL query her.
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, id);
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
-
-        public void EditType(Activity entity)
+        public void AddOrEditType(Activity entity)
         {
             string query = ""; //indtast SQL query her.
 

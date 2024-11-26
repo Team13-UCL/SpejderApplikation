@@ -75,34 +75,12 @@ namespace SpejderApplikation.ViewModel
         {
             // opret ny Meeting, med forud indtastet Unit hardcoded til sprint 1
         }
-        //public Meeting UpdateMeeting()
-        //{
-        //    if (dbMeeting.Date != Date)
-        //    {
-        //        return dbMeeting;
-        //    }
-        //    else return null;
-        //    if(dbBadge.Picture != Badge || dbBadge.Name != BadgeName)
-        //    {
-        //        // opdater Badge database
-        //    }
-            
-        //}
-        //public Activity UpdateActivity()
-        //{
-        //    if (dbActivity.ActivityDescription != Activity || dbActivity.Preparation != Preparation || dbActivity.Notes != Notes)
-        //    {
-        //        return dbActivity;
-        //    }
-        //    else return null;
-        //}
-        //public Badge UpdateBadge()
-        //{
-        //    if (dbBadge.Picture != Badge || dbBadge.Name != BadgeName)
-        //    {
-        //        return dbBadge;
-        //    }
-        //    else return null;
-        //}
+        public void UpdateID(int ActivityID, int BadgeID, int UnitID, int MeetingID)
+        {
+            badgeID = BadgeID;
+            activityID = ActivityID;
+            unitID = UnitID;
+            meetingID = MeetingID;
+        }
     }
 }

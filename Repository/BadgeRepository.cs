@@ -19,17 +19,13 @@ namespace SpejderApplikation.Repository
         {
             _connectionString = Connection.ConnectionString;
         }
-        public int AddType(Badge entity)
+
+        public void DeleteType(Badge entity)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteType(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EditType(Badge entity)
+        public void AddOrEditType(Badge entity)
         {
             throw new NotImplementedException();
         }

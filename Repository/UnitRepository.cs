@@ -16,23 +16,7 @@ namespace SpejderApplikation.Repository
             _connectionString = Connection.ConnectionString;
         }
 
-        public int AddType(Unit entity)
-        {
-            string query = ""; //indtast SQL query her.
-            int unitId = 0;
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, <type.variable>);
-                //en command.Parameter pr variabel
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-            return unitId;
-        }
-
-        public void DeleteType(int id)
+        public void DeleteType(Unit entity)
         {
             string query = ""; //indtast SQL query her.
 
@@ -45,7 +29,7 @@ namespace SpejderApplikation.Repository
             }
         }
 
-        public void EditType(Unit entity)
+        public void AddOrEditType(Unit entity)
         {
             string query = ""; //indtast SQL query her.
 

@@ -20,17 +20,12 @@ namespace SpejderApplikation.Repository
             _connectionString = Connection.ConnectionString;
         }
 
-        public int AddType(ScoutsMeeting entity)
+        public void DeleteType(ScoutsMeeting entity)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteType(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EditType(ScoutsMeeting entity)
+        public void AddOrEditType(ScoutsMeeting entity)
         {
             throw new NotImplementedException();
         }

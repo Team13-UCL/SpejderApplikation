@@ -8,7 +8,7 @@ namespace SpejderApplikation.Model
 {
     internal class Activity
     {
-        public int _activityID { get; set; }
+        public int _activityID { get; private set; }
         public string ActivityDescription { get; set; }
         public string Preparation { get; set; }
         public string Notes { get; set; }
@@ -25,6 +25,10 @@ namespace SpejderApplikation.Model
         public Activity()
         {
             
+        }
+        public void UpdateID(int ID)
+        {
+            _activityID = ID;
         }
     }
 }

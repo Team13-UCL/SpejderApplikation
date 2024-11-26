@@ -16,55 +16,12 @@ namespace SpejderApplikation.Repository
             _connectionString = Connection.ConnectionString;
         }
 
-        public int AddType(Meeting entity)
+        public void DeleteType(Meeting entity)
         {
-            string query = @"
-                INSERT INTO Meeting (Date, Start, Stop)
-                VALUES (@Date, @Start, @Stop);
-                SELECT SCOPE_IDENTITY();";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@Date", entity.Date.ToDateTime(TimeOnly.MinValue));
-                    command.Parameters.AddWithValue("@Start", entity.Start.ToTimeSpan());
-                    command.Parameters.AddWithValue("@Stop", entity.Stop.ToTimeSpan());
-
-                    connection.Open();
-                    return Convert.ToInt32(command.ExecuteScalar());
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log exception (implement logging if needed)
-                throw new Exception("An error occurred while adding a meeting.", ex);
-            }
+            throw new NotImplementedException();
         }
 
-        public void DeleteType(int id)
-        {
-            string query = "DELETE FROM Meeting WHERE MeetingID = @MeetingID";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@MeetingID", id);
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("An error occurred while deleting the meeting.", ex);
-            }
-        }
-
-        public void EditType(Meeting entity)
+        public void AddOrEditType(Meeting entity)
         {
             string query = @"
                 UPDATE Meeting

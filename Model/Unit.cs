@@ -12,7 +12,7 @@ namespace SpejderApplikation.Model
 {
     public class Unit
     {
-        private int _unitID { get; set; }
+        public int _unitID { get; private set; }
         public string Description { get; set; }
         public string UnitName { get; set; }
         public string Link { get; set; }
@@ -40,6 +40,10 @@ namespace SpejderApplikation.Model
             {
                 return new byte[0];
             }
+        }
+        public void UpdateID(int ID)
+        {
+            _unitID = ID;
         }
     }
 }

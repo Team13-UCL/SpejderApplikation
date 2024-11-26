@@ -25,5 +25,9 @@ namespace SpejderApplikation.Model
         {
             
         }
+        public void UpdateID(int ID)
+        {
+            _meetingID = ID;
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace SpejderApplikation.Model
 {
     internal class Badge
     {
-        private int _badgeID;
+        public int _badgeID { get; private set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public byte[] Picture { get; set; } // Byte-array til billeder af gemte mærker
@@ -35,7 +35,10 @@ namespace SpejderApplikation.Model
             this.Picture = badge.Picture;
             this.Link = badge.Link;
         }
-
+        public void UpdateID(int ID)
+        {
+            _badgeID = ID;
+        }
 
     }
 }
