@@ -78,7 +78,7 @@
             <!-- Placeholder for Logo -->
 
             <!-- Checkbox -->
-            <CheckBox Content="Vis gamle møder" VerticalAlignment="Center" Margin="10,0" />
+            <CheckBox Content="Vis gamle møder" VerticalAlignment="Center" Margin="10,0" IsChecked="{Binding ShowOld}"/>
 
             <!-- Task Buttons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,0">
