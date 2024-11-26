@@ -11,7 +11,7 @@ namespace SpejderApplikation.Repository
     {
         IEnumerable<Type> GetAll();
         public Type GetByID(int id);
-        public void AddOrEditType(Type entity);
+        public int AddOrEditType(Type entity, int ID);
         public void DeleteType(Type entity);
     }
 }

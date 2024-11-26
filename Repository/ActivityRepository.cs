@@ -3,6 +3,7 @@ using SpejderApplikation.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,43 +22,30 @@ namespace SpejderApplikation.Repository
             throw new NotImplementedException();
         }
 
-        public void AddOrEditType(Activity entity)
+        public int AddOrEditType(Activity entity, int ID)
         {
-            string query = ""; //indtast SQL query her.
+            string query = "spAddOrEditActivity @ActivityID, @ActivityDescription, @Preparation, @Notes, @Activity"; //indtast SQL query her.
+            int EntityID = 0;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, id);
+                command.Parameters.AddWithValue("@ActivityID", entity._activityID);
+                command.Parameters.AddWithValue("@ActivityDescription", entity.ActivityDescription);
+                command.Parameters.AddWithValue("@Preparation", entity.Preparation);
+                command.Parameters.AddWithValue("@Notes", entity.Notes);
+                command.Parameters.AddWithValue("@Activity", entity.BriefDescription);
                 connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
-
-        public IEnumerable<Activity> GetAll()
-        {
-            var entities = new List<Activity>();
-            string query = ""; // indtast SQL query her.
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand(query, connection);
-                connection.Open();
-
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader()) 
                 {
-                    while (reader.Read())
-                    {
-                        entities.Add(new Activity(
-
-                            (int)reader[""],
-                            (string)reader[""],
-                            (string)reader[""],
-                            (string)reader[""]));
-                    }
+                    EntityID = reader.IsDBNull(reader.GetOrdinal("ActivityID")) ? 0 : reader.GetInt32(reader.GetOrdinal("ActivityID"));
                 }
             }
-
-            return entities;
+            return EntityID;
+        }
+        public IEnumerable<Activity> GetAll()
+        {
+            throw new NotImplementedException();
         }
 
         public Activity GetByID(int id)
@@ -79,7 +67,8 @@ namespace SpejderApplikation.Repository
                         string Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? string.Empty : reader.GetString(reader.GetOrdinal("Notes"));
                         string Activity = reader.IsDBNull(reader.GetOrdinal("ActivityDescription")) ? string.Empty : reader.GetString(reader.GetOrdinal("ActivityDescription"));
                         string Preparation = reader.IsDBNull(reader.GetOrdinal("Preparation")) ? string.Empty : reader.GetString(reader.GetOrdinal("Preparation"));
-                        entity = new Activity(ActivityID, Activity, Preparation, Notes);
+                        string BriefDescription = reader.IsDBNull(reader.GetOrdinal("Activity")) ? string.Empty : reader.GetString(reader.GetOrdinal("Activity"));
+                        entity = new Activity(ActivityID, Activity, Preparation, Notes, BriefDescription);
                     }
                 }
             }

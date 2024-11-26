@@ -25,7 +25,7 @@ namespace SpejderApplikation.Repository
             throw new NotImplementedException();
         }
 
-        public void AddOrEditType(ScoutsMeeting entity)
+        public int AddOrEditType(ScoutsMeeting entity, int ID)
         {
             throw new NotImplementedException();
         }

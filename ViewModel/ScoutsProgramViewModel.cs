@@ -267,35 +267,11 @@ namespace SpejderApplikation.ViewModel
         }
         public void EditMeeting(ScoutsMeeting sm)
         {
-            if (sm.meetingID == 0 || sm.activityID == 0 || sm.unitID == 0 || sm.badgeID == 0)
-            {
-                int meetingID = 0, activityID = 0, unitID = 0, badgeID = 0;
-                if (SelectedMeeting._meetingID == 0) meetingID = MeetingRepo.AddType(SelectedMeeting);
-                else MeetingRepo.AddOrEditType(SelectedMeeting);
-                if (SelectedActivity._activityID == 0) activityID = ActivityRepo.AddType(SelectedActivity); 
-                else ActivityRepo.AddOrEditType(SelectedActivity);
-                if(SelectedBadge._badgeID == 0) badgeID = BadgeRepo.AddType(SelectedBadge);
-                else BadgeRepo.AddOrEditType(SelectedBadge);
-                if(SelectedUnit._unitID == 0) unitID = UnitRepo.AddType(SelectedUnit);
-                else UnitRepo.AddOrEditType(SelectedUnit);
-                SelectedMeeting.UpdateID(meetingID);
-                SelectedBadge.UpdateID(badgeID);
-                SelectedUnit.UpdateID(unitID);
-                SelectedActivity.UpdateID(activityID);
-                SelectedScoutMeeting.UpdateID(SelectedActivity._activityID, 
-                                                SelectedBadge._badgeID, 
-                                                SelectedUnit._unitID, 
-                                                SelectedMeeting._meetingID);
-                ScoutMeetingRepo.AddType(SelectedScoutMeeting);
-            }
-            else
-            {
-                MeetingRepo.AddOrEditType(SelectedMeeting);
-                ActivityRepo.AddOrEditType(SelectedActivity);
-                BadgeRepo.AddOrEditType(SelectedBadge);
-                UnitRepo.AddOrEditType(SelectedUnit);
-            }
-
+            int ActivityID = ActivityRepo.AddOrEditType(SelectedActivity, 0);
+            int MeetingID = MeetingRepo.AddOrEditType(SelectedMeeting, ActivityID);
+            int BadgeID = BadgeRepo.AddOrEditType(SelectedBadge, ActivityID);
+            int UnitID = UnitRepo.AddOrEditType(SelectedUnit, ActivityID);
+            SelectedScoutMeeting.UpdateID(ActivityID, BadgeID, UnitID, MeetingID);
         }
         public void DeleteMeeting()
         {

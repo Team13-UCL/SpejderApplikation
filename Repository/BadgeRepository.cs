@@ -25,9 +25,27 @@ namespace SpejderApplikation.Repository
             throw new NotImplementedException();
         }
 
-        public void AddOrEditType(Badge entity)
+        public int AddOrEditType(Badge entity, int ID)
         {
-            throw new NotImplementedException();
+            string query = "spAddOrEditBadge @ActivityID, @BadgeID, @BadgeName, @Description, @Picture, @Link"; //indtast SQL query her.
+            int EntityID = 0;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ActivityID", ID);
+                command.Parameters.AddWithValue("@BadgeID", entity._badgeID);
+                command.Parameters.AddWithValue("@BadgeName", entity.Name);
+                command.Parameters.AddWithValue("@Description", entity.Description);
+                command.Parameters.AddWithValue("@Picture", entity.Picture);
+                command.Parameters.AddWithValue("@Link", entity.Link);
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    EntityID = reader.IsDBNull(reader.GetOrdinal("BadgeID")) ? 0 : reader.GetInt32(reader.GetOrdinal("BadgeID"));
+                }
+            }
+            return EntityID;
         }
 
         public IEnumerable<Badge> GetAll()

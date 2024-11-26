@@ -21,31 +21,26 @@ namespace SpejderApplikation.Repository
             throw new NotImplementedException();
         }
 
-        public void AddOrEditType(Meeting entity)
+        public int AddOrEditType(Meeting entity, int ID)
         {
-            string query = @"
-                UPDATE Meeting
-                SET Date = @Date, Start = @Start, Stop = @Stop
-                WHERE MeetingID = @MeetingID";
+            string query = "spAddOrEditMeeting @ActivityID, @MeetingID, @Date, @Start, @Stop"; //indtast SQL query her.
+            int EntityID = 0;
 
-            try
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ActivityID", ID);
+                command.Parameters.AddWithValue("@MeetingID", entity._meetingID);
+                command.Parameters.AddWithValue("@Date", entity.Date);
+                command.Parameters.AddWithValue("@Start", entity.Start);
+                command.Parameters.AddWithValue("@Stop", entity.Stop);
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@MeetingID", entity._meetingID);
-                    command.Parameters.AddWithValue("@Date", entity.Date.ToDateTime(TimeOnly.MinValue));
-                    command.Parameters.AddWithValue("@Start", entity.Start.ToTimeSpan());
-                    command.Parameters.AddWithValue("@Stop", entity.Stop.ToTimeSpan());
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
+                    EntityID = reader.IsDBNull(reader.GetOrdinal("MeetingID")) ? 0 : reader.GetInt32(reader.GetOrdinal("MeetingID"));
                 }
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Der skete en fejl ved oprettetlese af møde", ex);
-            }
+            return EntityID;
         }
 
         public IEnumerable<Meeting> GetAll()

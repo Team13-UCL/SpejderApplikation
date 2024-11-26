@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
 
 namespace SpejderApplikation.Repository
 {
@@ -29,17 +30,18 @@ namespace SpejderApplikation.Repository
             }
         }
 
-        public void AddOrEditType(Unit entity)
+        public int AddOrEditType(Unit entity, int ID)
         {
-            string query = ""; //indtast SQL query her.
+            string query = "spAddOrEditUnit @ActivityID, @UnitID"; //indtast SQL query her.
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue(<query variable>, id);
+                command.Parameters.AddWithValue("@ActivityID", ID);
+                command.Parameters.AddWithValue("@UnitID", entity._unitID);
                 connection.Open();
-                command.ExecuteNonQuery();
             }
+            return entity._unitID;
         }
 
         public IEnumerable<Unit> GetAll()
