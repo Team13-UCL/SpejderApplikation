@@ -21,7 +21,6 @@ namespace SpejderApplikation.Repository
         {
             throw new NotImplementedException();
         }
-
         public int AddOrEditType(Activity entity, int ID)
         {
             string query = "spAddOrEditActivity @ActivityID, @ActivityDescription, @Preparation, @Notes, @Activity"; //indtast SQL query her.

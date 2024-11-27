@@ -19,10 +19,9 @@ namespace SpejderApplikation.ViewModel
         public int activityID { get; set; }
         public int badgeID { get; set; }
         public int unitID { get; set; }
-        public DateOnly Date { get; set; }
         public TimeOnly Start { get; set; }
         public TimeOnly Stop { get; set; }
-        public string Time { get { return $"{Start:HH:mm} - {Stop:HH:mm}"; } }
+        //public string Time { get { return $"{Start:HH:mm} - {Stop:HH:mm}"; } }
         private byte[] _badgeData;
         public byte[] BadgeData
         {
@@ -37,6 +36,24 @@ namespace SpejderApplikation.ViewModel
                 }
             }
         } 
+        public DateOnly Date { get; set; }
+        public string Time
+        {
+            get { return $"{Start:HH:mm} - {Stop:HH:mm}"; }
+            set
+            {
+                // Forvent format som "HH:mm - HH:mm"
+                var times = value.Split(" - ");
+                if (times.Length == 2 &&
+                    TimeOnly.TryParse(times[0], out var startTime) &&
+                    TimeOnly.TryParse(times[1], out var stopTime))
+                {
+                    Start = startTime;
+                    Stop = stopTime;
+                }
+            }
+        }
+
         public ImageSource Picture
         {
             get
@@ -71,6 +88,7 @@ namespace SpejderApplikation.ViewModel
             this.unitID = unitID;
 
         }
+
         public ScoutsMeeting()
         {
             // opret ny Meeting, med forud indtastet Unit hardcoded til sprint 1

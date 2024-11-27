@@ -16,7 +16,6 @@ namespace SpejderApplikation.Repository
         {
             _connectionString = Connection.ConnectionString;
         }
-
         public void DeleteType(Unit entity)
         {
             string query = ""; //indtast SQL query her.

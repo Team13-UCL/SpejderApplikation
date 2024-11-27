@@ -20,7 +20,6 @@ namespace SpejderApplikation.Repository
         {
             throw new NotImplementedException();
         }
-
         public int AddOrEditType(Meeting entity, int ID)
         {
             string query = "spAddOrEditMeeting @ActivityID, @MeetingID, @Date, @Start, @Stop"; //indtast SQL query her.

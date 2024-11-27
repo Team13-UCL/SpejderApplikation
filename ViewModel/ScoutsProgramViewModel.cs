@@ -187,13 +187,22 @@ namespace SpejderApplikation.ViewModel
         public Meeting SelectedMeeting
         {
             get { return _selectedMeeting; }
-            set 
-            { 
+            set
+            {
                 _selectedMeeting = value;
+                if (_selectedMeeting != null)
+                {
+                    Date = _selectedMeeting.Date;
+                    Start = _selectedMeeting.Start;
+                    Stop = _selectedMeeting.Stop;
+                }
+                else
+                {
+                    Date = default;
+                    Start = default;
+                    Stop = default;
+                }
                 OnPropertyChanged();
-                Date = _selectedMeeting.Date;
-                Start = _selectedMeeting.Start;
-                Stop = _selectedMeeting.Stop;
             }
         }
         private Activity _selectedActivity;
@@ -273,9 +282,36 @@ namespace SpejderApplikation.ViewModel
             int UnitID = UnitRepo.AddOrEditType(SelectedUnit, ActivityID);
             SelectedScoutMeeting.UpdateID(ActivityID, BadgeID, UnitID, MeetingID);
         }
+
         public void DeleteMeeting()
         {
-            ScoutMeetingRepo.DeleteType(SelectedScoutMeeting);
+            if (SelectedScoutMeeting != null)
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    "Er du sikker på, at du vil slette mødet?",
+                    "Bekræft sletning",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Fjern fra databasen
+                    ScoutMeetingRepo.DeleteType(SelectedScoutMeeting);
+
+                    // Fjern fra ObservableCollection
+                    ScoutMeetings.Remove(SelectedScoutMeeting);
+
+                    // Nulstil SelectedScoutMeeting
+                    SelectedScoutMeeting = null;
+
+                    // Eventuel opdatering af UI
+                    MessageBox.Show("Mødet blev slettet.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ingen møde valgt til sletning.");
+            }
         }
 
 
@@ -323,7 +359,6 @@ namespace SpejderApplikation.ViewModel
         }
 
         public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);
-
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen
         public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(SelectedScoutMeeting), canExecute => SelectedMeeting != null); // Tildeles til Edit knappen
         public RelayCommand NewCommand => new RelayCommand(execute => NewMeeting()); // tildeles til "Nyt Møde" knappen.
