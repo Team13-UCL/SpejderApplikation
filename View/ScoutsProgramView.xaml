@@ -370,13 +370,13 @@
         </Grid>
         <Image Grid.Row="3"
                Width="132"
-               Margin="606,168,0,26"
+               Margin="606,163,0,10"
                HorizontalAlignment="Left"
                Source="/Images/Scoutboy.png"
                Stretch="Fill" />
         <Image Grid.Row="3"
                Width="97"
-               Margin="540,219,0,10"
+               Margin="544,222,0,-5"
                HorizontalAlignment="Left"
                Source="/Images/fire.png"
                Stretch="Fill" />
