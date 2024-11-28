@@ -38,5 +38,10 @@ namespace SpejderApplikation.View
                 ? Visibility.Visible
                 : Visibility.Hidden;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

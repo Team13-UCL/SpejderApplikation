@@ -57,7 +57,7 @@
                    Margin="30,188,0,0"
                    IsHitTestVisible="False"
                    HorizontalAlignment="Left" />
-        
+
         <TextBlock HorizontalAlignment="Left"
                    Margin="25,267,0,0"
                    TextWrapping="Wrap"
@@ -85,6 +85,18 @@
         <Image Margin="17,166,576,197"
                Source="/Images/BæverBillede.png"
                Stretch="Fill" />
+        <Border BorderBrush="Black"
+                Name="MyBorder"
+                Background="#FF94D836"
+                CornerRadius="5"
+                Margin="74,286,454,71">
+            <Button Width="{Binding MyBorder.Width}"
+                    Height="{Binding MyBorder.Height}"
+                    Content="Login"
+                    Background="#FF94D836"
+                    Margin="6,4,5,5"
+                    BorderThickness="0"/>
+        </Border>
 
 
     </Grid>
