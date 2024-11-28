@@ -41,8 +41,8 @@ namespace SpejderApplikation.DataHandler
 
         public DrawingImage LoadSvg(byte[] svgBytes)
         {
-            try
-            {
+            //try
+            //{
                 // settings for wpf
                 WpfDrawingSettings settings = new WpfDrawingSettings
                 {
@@ -58,11 +58,11 @@ namespace SpejderApplikation.DataHandler
 
                     return new DrawingImage(drawing);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Error displaying SVG: {ex.Message}");
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new InvalidOperationException($"Error displaying SVG: {ex.Message}");
+            //}
         }
 
     }
