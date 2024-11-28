@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:SpejderApplikation"
         mc:Ignorable="d"
         Title="MainWindow"
+        Background="#89f336"
         Height="450"
         Width="800">
     <Grid Margin="10">
@@ -104,9 +105,10 @@
                         Margin="20,0">
                 <Button Content="Opret opgave"
                         Width="90"
-                        Background="LightGreen"
+                        Background="#89f336"
                         Margin="5,0"
-                        Height="25" />
+                        Height="25"
+                        Click="Button_Click" />
                 <Button Content="Rediger opgave"
                         Width="90"
                         Background="Gold"

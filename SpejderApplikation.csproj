@@ -9,13 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\bush.png" />
+    <None Remove="Images\BæverBillede.png" />
     <None Remove="Images\BæverSpejder.png" />
     <None Remove="Images\FamilieSpejder.png" />
+    <None Remove="Images\fire.png" />
+    <None Remove="Images\FugleBillede.png" />
     <None Remove="Images\JuniorSpejder.png" />
     <None Remove="Images\KFUMSpejderne.png" />
+    <None Remove="Images\LoginBillede.png" />
     <None Remove="Images\RoverSpejder.png" />
+    <None Remove="Images\Scoutboy.png" />
     <None Remove="Images\SeniorSpejder.png" />
+    <None Remove="Images\tree.png" />
     <None Remove="Images\TropSpejder.png" />
+    <None Remove="Images\UlveBillede.png" />
     <None Remove="Images\UlveSpejder.png" />
   </ItemGroup>
 
@@ -27,13 +35,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\bush.png" />
+    <Resource Include="Images\BæverBillede.png" />
     <Resource Include="Images\BæverSpejder.png" />
     <Resource Include="Images\FamilieSpejder.png" />
+    <Resource Include="Images\fire.png" />
+    <Resource Include="Images\FugleBillede.png" />
     <Resource Include="Images\JuniorSpejder.png" />
     <Resource Include="Images\KFUMSpejderne.png" />
+    <Resource Include="Images\LoginBillede.png" />
     <Resource Include="Images\RoverSpejder.png" />
+    <Resource Include="Images\Scoutboy.png" />
     <Resource Include="Images\SeniorSpejder.png" />
+    <Resource Include="Images\tree.png" />
     <Resource Include="Images\TropSpejder.png" />
+    <Resource Include="Images\UlveBillede.png" />
     <Resource Include="Images\UlveSpejder.png" />
   </ItemGroup>
 
