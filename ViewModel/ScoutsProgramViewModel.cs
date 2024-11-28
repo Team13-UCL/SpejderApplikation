@@ -268,7 +268,7 @@ namespace SpejderApplikation.ViewModel
             this.UnitRepo = UnitRepo ?? throw new ArgumentNullException(nameof(UnitRepo));
             _imageHandling = new ImageHandling();
             Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll());           
-            //ShowOldActivities(); // Initialize the ScoutMeetings collection
+            ShowOldActivities(); // Initialize the ScoutMeetings collection
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
         {
@@ -349,7 +349,7 @@ namespace SpejderApplikation.ViewModel
 
                 //den displayer med badgedata men skal måske os gemme i picture i badge????
                 SelectedBadge.Picture = imageBytes; // Save the image bytes to the Picture property in the Badge object
-                //SelectedScoutMeeting.BadgeData = imageBytes;
+                SelectedScoutMeeting.BadgeData = imageBytes;
                 
 
             }
@@ -374,7 +374,7 @@ namespace SpejderApplikation.ViewModel
 
         private void ShowOldActivities()
         {
-            var specificDate = new DateOnly(2024, 6, 22); // en specifik dato for at teste
+            var specificDate = new DateOnly(2024, 5, 10); // en specifik dato for at teste
 
             if (ShowOld == true)
             {

@@ -49,8 +49,8 @@ namespace SpejderApplikation.Repository
                         TimeSpan start = (TimeSpan)reader["Start"];
                         TimeSpan stop = (TimeSpan)reader["Stop"];
                         Byte[] picture;
-                        if (reader["BadgePicture"] != null)
-                        { picture = reader["BadgePicture"] as byte[]; }
+                        if (reader["Picture"] != null)
+                        { picture = reader["Picture"] as byte[]; }
                         else if (File.Exists(filePath) == true)
                         {
                             picture = File.ReadAllBytes(string.Concat(filePath, fileName));
