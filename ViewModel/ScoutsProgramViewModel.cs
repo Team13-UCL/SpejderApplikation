@@ -267,7 +267,8 @@ namespace SpejderApplikation.ViewModel
             this.ActivityRepo = ActivityRepo ?? throw new ArgumentNullException(nameof(ActivityRepo));
             this.UnitRepo = UnitRepo ?? throw new ArgumentNullException(nameof(UnitRepo));
             _imageHandling = new ImageHandling();
-            Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll());
+            Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll());           
+            ShowOldActivities(); // Initialize the ScoutMeetings collection
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
         {
@@ -356,6 +357,36 @@ namespace SpejderApplikation.ViewModel
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
+        }
+
+        private bool _showOld;
+        public bool ShowOld
+        {
+            get { return _showOld; }
+            set
+            {
+                _showOld = value;
+               // OnPropertyChanged(); ikke nødvendig
+                ShowOldActivities();
+            }
+        }
+              
+
+        private void ShowOldActivities()
+        {
+            var specificDate = new DateOnly(2024, 6, 22); // en specifik dato for at teste
+
+            if (ShowOld == true)
+            {
+                ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll());
+            }
+            else
+            {
+                var today = DateOnly.FromDateTime(DateTime.Today);
+               // ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll().Where(meeting => meeting.Date >= today)); // den rigtige der skal bruges 
+                ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll().Where(meeting => meeting.Date >= specificDate)); // en specifik dato for at teste
+            }
+            OnPropertyChanged(nameof(ScoutMeetings)); // tager scoutmeetings som parameter og opdaterer UI
         }
 
         public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);

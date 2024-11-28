@@ -183,6 +183,8 @@
             Orientation="Horizontal">
             <!--  Placeholder for Logo  -->
 
+            <!-- Checkbox -->
+            <CheckBox Content="Vis gamle møder" VerticalAlignment="Center" Margin="10,0" IsChecked="{Binding ShowOld}"/>
 
 
 
