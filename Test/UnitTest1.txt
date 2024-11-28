@@ -1,0 +1,119 @@
+using Microsoft.Data.SqlClient;
+using SpejderApplikation.Model;
+using SpejderApplikation.Repository;
+using SpejderApplikation.ViewModel;
+
+namespace SpejderApplikationTest
+{
+    [TestClass]
+    public class Test1
+    {
+        public string connectionString = "Server=DESKTOP-KK2A6LP;Database=SpejderApplikationTestDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        public ScoutsMeetingRepository ScoutsMeetingRepo;
+        public MeetingRepository MeetingRepo;
+        public BadgeRepository BadgeRepo;
+        public UnitRepository UnitRepo;
+        public ActivityRepository ActivityRepo;
+
+        public Meeting m0, m1, m2, m3;
+        public Badge b0, b1, b2, b3;
+        public Unit u0, u1, u2;
+        public Activity a0, a1, a2, a3;
+        public ScoutsMeeting sm1, sm2, sm3;
+
+        
+
+        [TestInitialize]
+        public void SetupForTest()
+        {
+            ScoutsMeetingRepo = new ScoutsMeetingRepository(connectionString);
+            ActivityRepo = new ActivityRepository(connectionString);
+            MeetingRepo = new MeetingRepository(connectionString);
+            UnitRepo = new UnitRepository(connectionString);
+            MeetingRepo = new MeetingRepository(connectionString);
+
+            // Initialiser testdata
+            m0 = new Meeting(0, DateOnly.MinValue, TimeOnly.MinValue, TimeOnly.MaxValue);
+            m1 = new Meeting(0, new DateOnly(2024, 11, 27), new TimeOnly(17, 0), new TimeOnly(19, 0));
+            m2 = new Meeting(0, new DateOnly(2024, 12, 4), new TimeOnly(17, 0), new TimeOnly(19, 0));
+            m3 = new Meeting(0, new DateOnly(2024, 12, 11), new TimeOnly(17, 0), new TimeOnly(19, 0));
+
+            b0 = new Badge(0, "Name", "Description", null, "Link");
+            b1 = new Badge(0, "Navigatør", "Moral og etik", null, "https://kfumspejderne.dk/maerke/navigatoer/");
+            b2 = new Badge(0, "Knivbevis", "Færdighed", null, "https://kfumspejderne.dk/maerke/knivbevis/");
+            b3 = new Badge(0, "Superhelte", "Motoriske bevægelser", null, "https://kfumspejderne.dk/maerke/superhelte/");
+
+            u0 = new Unit(0, "UnitName", "Unit Description", "Unit Link", null);
+            u1 = new Unit(1, "Bæver", "0-1 klasse", "https://kfumspejderne.dk/", null);
+            u2 = new Unit(2, "Ulve", "2-3 klasse", "https://kfumspejderne.dk/", null);
+
+            a0 = new Activity(0, "Activity Description", "Preparation", "Notes", "Activity");
+            a1 = new Activity(0, "Snakke om trafikregler i forskellige kontekster", "Berit forbereder", "", "Snak om trafikken");
+            a2 = new Activity(0, "Opsumere regler for høj dolkføring og snitte træmænd", "Husk at finde knive frem", "John har ansvaret", "Arbejde med knivbevis");
+            a3 = new Activity(0, "Hvilke specielle evner har bæverne hver for sig?", "Husk at forberede lidt konkurencer", "Mia forbereder", "Finde superkræfter");
+
+            sm1 = new ScoutsMeeting();
+            sm2 = new ScoutsMeeting();
+            sm3 = new ScoutsMeeting();
+        }
+
+        [TestMethod]
+        public void GetByIDTest()
+        {
+            int aID = ActivityRepo.AddOrEditType(a0, 1);
+            int bID = BadgeRepo.AddOrEditType(b0, 1);
+            int uID = UnitRepo.AddOrEditType(u0, 1);
+            int mID = MeetingRepo.AddOrEditType(m0, 1);
+
+            a0.UpdateID(aID);
+            b0.UpdateID(bID);
+            u0.UpdateID(uID);
+            m0.UpdateID(mID);
+
+            Assert.AreEqual(ActivityRepo.GetByID(aID), a0);
+            Assert.AreEqual(BadgeRepo.GetByID(bID), b0);
+            Assert.AreEqual(UnitRepo.GetByID(uID), u0);
+            Assert.AreEqual(MeetingRepo.GetByID(mID), m0);
+        }
+
+        [TestMethod]
+        public void AddScoutMeetingTest()
+        {
+            int aID1 = ActivityRepo.AddOrEditType(a1, 0);
+            int mID1 = MeetingRepo.AddOrEditType(m1, aID1);
+            int uID1 = UnitRepo.AddOrEditType(u1, aID1);
+            int bID1 = BadgeRepo.AddOrEditType(b1, aID1);
+            sm1 = ScoutsMeetingRepo.GetByID(aID1);
+            Assert.AreEqual("Snakke om trafikregler i forskellige kontekster", sm1.Activity);
+            Assert.AreEqual(new DateOnly(2024, 11, 27), sm1.Date);
+            Assert.AreEqual("Bæver", sm1.Unit);
+            Assert.AreEqual("Navigatør", sm1.BadgeName);
+        }
+
+        [TestMethod]
+        public void EditScoutMeetingTest()
+        {
+            int aID1 = ActivityRepo.AddOrEditType(a1, 0);
+            int mID1 = MeetingRepo.AddOrEditType(m1, aID1);
+            int uID1 = UnitRepo.AddOrEditType(u1, aID1);
+            int bID1 = BadgeRepo.AddOrEditType(b1, aID1);
+            sm1 = ScoutsMeetingRepo.GetByID(aID1);
+        }
+        [TestCleanup]
+        public void CleanupForTest()
+        {
+            string query = "EXEC ResetDatabase"; // SQL query, der kalder stored procedure.
+
+            using (SqlConnection connection = new SqlConnection(Connection.ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                // Åbn forbindelsen
+                connection.Open();
+
+                // Udfør forespørgslen
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+}
