@@ -59,13 +59,17 @@
                    HorizontalAlignment="Left" />
 
         <TextBlock HorizontalAlignment="Left"
-                   Margin="25,267,0,0"
-                   TextWrapping="Wrap"
-                   Text="Har du glemt dit kodeord?"
-                   VerticalAlignment="Top"
-                   FontFamily="Times New Roman"
-                   Foreground="#FF14FDC2"
-                   Hyperlink.Click="https://medlemsservice.spejdernet.dk/web/reset_password" />
+           Margin="25,267,0,0"
+           TextWrapping="Wrap"
+           VerticalAlignment="Top"
+           FontFamily="Times New Roman"
+           Foreground="#FF14FDC2">
+    <Hyperlink NavigateUri="https://medlemsservice.spejdernet.dk/web/reset_password"
+               RequestNavigate="Hyperlink_RequestNavigate"
+               Foreground="#FF14FDC2">
+        Har du glemt dit kodeord?
+    </Hyperlink>
+        </TextBlock>
         <Image Margin="210,206,403,142"
                Source="/Images/UlveBillede.png"
                Stretch="Fill" />
