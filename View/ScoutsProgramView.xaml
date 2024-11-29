@@ -6,28 +6,55 @@
     xmlns:local="clr-namespace:SpejderApplikation.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="ScoutsProgramView"
-    Width="800"
-    Height="650"
+    Width="850"
+    Height="750"
     MinWidth="400"
     MinHeight="400"
-    MaxWidth="800"
-    MaxHeight="650"
+    MaxWidth="850"
+    MaxHeight="750"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.Background>
         <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
             <GradientStop Color="#FFD87B0D" />
-            <GradientStop Offset="0.279" Color="#FF9DBB61" />
+            <GradientStop Offset="0.229" Color="#FF9DBB61" />
         </LinearGradientBrush>
     </Window.Background>
+
+
+    <Window.Resources>
+        <!-- Define the DataGridColumnHeader style -->
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#FF85A500" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="1" />
+            <!-- Make this uniform -->
+            
+        </Style>
+
+        <!-- Define the DataGrid style -->
+        <Style TargetType="DataGrid">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+
+    </Window.Resources>
 
     <Grid Margin="0">
         <!--  Define two rows: one for the badges and one for buttons, checkbox, and search  -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="98*" />
-            <RowDefinition Height="149*" />
+            <RowDefinition Height="19*" />
+            <RowDefinition Height="185*"/>
+            <RowDefinition Height="310*" />
         </Grid.RowDefinitions>
         <Border BorderThickness="6" CornerRadius="8,8,0,8" />
 
@@ -39,19 +66,19 @@
 
         <!--  Badge Icons Row  -->
         <Image
-            Grid.RowSpan="4"
+            Grid.RowSpan="5"
             Width="232"
             Height="718"
-            Margin="701,-61,0,0"
+            Margin="749,-3,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Source="/Images/tree.png"
             Stretch="Fill" />
         <Image
-            Grid.RowSpan="2"
+            Grid.RowSpan="4"
             Width="328"
             Height="258"
-            Margin="623,-148,0,0"
+            Margin="701,-73,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Source="/Images/bush.png"
@@ -80,8 +107,8 @@
                 Grid.RowSpan="2"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
-                HorizontalAlignment="Center"
-                Orientation="Horizontal">
+                HorizontalAlignment="Left"
+                Orientation="Horizontal" Width="572" Margin="36,0,0,0">
                 <!--  Placeholder rectangles for scout badge icons  -->
 
                 <Button
@@ -185,7 +212,7 @@
             Margin="0,10,0,10"
             Orientation="Horizontal">
             <!--  Placeholder for Logo  -->
-         
+
 
             <!--  Checkbox  -->
             <CheckBox
@@ -237,7 +264,7 @@
         </StackPanel>
 
         <!--  DataGrid Section  -->
-        <Grid Grid.Row="2" Grid.RowSpan="2">
+        <Grid Grid.Row="2" Grid.RowSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="1*" />
@@ -247,13 +274,12 @@
                 Grid.Column="0"
                 AutoGenerateColumns="False"
                 CanUserAddRows="False"
-                HeadersVisibility="Column"
                 ItemsSource="{Binding ScoutMeetings}"
                 RowHeight="40"
-                SelectedItem="{Binding SelectedScoutMeeting}">
+                SelectedItem="{Binding SelectedScoutMeeting}" AlternatingRowBackground="#FFD7E3BF" AlternationCount="9" Background="#FF9DBB61" RowBackground="#FFC4D6A0" Margin="10,0,22,0" HeadersVisibility="Column">
+
 
                 <DataGrid.Columns>
-                    <!--  Define columns as per your wireframe  -->
                     <DataGridTextColumn
                         Width="1*"
                         Binding="{Binding Date}"
@@ -284,14 +310,13 @@
             </DataGrid>
 
             <StackPanel
-                Grid.Column="1"
-                Margin="0,0,28,0"
-                Orientation="Vertical">
+                Margin="510,45,51,-45"
+                Orientation="Vertical" Grid.ColumnSpan="2">
                 <DatePicker
                     x:Name="MeetingDP"
                     Width="180"
                     Height="auto"
-                    Text="{Binding Date, Mode=TwoWay}" />
+                    Text="{Binding Date, Mode=TwoWay}" BorderBrush="Black" />
                 <TextBox
                     x:Name="StartTP"
                     Width="180"
@@ -311,7 +336,7 @@
                     x:Name="BadgeNametb"
                     Width="180"
                     Height="auto"
-                    Text="{Binding BadgeName, FallbackValue=Mærke, TargetNullValue=Mærke}" />
+                    Text="{Binding BadgeName, FallbackValue=Mærke, TargetNullValue=Mærke}" BorderBrush="Black" />
                 <TextBox
                     x:Name="Descriptiontb"
                     Width="180"
@@ -392,14 +417,16 @@
                 <TextBox
                     x:Name="UnitDescriptiontb"
                     Width="181"
-                    Text="{Binding UnitDescription, FallbackValue=Beskrivelse, TargetNullValue=Beskrivelse}" />
+                    Text="{Binding UnitDescription, FallbackValue=Beskrivelse, TargetNullValue=Beskrivelse}" BorderBrush="Black" />
                 <Grid Width="181" Height="auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition />
                         <ColumnDefinition Width="0*" />
                     </Grid.ColumnDefinitions>
-                    <TextBox
+
+                    <!--skal ikke bruges mere-->
+                    <!--<TextBox
                         x:Name="UnitLinktb"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
@@ -409,21 +436,21 @@
                         x:Name="UnitLinkbtn"
                         Grid.ColumnSpan="2"
                         Margin="136,0,0,0"
-                        Content="Billede" />
+                        Content="Billede" />-->
                 </Grid>
             </StackPanel>
         </Grid>
         <Image
-            Grid.Row="3"
+            Grid.Row="4"
             Width="132"
-            Margin="606,163,0,10"
+            Margin="622,185,0,19"
             HorizontalAlignment="Left"
             Source="/Images/Scoutboy.png"
             Stretch="Fill" />
         <Image
-            Grid.Row="3"
+            Grid.Row="4"
             Width="97"
-            Margin="544,222,0,-5"
+            Margin="541,217,0,0"
             HorizontalAlignment="Left"
             Source="/Images/fire.png"
             Stretch="Fill" />
