@@ -456,7 +456,7 @@
             Stretch="Fill" />
 
 
-        <ItemsControl Grid.Row="0"
+        <!--<ItemsControl Grid.Row="0"
                       ItemsSource="{Binding Units}"
                       Margin="10">
             <ItemsControl.ItemsPanel>
@@ -473,7 +473,7 @@
                             CommandParameter="{Binding}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ItemsControl>-->
 
 
 

@@ -25,6 +25,7 @@ namespace SpejderApplikation.ViewModel
         private readonly ImageHandling _imageHandling;
 
 
+        // Skifter enhed i ScoutsProgramView
 
 
         // Command til at vælge en enhed (RelayCommand)
@@ -38,33 +39,39 @@ namespace SpejderApplikation.ViewModel
             },
             canExecute => true);
 
-        public ObservableCollection<Unit> Units { get; set; } = new ObservableCollection<Unit>();
-        public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; } = new ObservableCollection<ScoutsMeeting>();
+
+        //programmet virker ikke med disse 
+        //public ObservableCollection<Unit> Units { get; set; } = new ObservableCollection<Unit>();
+        //public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; } = new ObservableCollection<ScoutsMeeting>();
 
 
+
+
+        public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
         public ObservableCollection<Badge> Badges { get; set; }
+        public ObservableCollection<Unit> Units { get; set; }
         private DateOnly _date;
-        public DateOnly Date 
+        public DateOnly Date
         {
             get { return _date; }
             set
             {
                 _date = value;
                 OnPropertyChanged(); // Afgørende for at UI opdateres når værdier ændres
-            } 
+            }
         }
         private TimeOnly _start;
-        public TimeOnly Start 
+        public TimeOnly Start
         {
             get { return _start; }
-            set 
-            { 
+            set
+            {
                 _start = value;
                 OnPropertyChanged();
             }
         }
         private TimeOnly _stop;
-        public TimeOnly Stop 
+        public TimeOnly Stop
         {
             get { return _stop; }
             set
@@ -78,8 +85,8 @@ namespace SpejderApplikation.ViewModel
         public string BadgeName
         {
             get { return _badgeName; }
-            set 
-            { 
+            set
+            {
                 _badgeName = value;
                 OnPropertyChanged();
             }
@@ -89,7 +96,9 @@ namespace SpejderApplikation.ViewModel
         public string BadgeDescription
         {
             get { return _badgeDescription; }
-            set { _badgeDescription = value;
+            set
+            {
+                _badgeDescription = value;
                 OnPropertyChanged();
             }
         }
@@ -98,7 +107,8 @@ namespace SpejderApplikation.ViewModel
         public string BadgeLink
         {
             get { return _badgeLink; }
-            set {
+            set
+            {
                 _badgeLink = value;
                 OnPropertyChanged();
             }
@@ -111,7 +121,7 @@ namespace SpejderApplikation.ViewModel
             {
                 _badgeData = value;
                 OnPropertyChanged();
-                
+
             }
         }
 
@@ -130,7 +140,9 @@ namespace SpejderApplikation.ViewModel
         public string Activity
         {
             get { return _activity; }
-            set { _activity = value;
+            set
+            {
+                _activity = value;
                 OnPropertyChanged();
             }
         }
@@ -139,7 +151,9 @@ namespace SpejderApplikation.ViewModel
         public string Preparation
         {
             get { return _preparation; }
-            set { _preparation = value;
+            set
+            {
+                _preparation = value;
                 OnPropertyChanged();
             }
         }
@@ -148,7 +162,9 @@ namespace SpejderApplikation.ViewModel
         public string Notes
         {
             get { return _notes; }
-            set { _notes = value;
+            set
+            {
+                _notes = value;
                 OnPropertyChanged();
             }
         }
@@ -157,8 +173,8 @@ namespace SpejderApplikation.ViewModel
         public string UnitName
         {
             get { return _unitName; }
-            set 
-            { 
+            set
+            {
                 _unitName = value;
                 OnPropertyChanged();
             }
@@ -168,7 +184,9 @@ namespace SpejderApplikation.ViewModel
         public string UnitDescription
         {
             get { return _unitDescription; }
-            set { _unitDescription = value;
+            set
+            {
+                _unitDescription = value;
                 OnPropertyChanged();
             }
         }
@@ -178,50 +196,25 @@ namespace SpejderApplikation.ViewModel
         public string UnitLink
         {
             get { return _unitLink; }
-            set { _unitLink = value;
+            set
+            {
+                _unitLink = value;
                 OnPropertyChanged();
             }
         }
 
-        // Skifter enhed i ScoutsProgramView
-        // Property for den valgte enhed
         private Unit _selectedUnit;
+
         public Unit SelectedUnit
         {
             get { return _selectedUnit; }
             set
             {
                 _selectedUnit = value;
-                OnPropertyChanged();  // Opdater bindingen
-                UnitName = _selectedUnit?.UnitName ?? string.Empty;
-                UnitLink = _selectedUnit?.Link ?? string.Empty;
-                UnitDescription = _selectedUnit?.Description ?? string.Empty;
-
-                // Opdater opgaver, når enheden ændres
-                UpdateScoutMeetingsForSelectedUnit();
-            }
-        }
-        // Metode der filtrerer opgaver efter enheden
-        private void UpdateScoutMeetingsForSelectedUnit()
-        {
-            if (SelectedUnit != null)
-            {
-                var filteredMeetings = ScoutMeetingRepo.GetAll()
-                    .Where(meeting => meeting.unitID == SelectedUnit._unitID);
-                ScoutMeetings.Clear();
-                foreach (var meeting in filteredMeetings)
-                {
-                    ScoutMeetings.Add(meeting);
-                }
-            }
-            else
-            {
-                // Hvis ingen enhed er valgt, vis alle opgaver
-                ScoutMeetings.Clear();
-                foreach (var meeting in ScoutMeetingRepo.GetAll())
-                {
-                    ScoutMeetings.Add(meeting);
-                }
+                OnPropertyChanged();
+                UnitName = _selectedUnit.UnitName;
+                UnitLink = _selectedUnit.Link;
+                UnitDescription = _selectedUnit.Description;
             }
         }
 
@@ -252,8 +245,8 @@ namespace SpejderApplikation.ViewModel
         public Activity SelectedActivity
         {
             get { return _selectedActivity; }
-            set 
-            { 
+            set
+            {
                 _selectedActivity = value;
                 OnPropertyChanged();
                 Activity = _selectedActivity.ActivityDescription;
@@ -266,8 +259,8 @@ namespace SpejderApplikation.ViewModel
         public Badge SelectedBadge
         {
             get { return _selectedBadge; }
-            set 
-            { 
+            set
+            {
                 _selectedBadge = value;
                 OnPropertyChanged();
                 BadgeName = _selectedBadge.Name;
@@ -281,11 +274,11 @@ namespace SpejderApplikation.ViewModel
 
 
         private ScoutsMeeting _selectedScoutMeeting;
-        public ScoutsMeeting SelectedScoutMeeting 
+        public ScoutsMeeting SelectedScoutMeeting
         {
-            get {  return _selectedScoutMeeting; }
-            set 
-            { 
+            get { return _selectedScoutMeeting; }
+            set
+            {
                 _selectedScoutMeeting = value;
                 OnPropertyChanged();
                 SelectedMeeting = MeetingRepo.GetByID(SelectedScoutMeeting.meetingID);
@@ -298,9 +291,9 @@ namespace SpejderApplikation.ViewModel
         }
 
         public ScoutsProgramViewModel(IRepository<ScoutsMeeting> repository,
-                                        IRepository<Meeting> meetingRepo, 
-                                        IRepository<Badge> BadgeRepo, 
-                                        IRepository<Activity> ActivityRepo, 
+                                        IRepository<Meeting> meetingRepo,
+                                        IRepository<Badge> BadgeRepo,
+                                        IRepository<Activity> ActivityRepo,
                                         IRepository<Unit> UnitRepo)
         {
             this.ScoutMeetingRepo = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -310,7 +303,7 @@ namespace SpejderApplikation.ViewModel
             this.ActivityRepo = ActivityRepo ?? throw new ArgumentNullException(nameof(ActivityRepo));
             this.UnitRepo = UnitRepo ?? throw new ArgumentNullException(nameof(UnitRepo));
             _imageHandling = new ImageHandling();
-            Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll());           
+            Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll());
             ShowOldActivities(); // Initialize the ScoutMeetings collection
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
@@ -366,14 +359,14 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 link = value;
-                OnPropertyChanged();                
+                OnPropertyChanged();
             }
         }
 
 
         private async Task DownloadImage()
         {
-            if (string.IsNullOrWhiteSpace(BadgeLink)) 
+            if (string.IsNullOrWhiteSpace(BadgeLink))
             {
                 MessageBox.Show("manglende hjemmeside");
                 return;
@@ -383,7 +376,7 @@ namespace SpejderApplikation.ViewModel
             {
                 // Download the SVG image
                 byte[] imageBytes = await _imageHandling.DownloadAndSaveImage(BadgeLink);
-                                
+
                 if (imageBytes == null || imageBytes.Length == 0)
                 {
                     MessageBox.Show("kunne ikke finde billedet");
@@ -393,7 +386,7 @@ namespace SpejderApplikation.ViewModel
                 //den displayer med badgedata men skal måske os gemme i picture i badge????
                 SelectedBadge.Picture = imageBytes; // Save the image bytes to the Picture property in the Badge object
                 SelectedScoutMeeting.BadgeData = imageBytes;
-                
+
 
             }
             catch (Exception ex)
@@ -410,11 +403,11 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _showOld = value;
-               // OnPropertyChanged(); ikke nødvendig
+                // OnPropertyChanged(); ikke nødvendig
                 ShowOldActivities();
             }
         }
-              
+
 
         private void ShowOldActivities()
         {
@@ -427,7 +420,7 @@ namespace SpejderApplikation.ViewModel
             else
             {
                 var today = DateOnly.FromDateTime(DateTime.Today);
-               // ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll().Where(meeting => meeting.Date >= today)); // den rigtige der skal bruges 
+                // ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll().Where(meeting => meeting.Date >= today)); // den rigtige der skal bruges 
                 ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll().Where(meeting => meeting.Date >= specificDate)); // en specifik dato for at teste
             }
             OnPropertyChanged(nameof(ScoutMeetings)); // tager scoutmeetings som parameter og opdaterer UI
