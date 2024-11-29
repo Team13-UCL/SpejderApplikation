@@ -429,6 +429,25 @@
             Stretch="Fill" />
 
 
+        <ItemsControl Grid.Row="0"
+                      ItemsSource="{Binding Units}"
+                      Margin="10">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding UnitName}"
+                            Margin="5"
+                            Padding="10"
+                            Command="{Binding DataContext.SelectUnitCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            CommandParameter="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
 
 
     </Grid>
