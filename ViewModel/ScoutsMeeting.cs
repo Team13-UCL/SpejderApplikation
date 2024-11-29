@@ -100,5 +100,29 @@ namespace SpejderApplikation.ViewModel
             unitID = UnitID;
             meetingID = MeetingID;
         }
+
+        private void UpdateScoutMeetingsForSelectedUnit()
+        {
+            if (SelectedUnit != null)
+            {
+                var filteredMeetings = ScoutMeetingRepo.GetAll()
+                    .Where(meeting => meeting.unitID == SelectedUnit.UnitID);
+                ScoutMeetings.Clear();
+                foreach (var meeting in filteredMeetings)
+                {
+                    ScoutMeetings.Add(meeting);
+                }
+            }
+            else
+            {
+                // Hvis ingen enhed er valgt, vis alle opgaver
+                ScoutMeetings.Clear();
+                foreach (var meeting in ScoutMeetingRepo.GetAll())
+                {
+                    ScoutMeetings.Add(meeting);
+                }
+            }
+        }
+
     }
 }

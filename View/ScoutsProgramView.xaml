@@ -89,7 +89,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent">
+                    BorderBrush="Transparent"
+                    Command="{Binding ShowFamilyScoutTasksCommand}">
                     <!--  ="OnFamilyScoutClick">  -->
                     <Image
                         x:Name="FamilieSpejder"
@@ -101,7 +102,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent">
+                    BorderBrush="Transparent"
+                    Command="{Binding ShowBeaverScoutTasksCommand}">
                     <!--  ="OnBeaverScoutClick">  -->
                     <Image
                         x:Name="BæverSpejder"
@@ -113,7 +115,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent">
+                    BorderBrush="Transparent"
+                        Command="{Binding ShowWolfScoutTasksCommand}">
                     <!--  ="OnWolfScoutClick"  -->
                     <Image
                         x:Name="UlveSpejder"
@@ -125,7 +128,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent">
+                    BorderBrush="Transparent"
+                        Command="{Binding ShowJuniorScoutTasksCommand}">
                     <!--  Click="OnJuniorScoutClick">  -->
                     <Image
                         x:Name="JuniorSpejder"
@@ -137,7 +141,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent">
+                    BorderBrush="Transparent"
+                        Command="{Binding ShowTroopScoutTasksCommand}">
                     <!--  Click="OnTroopScoutClick">  -->
                     <Image
                         x:Name="TropSpejder"
@@ -149,7 +154,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent">
+                    BorderBrush="Transparent"
+                        Command="{Binding ShowSeniorScoutTasksCommand}">
                     <!--  Click="OnSeniorScoutClick">  -->
                     <Image
                         x:Name="SeniorSpejder"
@@ -161,7 +167,8 @@
                     Height="65"
                     Margin="5"
                     Background="Transparent"
-                    BorderBrush="Transparent">
+                    BorderBrush="Transparent"
+                        Command="{Binding ShowRoverScoutTasksCommand}">
                     <!--  Click="OnRoverScoutClick">  -->
                     <Image
                         x:Name="RoverSpejder"

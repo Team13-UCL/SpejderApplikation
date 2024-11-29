@@ -24,6 +24,13 @@ namespace SpejderApplikation.ViewModel
         IRepository<Unit> UnitRepo;
         private readonly ImageHandling _imageHandling;
 
+
+        // Skifter enhed i ScoutsProgramView
+
+
+
+
+
         public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
         public ObservableCollection<Badge> Badges { get; set; }
         public ObservableCollection<Unit> Units { get; set; }
@@ -356,6 +363,7 @@ namespace SpejderApplikation.ViewModel
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
+
         }
 
         public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);
