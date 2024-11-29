@@ -25,15 +25,24 @@ namespace SpejderApplikation.ViewModel
         private readonly ImageHandling _imageHandling;
 
 
-        // Skifter enhed i ScoutsProgramView
 
 
+        // Command til at vælge en enhed (RelayCommand)
+        public RelayCommand SelectUnitCommand => new RelayCommand(
+            execute =>
+            {
+                if (execute is Unit selectedUnit)
+                {
+                    SelectedUnit = selectedUnit;
+                }
+            },
+            canExecute => true);
+
+        public ObservableCollection<Unit> Units { get; set; } = new ObservableCollection<Unit>();
+        public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; } = new ObservableCollection<ScoutsMeeting>();
 
 
-
-        public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
         public ObservableCollection<Badge> Badges { get; set; }
-        public ObservableCollection<Unit> Units { get; set; }
         private DateOnly _date;
         public DateOnly Date 
         {
@@ -174,18 +183,45 @@ namespace SpejderApplikation.ViewModel
             }
         }
 
+        // Skifter enhed i ScoutsProgramView
+        // Property for den valgte enhed
         private Unit _selectedUnit;
-
         public Unit SelectedUnit
         {
             get { return _selectedUnit; }
-            set 
-            { 
+            set
+            {
                 _selectedUnit = value;
-                OnPropertyChanged();
-                UnitName = _selectedUnit.UnitName;
-                UnitLink = _selectedUnit.Link;
-                UnitDescription = _selectedUnit.Description;
+                OnPropertyChanged();  // Opdater bindingen
+                UnitName = _selectedUnit?.UnitName ?? string.Empty;
+                UnitLink = _selectedUnit?.Link ?? string.Empty;
+                UnitDescription = _selectedUnit?.Description ?? string.Empty;
+
+                // Opdater opgaver, når enheden ændres
+                UpdateScoutMeetingsForSelectedUnit();
+            }
+        }
+        // Metode der filtrerer opgaver efter enheden
+        private void UpdateScoutMeetingsForSelectedUnit()
+        {
+            if (SelectedUnit != null)
+            {
+                var filteredMeetings = ScoutMeetingRepo.GetAll()
+                    .Where(meeting => meeting.unitID == SelectedUnit._unitID);
+                ScoutMeetings.Clear();
+                foreach (var meeting in filteredMeetings)
+                {
+                    ScoutMeetings.Add(meeting);
+                }
+            }
+            else
+            {
+                // Hvis ingen enhed er valgt, vis alle opgaver
+                ScoutMeetings.Clear();
+                foreach (var meeting in ScoutMeetingRepo.GetAll())
+                {
+                    ScoutMeetings.Add(meeting);
+                }
             }
         }
 
