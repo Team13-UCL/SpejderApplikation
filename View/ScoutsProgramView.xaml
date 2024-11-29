@@ -176,10 +176,6 @@
                         Stretch="Uniform" />
                 </Button>
             </StackPanel>
-            <ComboBox
-                Grid.Column="3"
-                Margin="0,10,0,0"
-                VerticalAlignment="Top" />
         </Grid>
 
 
@@ -189,15 +185,14 @@
             Margin="0,10,0,10"
             Orientation="Horizontal">
             <!--  Placeholder for Logo  -->
-
-
-
+         
 
             <!--  Checkbox  -->
             <CheckBox
                 Margin="10,0"
                 VerticalAlignment="Center"
-                Content="Vis gamle møder" />
+                Content="Vis gamle møder" 
+                IsChecked="{Binding ShowOld}"/>
 
             <!--  Task Buttons  -->
             <StackPanel

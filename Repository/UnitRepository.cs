@@ -61,8 +61,7 @@ namespace SpejderApplikation.Repository
                             (int)reader[""],
                             (string)reader[""],
                             (string)reader[""],
-                            (string)reader[""],
-                            (byte[])reader[""]));
+                            (string)reader[""]));
                     }
                 }
             }
@@ -89,8 +88,8 @@ namespace SpejderApplikation.Repository
                         string unitName = reader.IsDBNull(reader.GetOrdinal("UnitName")) ? string.Empty : (string)reader["UnitName"];
                         string description = reader.IsDBNull(reader.GetOrdinal("Description")) ? string.Empty : (string)reader["Description"];
                         string unitLink = reader.IsDBNull(reader.GetOrdinal("Link")) ? string.Empty : (string)reader["Link"];
-                        byte[] unitPicture = reader.IsDBNull(reader.GetOrdinal("Picture")) ? new byte[0] : (byte[])reader["Picture"];
-                        entity = new Unit(unitID, unitName, description, unitLink, unitPicture);
+                        //byte[] unitPicture = reader.IsDBNull(reader.GetOrdinal("Picture")) ? new byte[0] : (byte[])reader["Picture"]; bruges ikke mere
+                        entity = new Unit(unitID, unitName, description, unitLink);
                     }
                 }
             }

@@ -60,10 +60,16 @@ namespace SpejderApplikation.ViewModel
             {
                 if (BadgeData == null) return null;
 
-                var imageHandling = new ImageHandling();
-                return imageHandling.LoadSvg(BadgeData);
-
-
+                try
+                {
+                    var imageHandling = new ImageHandling();
+                    return imageHandling.LoadSvg(BadgeData);
+                }
+                catch (Exception)
+                {
+                    // Log the exception if necessary
+                    return null;
+                }
             }
         }
         public string BadgeName { get; set; } //behøves ikke
