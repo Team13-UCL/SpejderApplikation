@@ -19,8 +19,28 @@ namespace SpejderApplikation.ViewModel
         public int activityID { get; set; }
         public int badgeID { get; set; }
         public int unitID { get; set; }
-        public TimeOnly Start { get; set; }
-        public TimeOnly Stop { get; set; }
+        public TimeOnly _start;
+        public TimeOnly Start 
+        {
+            get => _start;
+            set
+            {
+                _start = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Time));
+            }
+        }
+        public TimeOnly _stop;
+        public TimeOnly Stop 
+        {
+            get => _stop;
+            set
+            {
+                _stop = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Time));
+            }
+        }
         //public string Time { get { return $"{Start:HH:mm} - {Stop:HH:mm}"; } }
         private byte[] _badgeData;
         public byte[] BadgeData
@@ -35,8 +55,17 @@ namespace SpejderApplikation.ViewModel
                     OnPropertyChanged(nameof(Picture)); // notificerer at Picture er ændret
                 }
             }
-        } 
-        public DateOnly Date { get; set; }
+        }
+        private DateOnly _date;
+        public DateOnly Date 
+        { 
+            get => _date; 
+            set 
+            { 
+                _date = value;
+                OnPropertyChanged();
+            } 
+        }
         public string Time
         {
             get { return $"{Start:HH:mm} - {Stop:HH:mm}"; }
@@ -73,9 +102,27 @@ namespace SpejderApplikation.ViewModel
             }
         }
         public string BadgeName { get; set; } //behøves ikke
-        public string Activity { get; set; }
+        private string _activity;
+        public string Activity 
+        { 
+            get => _activity; 
+            set
+            {
+                _activity = value;
+                OnPropertyChanged();
+            }
+        }
         public string Preparation { get; set; }
-        public string Notes { get; set; }
+        private string _notes;
+        public string Notes 
+        {
+            get => _notes;
+            set
+            {
+                _notes = value;
+                OnPropertyChanged();
+            }
+        }
         public string Unit { get; set; }
         public ScoutsMeeting(DateOnly date, TimeOnly start, TimeOnly stop, byte[] badge, 
                             string activity, string notes, string unit,

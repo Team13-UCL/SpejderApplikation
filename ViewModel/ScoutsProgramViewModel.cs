@@ -181,6 +181,7 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _notes = value;
+                SelectedScoutMeeting.Notes = value;
                 OnPropertyChanged();
             }
         }

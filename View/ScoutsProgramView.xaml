@@ -300,14 +300,34 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    
                     <DataGridTemplateColumn Header="Aktivitet" Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Name="ActivityColumntb"
+                                         Text="{Binding Activity}"
+                                         TextWrapping="Wrap"
+                                         IsReadOnly="True"
+                                         Background="Transparent"
+                                         BorderBrush="Transparent"
+                                         Foreground="Black"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                        
-                    <DataGridTextColumn
-                        Width="1*"
-                        Binding="{Binding Notes}"
-                        Header="Husk"
-                        IsReadOnly="True" />
+
+                    <DataGridTemplateColumn Header="Husk" Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Name="NotesColumntb"
+                                        Text="{Binding Notes}"
+                                        TextWrapping="Wrap"
+                                        IsReadOnly="True"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        Foreground="Black"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -339,7 +359,9 @@
                     x:Name="BadgeNametb"
                     Width="180"
                     Height="auto"
-                    Text="{Binding BadgeName, FallbackValue=Mærke, TargetNullValue=Mærke}" BorderBrush="Black" />
+                    Text="{Binding BadgeName, FallbackValue=Mærke, TargetNullValue=Mærke}"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto"/>
                 <TextBox
                     x:Name="Descriptiontb"
                     Width="180"
@@ -380,7 +402,8 @@
                         Margin="4,0,0,0"
                         ItemsSource="{Binding Badges}"
                         DisplayMemberPath="Name"
-                        SelectedItem="{Binding SelectedBadge}"/>
+                        SelectedItem="{Binding SelectedBadge}"
+                        SelectedIndex="{Binding SelectedBadge}"/>
                 </Grid>
                 <TextBox 
                     Name="ActivityTeasertb"
