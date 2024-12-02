@@ -276,7 +276,7 @@
                 CanUserAddRows="False"
                 ItemsSource="{Binding ScoutMeetings}"
                 RowHeight="40"
-                SelectedItem="{Binding SelectedScoutMeeting}" AlternatingRowBackground="#FFD7E3BF" AlternationCount="9" Background="#FF9DBB61" RowBackground="#FFC4D6A0" Margin="10,0,22,0" HeadersVisibility="Column">
+                SelectedItem="{Binding SelectedScoutMeeting}" AlternatingRowBackground="#FFD7E3BF" AlternationCount="2" Background="#FF9DBB61" RowBackground="#FFC4D6A0" Margin="10,0,22,0" HeadersVisibility="Column">
 
 
                 <DataGrid.Columns>
