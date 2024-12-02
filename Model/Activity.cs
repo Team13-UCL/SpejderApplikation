@@ -21,6 +21,7 @@ namespace SpejderApplikation.Model
             ActivityDescription = description;
             Preparation = preparation;
             Notes = notes;
+            BriefDescription = Activity;
         }
         // ???
         public Activity()

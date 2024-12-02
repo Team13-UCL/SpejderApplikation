@@ -57,6 +57,7 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _date = value;
+                SelectedScoutMeeting.Date = value;
                 OnPropertyChanged(); // Afgørende for at UI opdateres når værdier ændres
             }
         }
@@ -67,6 +68,7 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _start = value;
+                SelectedScoutMeeting.Start = value;
                 OnPropertyChanged();
             }
         }
@@ -77,6 +79,7 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _stop = value;
+                SelectedScoutMeeting.Stop = value;
                 OnPropertyChanged();
             }
         }
@@ -135,6 +138,19 @@ namespace SpejderApplikation.ViewModel
                 OnPropertyChanged();
             }
         }
+        private string _activityTeaser;
+
+        public string ActivityTeaser
+        {
+            get { return _activityTeaser; }
+            set 
+            { 
+                _activityTeaser = value;
+                SelectedScoutMeeting.Activity = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private string _activity;
         public string Activity
@@ -249,6 +265,7 @@ namespace SpejderApplikation.ViewModel
             {
                 _selectedActivity = value;
                 OnPropertyChanged();
+                ActivityTeaser = _selectedActivity.BriefDescription;
                 Activity = _selectedActivity.ActivityDescription;
                 Preparation = _selectedActivity.Preparation;
                 Notes = _selectedActivity.Notes;

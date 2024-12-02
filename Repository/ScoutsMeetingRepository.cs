@@ -59,7 +59,7 @@ namespace SpejderApplikation.Repository
                         {
                             picture = new byte[0];
                         }
-                        string ActivityDescription = reader.IsDBNull(reader.GetOrdinal("ActivityDescription")) ? string.Empty : (string)reader["ActivityDescription"];
+                        string Activity = reader.IsDBNull(reader.GetOrdinal("Activity")) ? string.Empty : (string)reader["Activity"];
                         string Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? string.Empty : (string)reader["Notes"];
                         string UnitName = reader.IsDBNull(reader.GetOrdinal("UnitName")) ? string.Empty : (string)reader["UnitName"];
                         int unitID = reader.IsDBNull(reader.GetOrdinal("UnitID")) ? 0 : (int)reader["UnitID"];
@@ -71,7 +71,7 @@ namespace SpejderApplikation.Repository
                             TimeOnly.FromTimeSpan(start),
                             TimeOnly.FromTimeSpan(stop),
                             picture,
-                            ActivityDescription,
+                            Activity,
                             Notes,
                             UnitName,
                             MeetingID,

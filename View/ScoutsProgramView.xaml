@@ -283,11 +283,13 @@
                     <DataGridTextColumn
                         Width="1*"
                         Binding="{Binding Date}"
-                        Header="Dato" />
+                        Header="Dato"
+                        IsReadOnly="True" />
                     <DataGridTextColumn
                         Width="1*"
                         Binding="{Binding Time, Mode=TwoWay}"
-                        Header="Tid" />
+                        Header="Tid"
+                        IsReadOnly="True" />
                     <DataGridTemplateColumn Width="1*" Header="Mærke">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -298,14 +300,14 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn
-                        Width="1*"
-                        Binding="{Binding Activity}"
-                        Header="Aktivitet" />
+                    <DataGridTemplateColumn Header="Aktivitet" Width="1*">
+                    </DataGridTemplateColumn>
+                        
                     <DataGridTextColumn
                         Width="1*"
                         Binding="{Binding Notes}"
-                        Header="Husk" />
+                        Header="Husk"
+                        IsReadOnly="True" />
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -316,17 +318,18 @@
                     x:Name="MeetingDP"
                     Width="180"
                     Height="auto"
-                    Text="{Binding Date, Mode=TwoWay}" BorderBrush="Black" />
+                    Text="{Binding Date}"
+                    BorderBrush="Black" />
                 <TextBox
                     x:Name="StartTP"
                     Width="180"
                     Height="auto"
-                    Text="{Binding Start, FallbackValue=00:00:00, TargetNullValue=00:00:00}" />
+                    Text="{Binding Start, FallbackValue=StartTid, TargetNullValue=StartTid, UpdateSourceTrigger=LostFocus}"/>
                 <TextBox
                     x:Name="StopTP"
                     Width="180"
                     Height="auto"
-                    Text="{Binding Stop, FallbackValue=00:00:00, TargetNullValue=00:00:00}" />
+                    Text="{Binding Stop, FallbackValue=SlutTid, TargetNullValue=SlutTid, UpdateSourceTrigger=LostFocus}" />
                 <Label
                     x:Name="Mærkelbl"
                     Width="178"
@@ -376,8 +379,14 @@
                         Grid.Column="1"
                         Margin="4,0,0,0"
                         ItemsSource="{Binding Badges}"
-                        SelectedItem="{Binding SelectedBadge}" />
+                        DisplayMemberPath="Name"
+                        SelectedItem="{Binding SelectedBadge}"/>
                 </Grid>
+                <TextBox 
+                    Name="ActivityTeasertb"
+                    Width="180"
+                    Height="auto"
+                    Text="{Binding ActivityTeaser, FallbackValue=Teaser, TargetNullValue=Teaser, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBox
                     x:Name="Activitytb"
                     Width="180"
@@ -392,7 +401,7 @@
                     x:Name="Notestb"
                     Width="180"
                     Height="auto"
-                    Text="{Binding Notes, FallbackValue=Noter, TargetNullValue=Noter}" />
+                    Text="{Binding Notes, FallbackValue=Noter, TargetNullValue=Noter, UpdateSourceTrigger=PropertyChanged}" />
                 <Grid Width="180" Height="auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
@@ -411,33 +420,20 @@
                 </Grid>
                 <TextBox
                     x:Name="Unittb"
-                    Width="181"
+                    Width="180"
                     Height="auto"
                     Text="{Binding UnitName, FallbackValue=Enhed, TargetNullValue=Enhed}" />
                 <TextBox
                     x:Name="UnitDescriptiontb"
-                    Width="181"
+                    Width="180"
                     Text="{Binding UnitDescription, FallbackValue=Beskrivelse, TargetNullValue=Beskrivelse}" BorderBrush="Black" />
-                <Grid Width="181" Height="auto">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*" />
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="0*" />
-                    </Grid.ColumnDefinitions>
-
-                    <!--skal ikke bruges mere-->
-                    <!--<TextBox
-                        x:Name="UnitLinktb"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="2"
-                        Margin="0,0,45,0"
-                        Text="{Binding UnitLink, FallbackValue=Link, TargetNullValue=Link}" />
-                    <Button
-                        x:Name="UnitLinkbtn"
-                        Grid.ColumnSpan="2"
-                        Margin="136,0,0,0"
-                        Content="Billede" />-->
-                </Grid>
+                <ComboBox
+                    Name="UnitSelectercb"
+                    Width="180"
+                    Height="auto"
+                    ItemsSource="{Binding Units}"
+                    SelectedItem="{Binding SelectedUnit}"
+                    DisplayMemberPath="UnitName"/>
             </StackPanel>
         </Grid>
         <Image
