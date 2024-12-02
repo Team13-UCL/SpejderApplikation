@@ -303,7 +303,7 @@ namespace SpejderApplikation.ViewModel
                 SelectedActivity = ActivityRepo.GetByID(SelectedScoutMeeting.activityID);
                 SelectedBadge = BadgeRepo.GetByID(SelectedScoutMeeting.badgeID);
                 SelectedUnit = UnitRepo.GetByID(_selectedScoutMeeting.unitID);
-                OnPropertyChanged(nameof(SelectedScoutMeeting.Picture));
+                
 
             }
         }
@@ -429,19 +429,30 @@ namespace SpejderApplikation.ViewModel
 
         private void ShowOldActivities()
         {
-            var specificDate = new DateOnly(2024, 5, 10); // en specifik dato for at teste
+            try
+            {
+                var specificDate = new DateOnly(2024, 5, 10); // For testing
 
-            if (ShowOld == true)
-            {
-                ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll());
+                var allMeetings = ScoutMeetingRepo.GetAll();
+
+                if (ShowOld == true)
+                {
+                    ScoutMeetings = new ObservableCollection<ScoutsMeeting>(allMeetings);
+                }
+                else
+                {
+                    var today = DateOnly.FromDateTime(DateTime.Today);
+                    ScoutMeetings = new ObservableCollection<ScoutsMeeting>(allMeetings.Where(meeting => meeting.Date >= specificDate));
+                }
+
+                SelectedScoutMeeting = ScoutMeetings.First(); // henter det første møde i listen ellers er det null og crasher                
+
+                OnPropertyChanged(nameof(ScoutMeetings));
             }
-            else
+            catch (Exception ex)
             {
-                var today = DateOnly.FromDateTime(DateTime.Today);
-                // ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll().Where(meeting => meeting.Date >= today)); // den rigtige der skal bruges 
-                ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll().Where(meeting => meeting.Date >= specificDate)); // en specifik dato for at teste
+                MessageBox.Show($"An error occurred while updating meetings: {ex.Message}");
             }
-            OnPropertyChanged(nameof(ScoutMeetings)); // tager scoutmeetings som parameter og opdaterer UI
         }
 
         public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);
