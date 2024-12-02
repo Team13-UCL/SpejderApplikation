@@ -69,7 +69,7 @@ namespace SpejderApplikation.ViewModel
             }
         }
 
-        public DateTime DateTime
+        public DateTime DateTime // skal bruges fordi datepicker ikke kan binde til DateOnly
         {
             get { return new DateTime(_date.Year, _date.Month, _date.Day); }
             set
@@ -338,6 +338,7 @@ namespace SpejderApplikation.ViewModel
             this.UnitRepo = UnitRepo ?? throw new ArgumentNullException(nameof(UnitRepo));
             _imageHandling = new ImageHandling();
             Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll());
+            Units = new ObservableCollection<Unit>(UnitRepo.GetAll());
             ShowOldActivities(); // Initialize the ScoutMeetings collection
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()

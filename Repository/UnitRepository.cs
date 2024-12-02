@@ -46,7 +46,7 @@ namespace SpejderApplikation.Repository
         public IEnumerable<Unit> GetAll()
         {
             var entities = new List<Unit>();
-            string query = ""; // indtast SQL query her.
+            string query = "SELECT * FROM Unit"; // indtast SQL query her.
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -57,11 +57,10 @@ namespace SpejderApplikation.Repository
                     while (reader.Read())
                     {
                         entities.Add(new Unit(
-
-                            (int)reader[""],
-                            (string)reader[""],
-                            (string)reader[""],
-                            (string)reader[""]));
+                            (int)reader["UnitID"],
+                            (string)reader["UnitName"],
+                            (string)reader["Description"],
+                            (string)reader["Link"]));
                     }
                 }
             }
