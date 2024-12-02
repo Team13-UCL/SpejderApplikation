@@ -56,9 +56,25 @@ namespace SpejderApplikation.ViewModel
             get { return _date; }
             set
             {
-                _date = value;
-                SelectedScoutMeeting.Date = value;
-                OnPropertyChanged(); // Afgørende for at UI opdateres når værdier ændres
+                if (_date != value)
+                {
+                    _date = value;
+                    if (SelectedScoutMeeting != null)
+                    {
+                        SelectedScoutMeeting.Date = value;
+                    }
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(DateTime)); // Notify that DateTime has changed
+                }
+            }
+        }
+
+        public DateTime DateTime
+        {
+            get { return new DateTime(_date.Year, _date.Month, _date.Day); }
+            set
+            {
+                Date = DateOnly.FromDateTime(value);
             }
         }
         private TimeOnly _start;
@@ -303,7 +319,7 @@ namespace SpejderApplikation.ViewModel
                 SelectedActivity = ActivityRepo.GetByID(SelectedScoutMeeting.activityID);
                 SelectedBadge = BadgeRepo.GetByID(SelectedScoutMeeting.badgeID);
                 SelectedUnit = UnitRepo.GetByID(_selectedScoutMeeting.unitID);
-                
+                Date = _selectedScoutMeeting.Date;
 
             }
         }

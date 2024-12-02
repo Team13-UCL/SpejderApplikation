@@ -338,8 +338,9 @@
                     x:Name="MeetingDP"
                     Width="180"
                     Height="auto"
-                    Text="{Binding Date}"
-                    BorderBrush="Black" />
+                        SelectedDate="{Binding DateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+
+                     />
                 <TextBox
                     x:Name="StartTP"
                     Width="180"
@@ -449,7 +450,7 @@
                 <TextBox
                     x:Name="UnitDescriptiontb"
                     Width="180"
-                    Text="{Binding UnitDescription, FallbackValue=Beskrivelse, TargetNullValue=Beskrivelse}" BorderBrush="Black" />
+                    Text="{Binding UnitDescription, FallbackValue=Beskrivelse, TargetNullValue=Beskrivelse}"/>
                 <ComboBox
                     Name="UnitSelectercb"
                     Width="180"
