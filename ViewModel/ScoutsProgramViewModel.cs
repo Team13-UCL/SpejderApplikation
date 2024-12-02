@@ -245,9 +245,20 @@ namespace SpejderApplikation.ViewModel
             {
                 _selectedUnit = value;
                 OnPropertyChanged();
-                UnitName = _selectedUnit.UnitName;
-                UnitLink = _selectedUnit.Link;
-                UnitDescription = _selectedUnit.Description;
+                if (_selectedUnit != null)
+                {
+                    UnitName = _selectedUnit.UnitName;
+                    UnitLink = _selectedUnit.Link;
+                    UnitDescription = _selectedUnit.Description;
+                }
+                else
+                {
+                    UnitName = string.Empty; // or handle the null case appropriately
+                    UnitDescription = string.Empty;
+                    UnitLink = string.Empty;
+                }
+                
+                
             }
         }
 
@@ -297,10 +308,21 @@ namespace SpejderApplikation.ViewModel
             {
                 _selectedBadge = value;
                 OnPropertyChanged();
-                BadgeName = _selectedBadge.Name;
-                BadgeDescription = _selectedBadge.Description;
-                BadgeLink = _selectedBadge.Link;
-                BadgeData = _selectedBadge.Picture;
+                if (_selectedBadge != null)
+                {
+                    BadgeName = _selectedBadge.Name;
+                    BadgeDescription = _selectedBadge.Description;
+                    BadgeLink = _selectedBadge.Link;
+                    BadgeData = _selectedBadge.Picture;
+                }
+                else
+                {
+                    BadgeName = string.Empty; // or handle the null case appropriately
+                    BadgeDescription = string.Empty;
+                    BadgeLink = string.Empty;
+                    BadgeData = new byte[0];
+                }
+                
 
 
             }
@@ -317,8 +339,9 @@ namespace SpejderApplikation.ViewModel
                 OnPropertyChanged();
                 SelectedMeeting = MeetingRepo.GetByID(SelectedScoutMeeting.meetingID);
                 SelectedActivity = ActivityRepo.GetByID(SelectedScoutMeeting.activityID);
-                SelectedBadge = BadgeRepo.GetByID(SelectedScoutMeeting.badgeID);
-                SelectedUnit = UnitRepo.GetByID(_selectedScoutMeeting.unitID);
+                SelectedBadge = Badges.FirstOrDefault(b => b._badgeID == _selectedScoutMeeting.badgeID);
+                SelectedUnit = Units.FirstOrDefault(u => u._unitID == _selectedScoutMeeting.unitID);
+
                 Date = _selectedScoutMeeting.Date;
 
             }
@@ -337,14 +360,15 @@ namespace SpejderApplikation.ViewModel
             this.ActivityRepo = ActivityRepo ?? throw new ArgumentNullException(nameof(ActivityRepo));
             this.UnitRepo = UnitRepo ?? throw new ArgumentNullException(nameof(UnitRepo));
             _imageHandling = new ImageHandling();
-            Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll());
-            Units = new ObservableCollection<Unit>(UnitRepo.GetAll());
+            Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll()); // Henter alle mærker fra databasen
+            Units = new ObservableCollection<Unit>(UnitRepo.GetAll()); // Henter alle enheder fra databasen
             ShowOldActivities(); // Initialize the ScoutMeetings collection
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
         {
             SelectedScoutMeeting = new ScoutsMeeting();
             ScoutMeetings.Add(SelectedScoutMeeting);
+            Date = DateOnly.FromDateTime(DateTime.Today);
         }
         public void EditMeeting(ScoutsMeeting sm)
         {

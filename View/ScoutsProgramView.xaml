@@ -403,8 +403,8 @@
                         Margin="4,0,0,0"
                         ItemsSource="{Binding Badges}"
                         DisplayMemberPath="Name"
-                        SelectedItem="{Binding SelectedBadge}"
-                        SelectedIndex="{Binding SelectedBadge}"/>
+                        SelectedItem="{Binding SelectedBadge,Mode=TwoWay}"
+                        />
                 </Grid>
                 <TextBox 
                     Name="ActivityTeasertb"
@@ -456,7 +456,7 @@
                     Width="180"
                     Height="auto"
                     ItemsSource="{Binding Units}"
-                    SelectedItem="{Binding SelectedUnit}"
+                    SelectedItem="{Binding SelectedUnit, Mode=TwoWay}"
                     DisplayMemberPath="UnitName"/>
             </StackPanel>
         </Grid>
