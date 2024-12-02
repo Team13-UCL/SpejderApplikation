@@ -23,30 +23,7 @@ namespace SpejderApplikation.ViewModel
         IRepository<Activity> ActivityRepo;
         IRepository<Unit> UnitRepo;
         private readonly ImageHandling _imageHandling;
-
-
-        // Skifter enhed i ScoutsProgramView
-
-
-        // Command til at vælge en enhed (RelayCommand)
-        public RelayCommand SelectUnitCommand => new RelayCommand(
-            execute =>
-            {
-                if (execute is Unit selectedUnit)
-                {
-                    SelectedUnit = selectedUnit;
-                }
-            },
-            canExecute => true);
-
-
-        //programmet virker ikke med disse 
-        //public ObservableCollection<Unit> Units { get; set; } = new ObservableCollection<Unit>();
-        //public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; } = new ObservableCollection<ScoutsMeeting>();
-
-
-
-
+        
         public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
         public ObservableCollection<Badge> Badges { get; set; }
         public ObservableCollection<Unit> Units { get; set; }
@@ -337,8 +314,14 @@ namespace SpejderApplikation.ViewModel
             {
                 _selectedScoutMeeting = value;
                 OnPropertyChanged();
+
                 SelectedMeeting = MeetingRepo.GetByID(SelectedScoutMeeting.meetingID);
                 SelectedActivity = ActivityRepo.GetByID(SelectedScoutMeeting.activityID);
+                //SelectedBadge = BadgeRepo.GetByID(SelectedScoutMeeting.badgeID);
+                //SelectedUnit = UnitRepo.GetByID(SelectedScoutMeeting.unitID);
+
+                //SeletedMeeting = Meetings.FirstOrDefault(m => m._meetingID == _selectedScoutMeeting.meetingID);
+                //SelectedActivity = Activities.FirstOrDefault(a => a._activityID == _selectedScoutMeeting.activityID);
                 SelectedBadge = Badges.FirstOrDefault(b => b._badgeID == _selectedScoutMeeting.badgeID);
                 SelectedUnit = Units.FirstOrDefault(u => u._unitID == _selectedScoutMeeting.unitID);
 
@@ -496,6 +479,24 @@ namespace SpejderApplikation.ViewModel
             }
         }
 
+        private void FilterMeetingsByUnit(object unitName)
+        {
+           
+
+            if (unitName is string unit)
+            {
+                var filteredMeetings = ScoutMeetingRepo.GetAll().Where(meeting => meeting.Unit == unit);
+                ScoutMeetings = new ObservableCollection<ScoutsMeeting>(filteredMeetings);
+                if (ScoutMeetings.Count > 0)
+                {
+                    SelectedScoutMeeting = ScoutMeetings.First();
+                    OnPropertyChanged(nameof(ScoutMeetings));
+                }                               
+               
+            }
+        }
+
+        public RelayCommand FilterMeetingsCommand => new RelayCommand(FilterMeetingsByUnit);
         public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen
         public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(SelectedScoutMeeting), canExecute => SelectedMeeting != null); // Tildeles til Edit knappen

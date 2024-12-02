@@ -34,7 +34,7 @@
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="BorderThickness" Value="1" />
             <!-- Make this uniform -->
-            
+
         </Style>
 
         <!-- Define the DataGrid style -->
@@ -117,7 +117,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                    Command="{Binding ShowFamilyScoutTasksCommand}">
+                    Command="{Binding FilterMeetingsCommand}"
+                    CommandParameter="FamilieSpejder">
                     <!--  ="OnFamilyScoutClick">  -->
                     <Image
                         x:Name="FamilieSpejder"
@@ -130,7 +131,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                    Command="{Binding ShowBeaverScoutTasksCommand}">
+                    Command="{Binding FilterMeetingsCommand}"
+                    CommandParameter="Bævere">
                     <!--  ="OnBeaverScoutClick">  -->
                     <Image
                         x:Name="BæverSpejder"
@@ -143,7 +145,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                        Command="{Binding ShowWolfScoutTasksCommand}">
+                        Command="{Binding FilterMeetingsCommand}"
+                        CommandParameter="Ulvene">
                     <!--  ="OnWolfScoutClick"  -->
                     <Image
                         x:Name="UlveSpejder"
@@ -156,7 +159,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                        Command="{Binding ShowJuniorScoutTasksCommand}">
+                        Command="{Binding FilterMeetingsCommand}"
+                        CommandParameter="Junior">
                     <!--  Click="OnJuniorScoutClick">  -->
                     <Image
                         x:Name="JuniorSpejder"
@@ -169,7 +173,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                        Command="{Binding ShowTroopScoutTasksCommand}">
+                        Command="{Binding FilterMeetingsCommand}"
+                        CommandParameter="Trop">
                     <!--  Click="OnTroopScoutClick">  -->
                     <Image
                         x:Name="TropSpejder"
@@ -182,7 +187,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                        Command="{Binding ShowSeniorScoutTasksCommand}">
+                       Command="{Binding FilterMeetingsCommand}"
+                        CommandParameter="Senior">
                     <!--  Click="OnSeniorScoutClick">  -->
                     <Image
                         x:Name="SeniorSpejder"
@@ -195,7 +201,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                        Command="{Binding ShowRoverScoutTasksCommand}">
+                        Command="{Binding FilterMeetingsCommand}"
+                        CommandParameter="Rover">
                     <!--  Click="OnRoverScoutClick">  -->
                     <Image
                         x:Name="RoverSpejder"
@@ -300,7 +307,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
+
                     <DataGridTemplateColumn Header="Aktivitet" Width="1*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
