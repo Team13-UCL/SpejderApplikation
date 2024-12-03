@@ -230,7 +230,7 @@ namespace SpejderApplikation.ViewModel
                 }
                 else
                 {
-                    UnitName = string.Empty; // or handle the null case appropriately
+                    UnitName = string.Empty; // handler null case
                     UnitDescription = string.Empty;
                     UnitLink = string.Empty;
                 }
@@ -255,7 +255,7 @@ namespace SpejderApplikation.ViewModel
                 }
                 else
                 {
-                    Date = default;
+                    Date = default; // handler nullcase
                     Start = default;
                     Stop = default;
                 }
@@ -294,7 +294,7 @@ namespace SpejderApplikation.ViewModel
                 }
                 else
                 {
-                    BadgeName = string.Empty; // or handle the null case appropriately
+                    BadgeName = string.Empty; // handler null case
                     BadgeDescription = string.Empty;
                     BadgeLink = string.Empty;
                     BadgeData = new byte[0];
@@ -317,15 +317,11 @@ namespace SpejderApplikation.ViewModel
 
                 SelectedMeeting = MeetingRepo.GetByID(SelectedScoutMeeting.meetingID);
                 SelectedActivity = ActivityRepo.GetByID(SelectedScoutMeeting.activityID);
-                //SelectedBadge = BadgeRepo.GetByID(SelectedScoutMeeting.badgeID);
-                //SelectedUnit = UnitRepo.GetByID(SelectedScoutMeeting.unitID);
-
-                //SeletedMeeting = Meetings.FirstOrDefault(m => m._meetingID == _selectedScoutMeeting.meetingID);
-                //SelectedActivity = Activities.FirstOrDefault(a => a._activityID == _selectedScoutMeeting.activityID);
-                SelectedBadge = Badges.FirstOrDefault(b => b._badgeID == _selectedScoutMeeting.badgeID);
-                SelectedUnit = Units.FirstOrDefault(u => u._unitID == _selectedScoutMeeting.unitID);
-
-                Date = _selectedScoutMeeting.Date;
+                //SelectedBadge = BadgeRepo.GetByID(SelectedScoutMeeting.badgeID); //gammel kode
+                //SelectedUnit = UnitRepo.GetByID(SelectedScoutMeeting.unitID); // gammel kode
+                SelectedBadge = Badges.FirstOrDefault(b => b._badgeID == _selectedScoutMeeting.badgeID); // ellers crasher det med instance fejl
+                SelectedUnit = Units.FirstOrDefault(u => u._unitID == _selectedScoutMeeting.unitID); // ellers crasher det med instance fejl
+                Date = _selectedScoutMeeting.Date; // sætter datoen til det valgte møde
 
             }
         }
@@ -345,13 +341,13 @@ namespace SpejderApplikation.ViewModel
             _imageHandling = new ImageHandling();
             Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll()); // Henter alle mærker fra databasen
             Units = new ObservableCollection<Unit>(UnitRepo.GetAll()); // Henter alle enheder fra databasen
-            ShowOldActivities(); // Initialize the ScoutMeetings collection
+            ShowOldActivities(); // Initialize the ScoutMeetings collection, kan måske ændres i metoden da vi allerede har scoutmeetings
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
         {
             SelectedScoutMeeting = new ScoutsMeeting();
             ScoutMeetings.Add(SelectedScoutMeeting);
-            Date = DateOnly.FromDateTime(DateTime.Today);
+            Date = DateOnly.FromDateTime(DateTime.Today); // Sætter datoen til i dag
         }
         public void EditMeeting(ScoutsMeeting sm)
         {
@@ -444,8 +440,7 @@ namespace SpejderApplikation.ViewModel
             get { return _showOld; }
             set
             {
-                _showOld = value;
-                // OnPropertyChanged(); ikke nødvendig
+                _showOld = value;                
                 ShowOldActivities();
             }
         }
@@ -456,6 +451,7 @@ namespace SpejderApplikation.ViewModel
             try
             {
                 var specificDate = new DateOnly(2024, 5, 10); // For testing
+                var today = DateOnly.FromDateTime(DateTime.Today); // For production
 
                 var allMeetings = ScoutMeetingRepo.GetAll();
 
@@ -464,9 +460,8 @@ namespace SpejderApplikation.ViewModel
                     ScoutMeetings = new ObservableCollection<ScoutsMeeting>(allMeetings);
                 }
                 else
-                {
-                    var today = DateOnly.FromDateTime(DateTime.Today);
-                    ScoutMeetings = new ObservableCollection<ScoutsMeeting>(allMeetings.Where(meeting => meeting.Date >= specificDate));
+                {                    
+                    ScoutMeetings = new ObservableCollection<ScoutsMeeting>(allMeetings.Where(meeting => meeting.Date >= specificDate)); //skal skifte til today hvis vi går live
                 }
 
                 SelectedScoutMeeting = ScoutMeetings.First(); // henter det første møde i listen ellers er det null og crasher                
@@ -483,14 +478,14 @@ namespace SpejderApplikation.ViewModel
         {
            
 
-            if (unitName is string unit)
+            if (unitName is string unit) // unitName er en object, så vi skal konvertere til string
             {
-                var filteredMeetings = ScoutMeetingRepo.GetAll().Where(meeting => meeting.Unit == unit);
-                ScoutMeetings = new ObservableCollection<ScoutsMeeting>(filteredMeetings);
-                if (ScoutMeetings.Count > 0)
+                var filteredMeetings = ScoutMeetingRepo.GetAll().Where(meeting => meeting.Unit == unit); // Filter meetings by unit
+                ScoutMeetings = new ObservableCollection<ScoutsMeeting>(filteredMeetings); // Update the ObservableCollection
+                if (ScoutMeetings.Count > 0)    // Hvis der er møder i listen
                 {
-                    SelectedScoutMeeting = ScoutMeetings.First();
-                    OnPropertyChanged(nameof(ScoutMeetings));
+                    SelectedScoutMeeting = ScoutMeetings.First(); // Sætter det første møde i listen som SelectedScoutMeeting
+                    OnPropertyChanged(nameof(ScoutMeetings)); 
                 }                               
                
             }

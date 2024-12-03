@@ -279,11 +279,15 @@
             <DataGrid
                 x:Name="ScoutDataGrid"
                 Grid.Column="0"
+                
                 AutoGenerateColumns="False"
                 CanUserAddRows="False"
                 ItemsSource="{Binding ScoutMeetings}"
+                
                 RowHeight="40"
-                SelectedItem="{Binding SelectedScoutMeeting}" AlternatingRowBackground="#FFD7E3BF" AlternationCount="2" Background="#FF9DBB61" RowBackground="#FFC4D6A0" Margin="10,0,22,0" HeadersVisibility="Column">
+                SelectedItem="{Binding SelectedScoutMeeting}" AlternatingRowBackground="#FFD7E3BF" AlternationCount="2" Background="#FF9DBB61" RowBackground="#FFC4D6A0" Margin="10,0,22,0" HeadersVisibility="Column" VirtualizingPanel.ScrollUnit="Pixel" RenderOptions.CachingHint="Cache" VirtualizingPanel.CacheLength="50" VirtualizingPanel.CacheLengthUnit="Pixel"
+>
+                
 
 
                 <DataGrid.Columns>
