@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Model
 {
-    internal class Meeting
+    public class Meeting
     {
         public int _meetingID { get; private set; }
         public DateOnly Date { get; set; }

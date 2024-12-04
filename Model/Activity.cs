@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Model
 {
-    internal class Activity
+    public class Activity
     {
         public int _activityID { get; private set; }
         public string ActivityDescription { get; set; }

@@ -13,7 +13,7 @@ using SpejderApplikation.DataHandler;
 
 namespace SpejderApplikation.ViewModel
 {
-    internal class ScoutsMeeting : ViewModelBase
+    public class ScoutsMeeting : ViewModelBase
     {
         public int meetingID { get; set; }
         public int activityID { get; set; }

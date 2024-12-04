@@ -15,7 +15,7 @@ using System.Windows.Media;
 
 namespace SpejderApplikation.ViewModel
 {
-    internal class ScoutsProgramViewModel : ViewModelBase
+    public class ScoutsProgramViewModel : ViewModelBase
     {
         IRepository<ScoutsMeeting> ScoutMeetingRepo;
         IRepository<Meeting> MeetingRepo;
@@ -351,11 +351,9 @@ namespace SpejderApplikation.ViewModel
         }
         public void EditMeeting(ScoutsMeeting sm)
         {
-            int ActivityID = ActivityRepo.AddOrEditType(SelectedActivity, 0);
-            int MeetingID = MeetingRepo.AddOrEditType(SelectedMeeting, ActivityID);
-            int BadgeID = BadgeRepo.AddOrEditType(SelectedBadge, ActivityID);
-            int UnitID = UnitRepo.AddOrEditType(SelectedUnit, ActivityID);
-            SelectedScoutMeeting.UpdateID(ActivityID, BadgeID, UnitID, MeetingID);
+            ActivityRepo.EditType(SelectedActivity);
+            BadgeRepo.EditType(SelectedBadge);
+            MeetingRepo.EditType(SelectedMeeting);
         }
 
         public void DeleteMeeting()

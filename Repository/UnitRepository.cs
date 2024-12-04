@@ -16,6 +16,10 @@ namespace SpejderApplikation.Repository
         {
             _connectionString = Connection.ConnectionString;
         }
+        public UnitRepository(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
         public void DeleteType(Unit entity)
         {
             string query = ""; //indtast SQL query her.
@@ -29,18 +33,17 @@ namespace SpejderApplikation.Repository
             }
         }
 
-        public int AddOrEditType(Unit entity, int ID)
+        public void EditType(Unit entity)
         {
             string query = "spAddOrEditUnit @ActivityID, @UnitID"; //indtast SQL query her.
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@ActivityID", ID);
+                //command.Parameters.AddWithValue("@ActivityID", entity.);
                 command.Parameters.AddWithValue("@UnitID", entity._unitID);
                 connection.Open();
             }
-            return entity._unitID;
         }
 
         public IEnumerable<Unit> GetAll()
@@ -96,6 +99,11 @@ namespace SpejderApplikation.Repository
                 return default;
             else
                 return entity;
+        }
+
+        public int AddType(Unit entity, int ID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

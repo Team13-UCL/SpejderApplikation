@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Model
 {
-    internal class Badge
+    public class Badge
     {
         public int _badgeID { get; private set; }
         public string Name { get; set; }

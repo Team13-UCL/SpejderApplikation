@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Repository
 {
-    internal interface IRepository<Type> 
+    public interface IRepository<Type> 
     {
         IEnumerable<Type> GetAll();
         public Type GetByID(int id);
-        public int AddOrEditType(Type entity, int ID);
+        public void EditType(Type entity);
+        public int AddType(Type entity, int ID);
         public void DeleteType(Type entity);
     }
 }

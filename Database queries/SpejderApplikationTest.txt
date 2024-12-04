@@ -1,0 +1,264 @@
+using Microsoft.Data.SqlClient;
+using SpejderApplikation.Model;
+using SpejderApplikation.Repository;
+using SpejderApplikation.ViewModel;
+using System.Numerics;
+
+namespace SpejderApplikationTest
+{
+    [TestClass]
+    public class Test1
+    {
+        public string connectionString = "Server=DESKTOP-KK2A6LP;Database=SpejderApplikationTestDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        public ScoutsMeetingRepository ScoutsMeetingRepo;
+        public MeetingRepository MeetingRepo;
+        public BadgeRepository BadgeRepo;
+        public UnitRepository UnitRepo;
+        public ActivityRepository ActivityRepo;
+
+        public Meeting m1, m2, m3, m4;
+        public Badge b1, b2, b3, b4;
+        public Activity a1, a2, a3, a4;
+        public Unit u1, u2,u3;
+        public ScoutsMeeting sm1, sm2, sm3, sm4;
+        public List<Unit> Units;
+        public List<Badge> Badges;
+        public List<ScoutsMeeting> ScoutsMeetings;
+
+        string filePath = Directory.GetCurrentDirectory();
+        string fileName = "\\Jeg kan selv.jpeg"; // har et basis KFUM mærke i projektets mappe
+
+        [TestInitialize]
+        public void SetupForTest()
+        {
+            string query = "EXEC InitializeDatabase"; // SQL query, der kalder stored procedure.
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                // Åbn forbindelsen
+                connection.Open();
+
+                // Udfør forespørgslen
+                command.ExecuteNonQuery();
+            }
+
+            ScoutsMeetingRepo = new ScoutsMeetingRepository(connectionString);
+            ActivityRepo = new ActivityRepository(connectionString);
+            MeetingRepo = new MeetingRepository(connectionString);
+            UnitRepo = new UnitRepository(connectionString);
+            BadgeRepo = new BadgeRepository(connectionString);
+
+            // Initialiser testdata
+            m1 = new Meeting(1, new DateOnly(2024, 11, 27), new TimeOnly(17, 0), new TimeOnly(19, 0));
+            m2 = new Meeting(2, new DateOnly(2024, 12, 4), new TimeOnly(17, 0), new TimeOnly(19, 0));
+            m3 = new Meeting(3, new DateOnly(2024, 12, 11), new TimeOnly(17, 0), new TimeOnly(19, 0));
+            m4 = new Meeting(4, new DateOnly(2024, 12, 18), new TimeOnly(17, 0), new TimeOnly(19, 0));
+
+
+            b1 = new Badge(1, 
+                           "Navigatør", 
+                           "Moral og etik", 
+                           null, 
+                           "https://kfumspejderne.dk/maerke/navigatoer/");
+            b2 = new Badge(2, 
+                           "Der var engang", 
+                           "Bæverne udvikler evnen til samarbejde og til at sætte sig i andres sted ved at lege sig ind i roller.", 
+                           null,
+                           "https://kfumspejderne.dk/maerke/der-var-engang/");
+            b3 = new Badge(3, 
+                           "Du og jeg",
+                           "For bævere er venner og relationer vigtige. De øver sig på at få nye venner og samarbejde i flokken.", 
+                           null,
+                           "https://kfumspejderne.dk/maerke/du-og-jeg/");
+            
+            a1 = new Activity(1, 
+                              "Diskussion om ære og respekt i hverdagen. Bæverne lærer at diskutere og reflektere over etiske dilemmaer.",
+                              "Forbered diskussionsemner.",
+                              "Husk at inkludere konkrete eksempler, som børnene kan relatere til.",
+                              "Navigatør - Moral og etik");
+            a2 = new Activity(2,
+                              "Bæverne leger rollespil, hvor de forestiller sig forskellige eventyrroller.",
+                              "Forbered enkle kostumer.",
+                              "Giv børnene tid til at improvisere og tilpasse rollerne.",
+                              "Der var engang - Rollespil");
+            a3 = new Activity(3,
+                              "Øvelse i at præsentere sig selv og lære nye færdigheder i samarbejde.",
+                              "Planlæg samarbejdslege.",
+                              "Notér hvilke børn der arbejder godt sammen for fremtidige gruppeinddelinger.",
+                              "Du og jeg - Samarbejde");
+            a4 = new Activity(4,
+                              "Madlavning med fokus på sunde råvarer og simple opskrifter.",
+                              "Skaff madvarer og udstyr.",
+                              "Brug opskrifter med ingredienser, som børnene kender, men udfordr dem også med nye smagsoplevelser.",
+                              "Madeventyr - Madlavning");
+
+            u1 = new Unit(1, "Familiespejder", "3 - 6 år", "https://kfumspejderne.dk/spejder/familiespejder/");
+            u2 = new Unit(2, "Bævere", "0 - 1 klasse", "https://kfumspejderne.dk/spejder/baever/");
+            u3 = new Unit(3, "Ulvene", "2 - 3 klasse", "https://kfumspejderne.dk/spejder/ulv/");
+
+            sm1 = new ScoutsMeeting();
+            sm2 = new ScoutsMeeting();
+            sm3 = new ScoutsMeeting();
+        }
+
+        [TestMethod]
+        public void GetAllUnits()
+        {
+            Units = UnitRepo.GetAll().ToList();
+            
+            Assert.AreEqual(7, Units.Count);
+            Assert.AreEqual("Ulvene", Units[2].UnitName);
+            Assert.AreEqual("6 - 8 klasse", Units[4].Description);
+            Assert.AreEqual("https://kfumspejderne.dk/spejder/familiespejder/", Units[0].Link);
+        }
+
+        [TestMethod]
+        public void GetAllBadges()
+        {
+            Badges = BadgeRepo.GetAll().ToList();
+            Assert.AreEqual (4, Badges.Count);
+            Assert.AreEqual ("Navigatør", Badges[0].Name);
+            Assert.AreEqual ("For bævere er venner og relationer vigtige. De øver sig på at få nye venner og samarbejde i flokken.",
+                             Badges[2].Description);
+            Assert.AreEqual("https://kfumspejderne.dk/maerke/madeventyr/", Badges[3].Link);
+        }
+
+        [TestMethod]
+        public void MeetingGetByIDTest()
+        {
+            Meeting meeting = MeetingRepo.GetByID(1);
+            Assert.AreEqual(m1.Date, meeting.Date);
+            meeting = MeetingRepo.GetByID(2);
+            Assert.AreEqual(m2.Start, meeting.Start);
+            meeting = MeetingRepo.GetByID(3);
+            Assert.AreEqual(m3.Stop, meeting.Stop);
+            meeting = MeetingRepo.GetByID(4);
+            Assert.AreEqual(m4._meetingID, m4._meetingID);
+        }
+
+        [TestMethod]
+        public void ActivityGetByIDTest()
+        {
+            Activity activity = ActivityRepo.GetByID(1);
+            Assert.AreEqual(a1.ActivityDescription, activity.ActivityDescription);
+            activity = ActivityRepo.GetByID(2);
+            Assert.AreEqual(a2.Notes, activity.Notes);
+            activity = ActivityRepo.GetByID(3);
+            Assert.AreEqual(a3.Preparation, activity.Preparation);
+            activity = ActivityRepo.GetByID(4);
+            Assert.AreEqual(a4.BriefDescription, activity.BriefDescription);
+
+        }
+
+        [TestMethod]
+        public void UnitGetByIDTest()
+        {
+            Unit unit = UnitRepo.GetByID(1);
+            Assert.AreEqual(u1.UnitName, unit.UnitName);
+            unit = UnitRepo.GetByID(2);
+            Assert.AreEqual(u2.Description, unit.Description);
+            unit = UnitRepo.GetByID(3);
+            Assert.AreEqual(u3.Link, unit.Link);
+
+        }
+
+        [TestMethod]
+        public void BadgeGetByIDTest() 
+        {
+            Badge badge = BadgeRepo.GetByID(1);
+            Assert.AreEqual(b1.Name, badge.Name);
+            badge = BadgeRepo.GetByID(2);
+            Assert.AreEqual(b2.Link, badge.Link);
+            badge = BadgeRepo.GetByID(3);
+            Assert.AreEqual(badge.Description, badge.Description);
+
+        }
+
+        [TestMethod]
+        public void EditActivityTest()
+        {
+            Activity change = new Activity(1,
+                              "Natteløb om ære og venskab",
+                              "Forbered poster til natten",
+                              "Sørg for varm kakao og skumfiduser til bagefter",
+                              "Natteløb i fuldmånens skær");
+            Activity test = ActivityRepo.GetByID(1);
+            Assert.AreNotEqual(change.ActivityDescription, test.ActivityDescription);
+            Assert.AreNotEqual(change.Notes, test.Notes);
+            Assert.AreNotEqual(change.BriefDescription, test.BriefDescription);
+            Assert.AreNotEqual(change.Preparation, test.Preparation);
+
+            ActivityRepo.EditType(change);
+            test = ActivityRepo.GetByID(1);
+            Assert.AreEqual(change.ActivityDescription, test.ActivityDescription);
+            Assert.AreEqual(change.BriefDescription, test.BriefDescription);
+            Assert.AreEqual(change.Notes, test.Notes);
+            Assert.AreEqual(change.Preparation, test.Preparation);
+        }
+
+        [TestMethod]
+        public void EditMeetingTest()
+        {
+            Meeting change = new Meeting(1, new DateOnly(2024, 11, 30), new TimeOnly(17, 30), new TimeOnly(20, 0));
+            Meeting test = MeetingRepo.GetByID(1);
+            Assert.AreNotEqual(change.Date, test.Date);
+            Assert.AreNotEqual(change.Start, test.Start);
+            Assert.AreNotEqual(change.Stop, test.Stop);
+
+            MeetingRepo.EditType(change);
+            test = MeetingRepo.GetByID(1);
+            Assert.AreEqual(change.Date, test.Date);
+            Assert.AreEqual(change.Start, test.Start);
+            Assert.AreEqual(change.Stop, test.Stop);
+        }
+
+        [TestMethod]
+        public void EditBadgeTest()
+        {
+            byte[] Picture = File.ReadAllBytes(string.Concat(filePath, fileName));
+            Badge change = new Badge(1,
+                           "Jeg kan selv",
+                           "Gennem arbejdet med mærket lærer bæverne at gøre nogle hverdagsting selv.",
+                           Picture,
+                           "https://kfumspejderne.dk/maerke/jeg-kan-selv/");
+            Badge test = BadgeRepo.GetByID(1);
+            Assert.AreNotEqual(change.Name, test.Name);
+            Assert.AreNotEqual(change.Description, test.Description);
+            Assert.AreNotEqual(change.Link, test.Link);
+
+            BadgeRepo.EditType(change);
+            test = BadgeRepo.GetByID(1);
+            Assert.AreEqual(change.Name, test.Name);
+            Assert.AreEqual(change.Description, test.Description);
+            Assert.AreEqual(change.Link, test.Link);
+        }
+
+        //[TestMethod]
+        //public void AddScoutMeetingTest()
+        //{
+        //    Activity activity = new Activity(0, "Description", "Preparation", "Notes", "Teaser");
+        //    int activityID = ActivityRepo.AddType(activity, 0);
+        //    Assert.AreEqual(5, activityID);
+
+        //}
+
+        [TestCleanup]
+        public void CleanupForTest()
+        {
+            string query = "EXEC ResetDatabase"; // SQL query, der kalder stored procedure.
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                // Åbn forbindelsen
+                connection.Open();
+
+                // Udfør forespørgslen
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+}

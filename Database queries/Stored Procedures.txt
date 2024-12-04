@@ -1,0 +1,246 @@
+CREATE PROCEDURE [spEditActivity] 
+    @ActivityID INT,
+    @ActivityDescription VARCHAR(255),
+    @Preparation VARCHAR(500),
+    @Notes VARCHAR(500),
+    @Activity VARCHAR(500)
+AS
+BEGIN
+    -- Start en transaktion
+    BEGIN TRANSACTION
+
+    -- Udfør opdateringen
+    UPDATE Activity
+    SET
+        ActivityDescription = @ActivityDescription,
+        Preparation = @Preparation,
+        Notes = @Notes,
+        Activity = @Activity
+    WHERE ActivityID = @ActivityID;
+
+    -- Tjek om der blev opdateret nogen rækker
+    IF @@ROWCOUNT = 0
+    BEGIN
+        -- Rul tilbage, hvis ingen rækker blev opdateret
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+
+    -- Hvis alt er ok, gennemfør transaktionen
+    COMMIT TRANSACTION;
+END
+GO;
+
+CREATE PROCEDURE [spEditBadge]
+    @BadgeID INT,
+    @Name VARCHAR(100),
+	@Description VARCHAR(255),
+	@Picture VARBINARY(MAX),
+	@Link VARCHAR(500)
+AS
+BEGIN
+    -- Start en transaktion
+    BEGIN TRANSACTION
+
+    -- Udfør opdateringen
+    UPDATE Badge
+    SET
+        BadgeName = @Name,
+		[Description] = @Description,
+		Picture = @Picture,
+		Link = @Link
+    WHERE BadgeID = @BadgeID
+
+    -- Tjek om der blev opdateret nogen rækker
+    IF @@ROWCOUNT = 0
+    BEGIN
+        -- Rul tilbage, hvis ingen rækker blev opdateret
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+
+    -- Hvis alt er ok, gennemfør transaktionen
+    COMMIT TRANSACTION;
+END
+GO;
+
+CREATE PROCEDURE [spEditMeeting]
+    @MeetingID INT,
+    @Date DATE,
+	@Start TIME,
+	@Stop TIME
+AS
+BEGIN
+    -- Start en transaktion
+    BEGIN TRANSACTION
+
+    -- Udfør opdateringen
+    UPDATE Meeting
+    SET
+        [Date] = @Date,
+		[Start] = @Start,
+		[Stop] = @Stop
+    WHERE MeetingID = @MeetingID
+
+    -- Tjek om der blev opdateret nogen rækker
+    IF @@ROWCOUNT = 0
+    BEGIN
+        -- Rul tilbage, hvis ingen rækker blev opdateret
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+
+    -- Hvis alt er ok, gennemfør transaktionen
+    COMMIT TRANSACTION;
+END
+GO;
+
+CREATE PROCEDURE [spGetAllScoutmeetings]
+AS
+BEGIN
+    BEGIN TRY
+        -- Hent alle møder og deres tilknyttede oplysninger
+        SELECT DISTINCT 
+            Activity.ActivityID,
+            Activity.ActivityDescription,
+            Activity.Notes,
+            Unit.UnitID,
+            Unit.UnitName,
+            Meeting.MeetingID,
+            Meeting.Date,
+            Meeting.Start,
+            Meeting.Stop,
+            -- Brug LEFT JOIN for ActivityBadge for at tillade aktiviteter uden mærker
+            COALESCE(Badge.Picture, CAST(0x AS VARBINARY(MAX))) AS BadgePicture, -- Hvis ingen badge, returneres tom VARBINARY
+            Badge.BadgeID
+        FROM Activity
+        INNER JOIN ActivityUnit
+            ON Activity.ActivityID = ActivityUnit.ActivityID
+        INNER JOIN Unit
+            ON ActivityUnit.UnitID = Unit.UnitID
+        INNER JOIN ActivityMeeting
+            ON Activity.ActivityID = ActivityMeeting.ActivityID
+        INNER JOIN Meeting
+            ON ActivityMeeting.MeetingID = Meeting.MeetingID
+        LEFT JOIN ActivityBadge
+            ON Activity.ActivityID = ActivityBadge.ActivityID
+        LEFT JOIN Badge
+            ON ActivityBadge.BadgeID = Badge.BadgeID
+    END TRY
+    BEGIN CATCH
+        -- Fejlhåndtering: Hvis der opstår en fejl, returner en besked
+        SELECT ERROR_MESSAGE() AS ErrorMessage;
+    END CATCH
+END
+GO;
+
+CREATE PROCEDURE [spGetScoutmeetingByID] @ActivityID INT
+AS
+BEGIN
+    BEGIN TRY
+        -- Hent alle møder og deres tilknyttede oplysninger
+        SELECT DISTINCT 
+            Activity.ActivityID,
+            Activity.ActivityDescription,
+            Activity.Notes,
+            Unit.UnitID,
+            Unit.UnitName,
+            Meeting.MeetingID,
+            Meeting.Date,
+            Meeting.Start,
+            Meeting.Stop,
+            -- Brug LEFT JOIN for ActivityBadge for at tillade aktiviteter uden mærker
+            COALESCE(Badge.Picture, CAST(0x AS VARBINARY(MAX))) AS BadgePicture, -- Hvis ingen badge, returneres tom VARBINARY
+            Badge.BadgeID
+        FROM Activity
+        INNER JOIN ActivityUnit
+            ON Activity.ActivityID = ActivityUnit.ActivityID
+        INNER JOIN Unit
+            ON ActivityUnit.UnitID = Unit.UnitID
+        INNER JOIN ActivityMeeting
+            ON Activity.ActivityID = ActivityMeeting.ActivityID
+        INNER JOIN Meeting
+            ON ActivityMeeting.MeetingID = Meeting.MeetingID
+        LEFT JOIN ActivityBadge
+            ON Activity.ActivityID = ActivityBadge.ActivityID
+        LEFT JOIN Badge
+            ON ActivityBadge.BadgeID = Badge.BadgeID
+		WHERE Activity.ActivityID = @ActivityID
+    END TRY
+    BEGIN CATCH
+        -- Fejlhåndtering: Hvis der opstår en fejl, returner en besked
+        SELECT ERROR_MESSAGE() AS ErrorMessage;
+    END CATCH
+END
+GO
+
+CREATE PROCEDURE [spSelectActivity] @ActivityID INT
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT
+		ActivityID,
+		ActivityDescription,
+		Preparation,
+		Notes,
+		Activity
+	FROM Activity
+	WHERE
+		ActivityID = @ActivityID
+END
+GO;
+
+CREATE PROCEDURE [spSelectBadge]
+    @BadgeID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        BadgeID,
+        BadgeName,
+        Description,
+        Picture,
+        Link
+    FROM 
+        Badge
+    WHERE 
+        BadgeID = @BadgeID;
+END
+GO;
+
+CREATE PROCEDURE [spSelectMeeting]
+    @MeetingID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        MeetingID,
+        Date,
+        Start,
+        Stop
+        
+    FROM 
+        Meeting
+	WHERE MeetingID = @MeetingID
+END
+GO;
+
+CREATE PROCEDURE [spSelectUnit]
+    @UnitID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        UnitID,
+        UnitName,
+        Description,
+        Link        
+    FROM 
+        Unit
+    WHERE 
+        UnitID = @UnitID;
+END
+GO;

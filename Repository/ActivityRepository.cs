@@ -9,23 +9,25 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Repository
 {
-    internal class ActivityRepository : IRepository<Activity>
+    public class ActivityRepository : IRepository<Activity>
     {
         private readonly string _connectionString;
         public ActivityRepository()
         {
             _connectionString = Connection.ConnectionString;
         }
-
+        public ActivityRepository(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
         public void DeleteType(Activity entity)
         {
             throw new NotImplementedException();
         }
-        public int AddOrEditType(Activity entity, int ID)
+        public void EditType(Activity entity)
         {
-            string query = "spAddOrEditActivity @ActivityID, @ActivityDescription, @Preparation, @Notes, @Activity"; //indtast SQL query her.
-            int EntityID = 0;
-
+            string query = "EXEC spEditActivity @ActivityID, @ActivityDescription, @Preparation, @Notes, @Activity"; //indtast SQL query her.
+            
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -35,12 +37,8 @@ namespace SpejderApplikation.Repository
                 command.Parameters.AddWithValue("@Notes", entity.Notes);
                 command.Parameters.AddWithValue("@Activity", entity.BriefDescription);
                 connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader()) 
-                {
-                    EntityID = reader.IsDBNull(reader.GetOrdinal("ActivityID")) ? 0 : reader.GetInt32(reader.GetOrdinal("ActivityID"));
-                }
+                command.ExecuteNonQuery();
             }
-            return EntityID;
         }
         public IEnumerable<Activity> GetAll()
         {
@@ -75,6 +73,44 @@ namespace SpejderApplikation.Repository
                 return default;
             else
                 return entity;
+        }
+
+        public int AddType(Activity entity, int ID)
+        {
+            string query = @"
+                DECLARE @ActivityID INT;
+                EXEC spAddActivity 
+                    @Activity, 
+                    @Description, 
+                    @Preparation, 
+                    @Notes, 
+                    @ActivityID OUTPUT;
+                SELECT @ActivityID;";
+
+            int ActivityID = 0;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                // Tilføj input-parametre
+                command.Parameters.AddWithValue("Activity", entity.BriefDescription);
+                command.Parameters.AddWithValue("Description", entity.ActivityDescription);
+                command.Parameters.AddWithValue("Preparation", entity.Preparation);
+                command.Parameters.AddWithValue("Notes", entity.Notes);
+
+                connection.Open();
+
+                // Udfør query og få output
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        // Læs den returnerede værdi
+                        ActivityID = reader.IsDBNull(reader.GetOrdinal("ActivityID")) ? 0 : reader.GetInt32(reader.GetOrdinal("ActivityID")); // Output-parametren returneres som en kolonne.
+                    }
+                }
+            }
+            return ActivityID;
         }
     }
 }

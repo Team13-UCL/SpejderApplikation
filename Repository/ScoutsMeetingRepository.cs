@@ -12,20 +12,19 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Repository
 {
-    internal class ScoutsMeetingRepository : IRepository<ScoutsMeeting>
+    public class ScoutsMeetingRepository : IRepository<ScoutsMeeting>
     {
         private readonly string _connectionString;
         public ScoutsMeetingRepository()
         {
             _connectionString = Connection.ConnectionString;
         }
-
-        public void DeleteType(ScoutsMeeting entity)
+        public ScoutsMeetingRepository(string connectionString)
         {
-            throw new NotImplementedException();
+            _connectionString = connectionString;
         }
 
-        public int AddOrEditType(ScoutsMeeting entity, int ID)
+        public void EditType(ScoutsMeeting entity)
         {
             throw new NotImplementedException();
         }
@@ -85,7 +84,18 @@ namespace SpejderApplikation.Repository
             return entities;
         }
 
-        public ScoutsMeeting GetByID(int id)
+
+        ScoutsMeeting IRepository<ScoutsMeeting>.GetByID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IRepository<ScoutsMeeting>.AddType(ScoutsMeeting entity, int ID)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IRepository<ScoutsMeeting>.DeleteType(ScoutsMeeting entity)
         {
             throw new NotImplementedException();
         }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Repository
 {
-    internal class BadgeRepository : IRepository<Badge>
+    public class BadgeRepository : IRepository<Badge>
     {
         private readonly string _connectionString;
         string filePath = Directory.GetCurrentDirectory();
@@ -19,33 +19,32 @@ namespace SpejderApplikation.Repository
         {
             _connectionString = Connection.ConnectionString;
         }
+        public BadgeRepository(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
 
         public void DeleteType(Badge entity)
         {
             throw new NotImplementedException();
         }
 
-        public int AddOrEditType(Badge entity, int ID)
+        public void EditType(Badge entity)
         {
-            string query = "spAddOrEditBadge @ActivityID, @BadgeID, @BadgeName, @Description, @Picture, @Link"; //indtast SQL query her.
+            string query = "spEditBadge @BadgeID, @Name, @Description, @Picture, @Link"; //indtast SQL query her.
             int EntityID = 0;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@ActivityID", ID);
                 command.Parameters.AddWithValue("@BadgeID", entity._badgeID);
-                command.Parameters.AddWithValue("@BadgeName", entity.Name);
+                command.Parameters.AddWithValue("@Name", entity.Name);
                 command.Parameters.AddWithValue("@Description", entity.Description);
                 command.Parameters.AddWithValue("@Picture", entity.Picture);
                 command.Parameters.AddWithValue("@Link", entity.Link);
                 connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    EntityID = reader.IsDBNull(reader.GetOrdinal("BadgeID")) ? 0 : reader.GetInt32(reader.GetOrdinal("BadgeID"));
-                }
+                command.ExecuteNonQuery();
             }
-            return EntityID;
         }
 
         public IEnumerable<Badge> GetAll()
@@ -114,6 +113,11 @@ namespace SpejderApplikation.Repository
             }
 
             return entity ?? new Badge(); // Returér en tom instans, hvis intet blev fundet.
+        }
+
+        public int AddType(Badge entity, int ID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

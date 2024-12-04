@@ -245,7 +245,8 @@
                     Height="25"
                     Margin="5,0"
                     Background="Gold"
-                    Content="Rediger opgave" />
+                    Content="Rediger opgave"
+                    Command="{Binding EditCommand}"/>
                 <Button
                     Width="90"
                     Height="25"

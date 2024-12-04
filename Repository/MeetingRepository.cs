@@ -8,38 +8,36 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Repository
 {
-    internal class MeetingRepository : IRepository<Meeting>
+    public class MeetingRepository : IRepository<Meeting>
     {
         private readonly string _connectionString;
         public MeetingRepository()
         {
             _connectionString = Connection.ConnectionString;
         }
-
+        public MeetingRepository(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
         public void DeleteType(Meeting entity)
         {
             throw new NotImplementedException();
         }
-        public int AddOrEditType(Meeting entity, int ID)
+        public void EditType(Meeting entity)
         {
-            string query = "spAddOrEditMeeting @ActivityID, @MeetingID, @Date, @Start, @Stop"; //indtast SQL query her.
+            string query = "spEditMeeting @MeetingID, @Date, @Start, @Stop"; //indtast SQL query her.
             int EntityID = 0;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@ActivityID", ID);
                 command.Parameters.AddWithValue("@MeetingID", entity._meetingID);
                 command.Parameters.AddWithValue("@Date", entity.Date);
                 command.Parameters.AddWithValue("@Start", entity.Start);
                 command.Parameters.AddWithValue("@Stop", entity.Stop);
                 connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    EntityID = reader.IsDBNull(reader.GetOrdinal("MeetingID")) ? 0 : reader.GetInt32(reader.GetOrdinal("MeetingID"));
-                }
+                command.ExecuteNonQuery();
             }
-            return EntityID;
         }
 
         public IEnumerable<Meeting> GetAll()
@@ -109,6 +107,11 @@ namespace SpejderApplikation.Repository
             }
 
             return entity; // If entity is null, the caller should handle the null value appropriately.
+        }
+
+        public int AddType(Meeting entity, int ID)
+        {
+            throw new NotImplementedException();
         }
     }
 }
