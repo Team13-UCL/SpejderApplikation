@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SpejderApplikation.ViewModel;
 
 namespace SpejderApplikation.View
 {
@@ -21,9 +22,13 @@ namespace SpejderApplikation.View
     /// </summary>
     public partial class Login : Window
     {
+        LoginViewModel vm;
         public Login()
         {
+            var UserRepo = new Repository.UserRepo();
+            vm = new LoginViewModel(UserRepo);
             InitializeComponent();
+            DataContext = vm;
         }
 
         private void EmailTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -33,23 +38,34 @@ namespace SpejderApplikation.View
                 ? Visibility.Visible
                 : Visibility.Hidden;
         }
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        private void PasswordTextBox_TextChanged(object sender, RoutedEventArgs e)
         {
             // Viser adgangskodefeltet er tomt, vis placeholder, ellers skjuler den boxsen
-            PasswordPlaceholder.Visibility = string.IsNullOrEmpty(PasswordBox.Password)
+            PasswordPlaceholder.Visibility = string.IsNullOrEmpty(PasswordBox.Text)
                 ? Visibility.Visible
                 : Visibility.Hidden;
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+               
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
             e.Handled = true;
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (vm.Authenticate() == true)
+            {
+                MessageBox.Show("Login Success");
+                ScoutsProgramView scoutsProgramView = new ScoutsProgramView();
+                scoutsProgramView.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Login Failed");
+            }
         }
     }
 }

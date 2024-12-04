@@ -459,10 +459,10 @@ namespace SpejderApplikation.ViewModel
                 }
                 else
                 {                    
-                    ScoutMeetings = new ObservableCollection<ScoutsMeeting>(allMeetings.Where(meeting => meeting.Date >= specificDate)); //skal skifte til today hvis vi går live
+                    ScoutMeetings = new ObservableCollection<ScoutsMeeting>(allMeetings.Where(meeting => meeting.Date >= today)); //skal skifte til today hvis vi går live
                 }
 
-                SelectedScoutMeeting = ScoutMeetings.First(); // henter det første møde i listen ellers er det null og crasher                
+                //SelectedScoutMeeting = ScoutMeetings.First(); // henter det første møde i listen ellers er det null og crasher, lol det virker nu åbenbart uden den              
 
                 OnPropertyChanged(nameof(ScoutMeetings));
             }
