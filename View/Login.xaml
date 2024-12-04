@@ -7,8 +7,15 @@
         mc:Ignorable="d"
         Title="Login"
         Height="400"
-        Width="650">
+        Width="650"        
+        MinWidth="650"
+        MinHeight="400"
+        MaxWidth="650"
+        MaxHeight="400"
+        WindowStartupLocation="CenterScreen">
     <Grid>
+
+
         <!-- Titel -->
         <Image Source="/Images/LoginBillede.png"
                Stretch="Fill" />
@@ -21,13 +28,15 @@
                    VerticalAlignment="Top"
                    Margin="0,58,0,0" />
 
-        <PasswordBox x:Name="PasswordBox"
+        <TextBox x:Name="PasswordBox"
                      HorizontalAlignment="Left"
                      Margin="25,232,0,0"
                      VerticalAlignment="Top"
                      Width="220"
-                     Height="30"
-                     PasswordChanged="PasswordBox_PasswordChanged" />
+                     Height="30" 
+                    TextChanged="PasswordTextBox_TextChanged" 
+                     Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                     />
         <TextBlock x:Name="PasswordPlaceholder"
                    Text="Adgangskode"
                    FontFamily="Times New Roman"
@@ -36,7 +45,8 @@
                    VerticalAlignment="Top"
                    Margin="30,239,0,0"
                    IsHitTestVisible="False"
-                   HorizontalAlignment="Left" />
+                   HorizontalAlignment="Left" 
+                   />
         <TextBox x:Name="EmailTextBox"
                  Margin="25,184,0,0"
                  Width="220"
@@ -45,7 +55,9 @@
                  HorizontalAlignment="Left"
                  FontFamily="Times New Roman"
                  FontSize="14"
-                 TextChanged="EmailTextBox_TextChanged" />
+                 TextChanged="EmailTextBox_TextChanged" 
+                 Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                 />
 
         <!-- Placeholder Text -->
         <TextBlock x:Name="EmailPlaceholder"
@@ -70,37 +82,42 @@
         Har du glemt dit kodeord?
     </Hyperlink>
         </TextBlock>
-        <Image Margin="210,206,403,142"
-               Source="/Images/UlveBillede.png"
-               Stretch="Fill" />
-        <Image Margin="231,151,383,191"
-               Source="/Images/FugleBillede.png"
-               Stretch="Fill"
-               RenderTransformOrigin="0.5,0.5">
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="1" />
-                    <SkewTransform />
-                    <RotateTransform />
-                    <TranslateTransform />
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
-        <Image Margin="17,166,576,197"
-               Source="/Images/BæverBillede.png"
-               Stretch="Fill" />
-        <Border BorderBrush="Black"
-                Name="MyBorder"
-                Background="#FF94D836"
-                CornerRadius="5"
-                Margin="74,286,454,71">
-            <Button Width="{Binding MyBorder.Width}"
-                    Height="{Binding MyBorder.Height}"
-                    Content="Login"
-                    Background="#FF94D836"
-                    Margin="6,4,5,5"
-                    BorderThickness="0"/>
-        </Border>
+        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Source="/Images/UlveBillede.png"
+            Stretch="Fill"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Grid.Row="1"
+            Grid.Column="0" Height="31" Width="59" Margin="155,30,0,0"/>
+            <Image Source="/Images/FugleBillede.png"
+            Stretch="Fill"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Grid.Row="0" Height="25" Width="45" Margin="229,162,0,0"/>
+            <Image Source="/Images/BæverBillede.png"
+            Stretch="Fill"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Grid.Column="0" Height="33" Width="67" Margin="23,154,0,0"/>
+        </Grid>
+        <Button HorizontalAlignment="Left" Margin="40,296,0,0" VerticalAlignment="Top" x:Name="LoginButton" 
+         Width="122"
+         Height="27"
+         Content="Login"
+         Background="#FF94D836"
+         BorderThickness="0"
+         Command="{Binding LoginCommand}" Click="LoginButton_Click"
+          IsDefault="True"/>
+
 
 
     </Grid>
