@@ -3,6 +3,7 @@ using SpejderApplikation.Model;
 using SpejderApplikation.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -117,7 +118,47 @@ namespace SpejderApplikation.Repository
 
         public int AddType(Badge entity, int ID)
         {
-            throw new NotImplementedException();
+            string query = "EXEC spAddBadge @ActivityID, @BadgeName, @Description, @Picture, @Link, @BadgeID, @NewBadgeID OUTPUT";
+
+            int BadgeID = 0;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                // Tilføj input-parametre
+                command.Parameters.AddWithValue("@ActivityID", ID);
+                command.Parameters.AddWithValue("@BadgeName", entity.Name);
+                command.Parameters.AddWithValue("@Description", entity.Description);
+
+                var pictureParam = new SqlParameter("@Picture", SqlDbType.VarBinary);
+                if (entity.Picture != null && entity.Picture.Length > 0)
+                {
+                    pictureParam.Value = entity.Picture;
+                }
+                else
+                {
+                    pictureParam.Value = DBNull.Value;
+                }
+                command.Parameters.Add(pictureParam);
+
+                command.Parameters.AddWithValue("@Link", entity.Link ?? (object)DBNull.Value); // Håndter null for Link
+                command.Parameters.AddWithValue("@BadgeID", entity._badgeID);
+
+                // Output-parameter
+                SqlParameter outputParam = new SqlParameter("@NewBadgeID", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                command.Parameters.Add(outputParam);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+
+                // Hent værdien fra output-parametret
+                BadgeID = (int)outputParam.Value;
+            }
+
+            return BadgeID;
         }
     }
 }

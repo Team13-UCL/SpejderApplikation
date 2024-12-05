@@ -312,6 +312,7 @@ namespace SpejderApplikation.ViewModel
             get { return _selectedScoutMeeting; }
             set
             {
+                Add(SelectedActivity, SelectedMeeting, SelectedUnit, SelectedBadge);
                 _selectedScoutMeeting = value;
                 OnPropertyChanged();
 
@@ -489,6 +490,19 @@ namespace SpejderApplikation.ViewModel
             }
         }
 
+        public void Add(Activity activity, Meeting meeting, Unit unit, Badge badge)
+        {
+            int ActivityID, MeetingID, UnitID, BadgeID;
+            if (activity._activityID == null || activity._activityID == 0)
+                ActivityID = ActivityRepo.AddType(activity, 0);
+            else { ActivityID = activity._activityID; }
+            if(meeting._meetingID == null ||  meeting._meetingID == 0)
+                MeetingRepo.AddType(meeting, ActivityID);
+            if(unit._unitID == null || unit._unitID == 0)
+                UnitRepo.AddType(unit, ActivityID);
+            if(badge._badgeID == null || badge._badgeID == 0)
+                BadgeRepo.AddType(badge, ActivityID);
+        }
         public RelayCommand FilterMeetingsCommand => new RelayCommand(FilterMeetingsByUnit);
         public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen

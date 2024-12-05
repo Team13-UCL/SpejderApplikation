@@ -47,17 +47,18 @@ namespace SpejderApplikation.Repository
                         DateTime dateTime = (DateTime)reader["Date"];
                         TimeSpan start = (TimeSpan)reader["Start"];
                         TimeSpan stop = (TimeSpan)reader["Stop"];
-                        Byte[] picture;
-                        if (reader["Picture"] != null)
-                        { picture = reader["Picture"] as byte[]; }
-                        else if (File.Exists(filePath) == true)
-                        {
-                            picture = File.ReadAllBytes(string.Concat(filePath, fileName));
-                        }
-                        else
-                        {
-                            picture = new byte[0];
-                        }
+                        Byte[] picture = reader.IsDBNull(reader.GetOrdinal("Picture")) ? null : (Byte[])reader["Picture"];
+                        
+                        //if (reader["Picture"] != null)
+                        //{ picture = reader["Picture"] as byte[]; }
+                        //else if (File.Exists(filePath) == true)
+                        //{
+                        //    picture = File.ReadAllBytes(string.Concat(filePath, fileName));
+                        //}
+                        //else
+                        //{
+                        //    picture = new byte[0];
+                        //}
                         string Activity = reader.IsDBNull(reader.GetOrdinal("Activity")) ? string.Empty : (string)reader["Activity"];
                         string Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? string.Empty : (string)reader["Notes"];
                         string UnitName = reader.IsDBNull(reader.GetOrdinal("UnitName")) ? string.Empty : (string)reader["UnitName"];
@@ -85,19 +86,35 @@ namespace SpejderApplikation.Repository
         }
 
 
-        ScoutsMeeting IRepository<ScoutsMeeting>.GetByID(int id)
+        public ScoutsMeeting GetByID(int id)
         {
             throw new NotImplementedException();
         }
 
-        int IRepository<ScoutsMeeting>.AddType(ScoutsMeeting entity, int ID)
+        public int AddType(ScoutsMeeting entity, int ID)
         {
             throw new NotImplementedException();
         }
 
-        void IRepository<ScoutsMeeting>.DeleteType(ScoutsMeeting entity)
+        public void DeleteType(ScoutsMeeting entity)
         {
-            throw new NotImplementedException();
+            string query = "spDeleteScoutMeeting @ActivityID, @MeetingID, @UnitID, @BadgeID";
+            if(entity.meetingID == null)
+                entity.meetingID = 0;
+            if(entity.unitID == null)
+                entity.unitID = 0;
+            if(entity.badgeID == null)
+                entity.badgeID = 0;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ActivityID", entity.activityID);
+                command.Parameters.AddWithValue("@MeetingID", entity.meetingID);
+                command.Parameters.AddWithValue("@UnitID", entity.unitID);
+                command.Parameters.AddWithValue("@BadgeID", entity.badgeID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
         }
     }
 }

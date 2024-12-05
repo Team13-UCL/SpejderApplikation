@@ -2,6 +2,7 @@
 using SpejderApplikation.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
@@ -77,15 +78,7 @@ namespace SpejderApplikation.Repository
 
         public int AddType(Activity entity, int ID)
         {
-            string query = @"
-                DECLARE @ActivityID INT;
-                EXEC spAddActivity 
-                    @Activity, 
-                    @Description, 
-                    @Preparation, 
-                    @Notes, 
-                    @ActivityID OUTPUT;
-                SELECT @ActivityID;";
+            string query = "EXEC spAddActivity @Activity, @Description, @Preparation, @Notes, @ActivityID OUTPUT";
 
             int ActivityID = 0;
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -93,22 +86,18 @@ namespace SpejderApplikation.Repository
                 SqlCommand command = new SqlCommand(query, connection);
 
                 // Tilføj input-parametre
-                command.Parameters.AddWithValue("Activity", entity.BriefDescription);
-                command.Parameters.AddWithValue("Description", entity.ActivityDescription);
-                command.Parameters.AddWithValue("Preparation", entity.Preparation);
-                command.Parameters.AddWithValue("Notes", entity.Notes);
-
-                connection.Open();
-
-                // Udfør query og få output
-                using (SqlDataReader reader = command.ExecuteReader())
+                command.Parameters.AddWithValue("@Activity", entity.BriefDescription);
+                command.Parameters.AddWithValue("@Description", entity.ActivityDescription);
+                command.Parameters.AddWithValue("@Preparation", entity.Preparation);
+                command.Parameters.AddWithValue("@Notes", entity.Notes);
+                SqlParameter outputParam = new SqlParameter("@ActivityID", SqlDbType.Int)
                 {
-                    if (reader.Read())
-                    {
-                        // Læs den returnerede værdi
-                        ActivityID = reader.IsDBNull(reader.GetOrdinal("ActivityID")) ? 0 : reader.GetInt32(reader.GetOrdinal("ActivityID")); // Output-parametren returneres som en kolonne.
-                    }
-                }
+                    Direction = ParameterDirection.Output
+                };
+                command.Parameters.Add(outputParam);
+                connection.Open();
+                command.ExecuteNonQuery();
+                ActivityID = (int)outputParam.Value;
             }
             return ActivityID;
         }

@@ -12,11 +12,11 @@ namespace SpejderApplikation.ViewModel
 {
     class LoginViewModel : ViewModelBase
     {
-        public LoginViewModel(IRepository<User> repository)
-        {
+        //public LoginViewModel(IRepository<User> repository)
+        //{
             
-            _users = new List<User>(repository.GetAll());
-        }
+        //    _users = new List<User>(repository.GetAll());
+        //}
 
         
         private List<User> _users;

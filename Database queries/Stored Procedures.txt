@@ -29,7 +29,7 @@ BEGIN
     -- Hvis alt er ok, gennemfør transaktionen
     COMMIT TRANSACTION;
 END
-GO;
+
 
 CREATE PROCEDURE [spEditBadge]
     @BadgeID INT,
@@ -62,7 +62,7 @@ BEGIN
     -- Hvis alt er ok, gennemfør transaktionen
     COMMIT TRANSACTION;
 END
-GO;
+
 
 CREATE PROCEDURE [spEditMeeting]
     @MeetingID INT,
@@ -93,16 +93,16 @@ BEGIN
     -- Hvis alt er ok, gennemfør transaktionen
     COMMIT TRANSACTION;
 END
-GO;
 
-CREATE PROCEDURE [spGetAllScoutmeetings]
+
+CREATE PROCEDURE [dbo].[spGetAllScoutmeetings]
 AS
 BEGIN
     BEGIN TRY
         -- Hent alle møder og deres tilknyttede oplysninger
         SELECT DISTINCT 
             Activity.ActivityID,
-            Activity.ActivityDescription,
+            Activity.Activity,
             Activity.Notes,
             Unit.UnitID,
             Unit.UnitName,
@@ -111,7 +111,7 @@ BEGIN
             Meeting.Start,
             Meeting.Stop,
             -- Brug LEFT JOIN for ActivityBadge for at tillade aktiviteter uden mærker
-            COALESCE(Badge.Picture, CAST(0x AS VARBINARY(MAX))) AS BadgePicture, -- Hvis ingen badge, returneres tom VARBINARY
+            COALESCE(Badge.Picture, CAST(0x AS VARBINARY(MAX))) AS Picture, -- Hvis ingen badge, returneres tom VARBINARY
             Badge.BadgeID
         FROM Activity
         INNER JOIN ActivityUnit
@@ -132,7 +132,7 @@ BEGIN
         SELECT ERROR_MESSAGE() AS ErrorMessage;
     END CATCH
 END
-GO;
+
 
 CREATE PROCEDURE [spGetScoutmeetingByID] @ActivityID INT
 AS
@@ -172,7 +172,7 @@ BEGIN
         SELECT ERROR_MESSAGE() AS ErrorMessage;
     END CATCH
 END
-GO
+
 
 CREATE PROCEDURE [spSelectActivity] @ActivityID INT
 AS
@@ -188,7 +188,7 @@ BEGIN
 	WHERE
 		ActivityID = @ActivityID
 END
-GO;
+
 
 CREATE PROCEDURE [spSelectBadge]
     @BadgeID INT
@@ -207,7 +207,7 @@ BEGIN
     WHERE 
         BadgeID = @BadgeID;
 END
-GO;
+
 
 CREATE PROCEDURE [spSelectMeeting]
     @MeetingID INT
@@ -225,7 +225,7 @@ BEGIN
         Meeting
 	WHERE MeetingID = @MeetingID
 END
-GO;
+
 
 CREATE PROCEDURE [spSelectUnit]
     @UnitID INT
@@ -243,4 +243,162 @@ BEGIN
     WHERE 
         UnitID = @UnitID;
 END
-GO;
+
+CREATE PROCEDURE spDeleteScoutMeeting 
+	@ActivityID INT, 
+	@MeetingID INT,  
+	@UnitID INT, 
+	@BadgeID INT
+AS
+BEGIN
+	BEGIN TRANSACTION
+	BEGIN TRY
+		ALTER TABLE ActivityUnit NOCHECK CONSTRAINT ALL;
+		ALTER TABLE ActivityBadge NOCHECK CONSTRAINT ALL;
+		ALTER TABLE ActivityMeeting NOCHECK CONSTRAINT ALL;
+
+		IF @UnitID != 0
+		BEGIN
+			DELETE FROM ActivityUnit 
+			WHERE 
+				ActivityID = @ActivityID 
+			AND 
+				UnitID = @UnitID;
+		END
+
+		IF @MeetingID != 0
+		BEGIN
+			DELETE FROM ActivityMeeting
+			WHERE
+				ActivityID = @ActivityID
+			AND
+				MeetingID = @MeetingID;
+			
+			
+			DELETE FROM Meeting
+			WHERE
+				MeetingID = @MeetingID;
+		END
+
+		IF @BadgeID != 0
+		BEGIN
+			DELETE FROM ActivityBadge
+			WHERE
+				ActivityID = @ActivityID
+			AND
+				BadgeID = @BadgeID;
+		END
+
+		DELETE FROM Activity
+		WHERE
+			ActivityID = @ActivityID;
+		
+		ALTER TABLE ActivityUnit CHECK CONSTRAINT ALL;
+		ALTER TABLE ActivityBadge CHECK CONSTRAINT ALL;
+		ALTER TABLE ActivityMeeting CHECK CONSTRAINT ALL;
+
+		
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW;
+	END CATCH
+END
+
+CREATE PROCEDURE spAddActivity 
+	@Activity VARCHAR(500), 
+	@Description VARCHAR(255),
+	@Preparation VARCHAR(500),
+	@Notes VARCHAR(500),
+	@ActivityID INT OUTPUT
+AS
+BEGIN
+	BEGIN TRANSACTION
+	BEGIN TRY
+		INSERT INTO Activity (
+			Activity,
+			ActivityDescription,
+			Preparation,
+			Notes)
+		VALUES (
+			@Activity,
+			@Description,
+			@Preparation,
+			@Notes);
+		SET @ActivityID = SCOPE_IDENTITY();
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW;
+	END CATCH
+END
+
+CREATE PROCEDURE spAddBadge 
+    @ActivityID INT,
+    @BadgeName VARCHAR(100),
+    @Description VARCHAR(255),
+    @Picture VARBINARY(MAX),
+    @Link VARCHAR(500),
+    @BadgeID INT,
+    @NewBadgeID INT OUTPUT
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        IF @BadgeID != 0
+        BEGIN
+            -- Tilknyt eksisterende badge til aktivitet
+            INSERT INTO ActivityBadge (
+                ActivityID,
+                BadgeID
+            )
+            VALUES (
+                @ActivityID, 
+                @BadgeID
+            );
+
+            -- Returnér det eksisterende BadgeID som output
+            SET @NewBadgeID = @BadgeID;
+        END
+        ELSE
+        BEGIN
+            -- Opret en ny badge
+            INSERT INTO Badge (
+                BadgeName,
+                [Description],
+                [Picture],
+                Link
+            )
+            VALUES (
+                @BadgeName,
+                @Description,
+                @Picture,
+                @Link
+            );
+
+            -- Hent det nye BadgeID og sæt det til output-parameteren
+            SET @NewBadgeID = SCOPE_IDENTITY();
+
+            -- Tilknyt den nye badge til aktiviteten
+            INSERT INTO ActivityBadge (
+                ActivityID,
+                BadgeID
+            )
+            VALUES (
+                @ActivityID,
+                @NewBadgeID
+            );
+        END;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Rul transaktionen tilbage ved fejl
+        ROLLBACK TRANSACTION;
+
+        -- Genkast fejlen
+        THROW;
+    END CATCH;
+END;
