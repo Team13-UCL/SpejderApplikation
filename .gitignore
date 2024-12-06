@@ -1,6 +1,5 @@
 .vs/
 /obj/bin/
 obj/
-*.dll
 *.exe
 *.pdb
