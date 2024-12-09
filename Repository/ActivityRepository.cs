@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using SpejderApplikation.Model;
+using SpejderApplikation.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -100,6 +101,11 @@ namespace SpejderApplikation.Repository
                 ActivityID = (int)outputParam.Value;
             }
             return ActivityID;
+        }
+
+        public void ConnectTypes(Activity entity, ScoutsMeeting JoinedEntity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

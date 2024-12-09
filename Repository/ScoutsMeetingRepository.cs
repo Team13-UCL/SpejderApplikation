@@ -3,6 +3,7 @@ using SpejderApplikation.Model;
 using SpejderApplikation.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
@@ -88,7 +89,79 @@ namespace SpejderApplikation.Repository
 
         public ScoutsMeeting GetByID(int id)
         {
-            throw new NotImplementedException();
+            ScoutsMeeting entity = null; // Ensure initialization.
+            string query = "spGetScoutmeetingByID"; // Name of the stored procedure.
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@ActivityID", id);
+
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        // Extracting values with null checks.
+                        
+                        DateTime dateTime = reader.IsDBNull(reader.GetOrdinal("Date")) 
+                            ? DateTime.MinValue 
+                            : reader.GetDateTime(reader.GetOrdinal("Date"));
+                        DateOnly Date = DateOnly.FromDateTime(dateTime);
+                        TimeOnly start = reader.IsDBNull(reader.GetOrdinal("Start")) 
+                            ? TimeOnly.MinValue 
+                            : TimeOnly.FromTimeSpan(reader.GetTimeSpan(reader.GetOrdinal("Start)")));
+                        TimeOnly stop = reader.IsDBNull(reader.GetOrdinal("Stop")) 
+                            ? TimeOnly.MinValue 
+                            : TimeOnly.FromTimeSpan(reader.GetTimeSpan(reader.GetOrdinal("Stop")));
+                        byte[] picture = reader.IsDBNull(reader.GetOrdinal("BadgePicture")) 
+                            ? null 
+                            : (byte[])reader["BadgePicture"];
+
+                        string activity = reader.IsDBNull(reader.GetOrdinal("ActivityDescription")) 
+                            ? string.Empty 
+                            : reader.GetString(reader.GetOrdinal("ActivityDescription"));
+                        string notes = reader.IsDBNull(reader.GetOrdinal("Notes")) 
+                            ? string.Empty 
+                            : reader.GetString(reader.GetOrdinal("Notes"));
+                        string unitName = reader.IsDBNull(reader.GetOrdinal("UnitName")) 
+                            ? string.Empty 
+                            : reader.GetString(reader.GetOrdinal("UnitName"));
+
+                        int unitID = reader.IsDBNull(reader.GetOrdinal("UnitID")) 
+                            ? 0 
+                            : reader.GetInt32(reader.GetOrdinal("UnitID"));
+                        int meetingID = reader.IsDBNull(reader.GetOrdinal("MeetingID")) 
+                            ? 0 
+                            : reader.GetInt32(reader.GetOrdinal("MeetingID"));
+                        int badgeID = reader.IsDBNull(reader.GetOrdinal("BadgeID")) 
+                            ? 0 
+                            : reader.GetInt32(reader.GetOrdinal("BadgeID"));
+                        int activityID = reader.IsDBNull(reader.GetOrdinal("ActivityID")) 
+                            ? 0 
+                            : reader.GetInt32(reader.GetOrdinal("ActivityID"));
+
+                        // Create the entity.
+                        entity = new ScoutsMeeting(
+                            DateOnly.FromDateTime(dateTime),
+                            start,
+                            stop,
+                            picture,
+                            activity,
+                            notes,
+                            unitName,
+                            meetingID,
+                            unitID,
+                            badgeID,
+                            activityID
+                        );
+                    }
+                }
+            }
+
+            return entity ?? default; // Return default if no record found.
         }
 
         public int AddType(ScoutsMeeting entity, int ID)
@@ -115,6 +188,11 @@ namespace SpejderApplikation.Repository
                 connection.Open();
                 command.ExecuteNonQuery();
             }
+        }
+
+        public void ConnectTypes(ScoutsMeeting entity, ScoutsMeeting JoinedEntity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

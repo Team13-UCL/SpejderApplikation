@@ -1,7 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
 using SpejderApplikation.Model;
+using SpejderApplikation.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -110,6 +112,33 @@ namespace SpejderApplikation.Repository
         }
 
         public int AddType(Meeting entity, int ID)
+        {
+            string query = "EXEC spAddMeeting @ActivityID, @Date, @Start, @Stop, @MeetingID, @NewMeetingID OUTPUT";
+
+            int MeetingID = 0;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                // Tilføj input-parametre
+                command.Parameters.AddWithValue("@Date", entity.Date);
+                command.Parameters.AddWithValue("@Start", entity.Start);
+                command.Parameters.AddWithValue("@Stop", entity.Stop);
+                command.Parameters.AddWithValue("@MeetingID", entity._meetingID);
+                command.Parameters.AddWithValue("@ActivityID", ID);
+                SqlParameter outputParam = new SqlParameter("@NewMeetingID", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                command.Parameters.Add(outputParam);
+                connection.Open();
+                command.ExecuteNonQuery();
+                MeetingID = (int)outputParam.Value;
+            }
+            return MeetingID; ;
+        }
+
+        public void ConnectTypes(Meeting entity, ScoutsMeeting JoinedEntity)
         {
             throw new NotImplementedException();
         }

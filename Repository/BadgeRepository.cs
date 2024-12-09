@@ -160,5 +160,20 @@ namespace SpejderApplikation.Repository
 
             return BadgeID;
         }
+
+        public void ConnectTypes(Badge entity, ScoutsMeeting JoinedEntity)
+        {
+            string query = "spEditActivityBadge @BadgeID, @NewBadgeID, @ActivityID"; //indtast SQL query her.
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@BadgeID", JoinedEntity.badgeID);
+                command.Parameters.AddWithValue("@NewBadgeID", entity._badgeID);
+                command.Parameters.AddWithValue("@ActivityID", JoinedEntity.activityID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
     }
 }

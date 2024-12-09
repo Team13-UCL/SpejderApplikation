@@ -1,7 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
 using SpejderApplikation.Model;
+using SpejderApplikation.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,15 +37,7 @@ namespace SpejderApplikation.Repository
 
         public void EditType(Unit entity)
         {
-            string query = "spAddOrEditUnit @ActivityID, @UnitID"; //indtast SQL query her.
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand(query, connection);
-                //command.Parameters.AddWithValue("@ActivityID", entity.);
-                command.Parameters.AddWithValue("@UnitID", entity._unitID);
-                connection.Open();
-            }
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Unit> GetAll()
@@ -103,7 +97,35 @@ namespace SpejderApplikation.Repository
 
         public int AddType(Unit entity, int ID)
         {
-            throw new NotImplementedException();
+            string query = "EXEC spAddUnit @ActivityID, @UnitID";
+
+            int ActivityID = 0;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+
+                // Tilføj input-parametre
+                command.Parameters.AddWithValue("@ActivityID", ID);
+                command.Parameters.AddWithValue("@UnitID", entity._unitID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            return entity._unitID;
+        }
+
+        public void ConnectTypes(Unit entity, ScoutsMeeting JoinedEntity)
+        {
+            string query = "spEditUnit @UnitID, @NewUnitID, @ActivityID"; //indtast SQL query her.
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@UnitID", JoinedEntity.unitID);
+                command.Parameters.AddWithValue("@NewUnitID", entity._unitID);
+                command.Parameters.AddWithValue("@ActivityID", JoinedEntity.activityID);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
         }
     }
 }

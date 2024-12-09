@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpejderApplikation.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,5 +15,6 @@ namespace SpejderApplikation.Repository
         public void EditType(Type entity);
         public int AddType(Type entity, int ID);
         public void DeleteType(Type entity);
+        public void ConnectTypes(Type entity, ScoutsMeeting JoinedEntity);
     }
 }

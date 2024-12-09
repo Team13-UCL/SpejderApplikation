@@ -402,3 +402,109 @@ BEGIN
         THROW;
     END CATCH;
 END;
+
+CREATE PROCEDURE spAddMeeting 
+    @ActivityID INT,
+    @Date DATE,
+    @Start TIME,
+    @Stop TIME,
+    @MeetingID INT,
+    @NewMeetingID INT OUTPUT
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        -- Hvis et eksisterende møde bruges
+        IF @MeetingID != 0
+        BEGIN
+            INSERT INTO ActivityMeeting (
+                ActivityID,
+                MeetingID
+            )
+            VALUES (
+                @ActivityID,
+                @MeetingID
+            );
+            -- Sæt NewMeetingID til det eksisterende MeetingID
+            SET @NewMeetingID = @MeetingID;
+        END
+        ELSE
+        BEGIN
+            -- Opret nyt møde
+            INSERT INTO Meeting (
+                [Date],
+                [Start],
+                [Stop]
+            )
+            VALUES (
+                @Date,
+                @Start,
+                @Stop
+            );
+
+            -- Hent ID for det nye møde
+            SET @NewMeetingID = SCOPE_IDENTITY();
+
+            -- Opret forbindelse mellem Activity og det nye møde
+            INSERT INTO ActivityMeeting (
+                ActivityID,
+                MeetingID
+            )
+            VALUES (
+                @ActivityID,
+                @NewMeetingID
+            );
+        END;
+
+        -- Bekræft ændringer
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Rul tilbage ved fejl
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+
+CREATE PROCEDURE spAddUnit 
+	@ActivityID INT,
+	@UnitID INT
+AS
+BEGIN
+	BEGIN TRANSACTION
+	BEGIN TRY
+
+	 INSERT INTO ActivityUnit (
+		ActivityID,
+		UnitID
+		)
+	VALUES (
+		@ActivityID,
+		@UnitID
+		);
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION
+		THROW;
+	END CATCH;
+END;
+
+CREATE PROCEDURE spEditUnit 
+	@UnitID INT, 
+	@NewUnitID INT, 
+	@ActivityID INT
+AS
+BEGIN
+	BEGIN TRANSACTION
+	BEGIN TRY
+		UPDATE ActivityUnit
+		SET UnitID = @NewUnitID
+		WHERE UnitID = @UnitID AND ActivityID = @ActivityID
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION
+		THROW
+	END CATCH
+END
