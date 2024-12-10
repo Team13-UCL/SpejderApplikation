@@ -32,5 +32,7 @@ namespace SpejderApplikation.View
             InitializeComponent();
             DataContext = vm;
         }
+
+        
     }
 }
