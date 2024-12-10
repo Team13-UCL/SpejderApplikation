@@ -508,3 +508,22 @@ BEGIN
 		THROW
 	END CATCH
 END
+
+Create PROCEDURE [dbo].[spEditActivityBadge] 
+	@BadgeID INT, 
+	@NewBadgeID INT, 
+	@ActivityID INT
+AS
+BEGIN
+	BEGIN TRANSACTION
+	BEGIN TRY
+		UPDATE ActivityBadge
+		SET BadgeID = @NewBadgeID
+		WHERE BadgeID = @BadgeID AND ActivityID = @ActivityID
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION
+		THROW
+	END CATCH
+END
