@@ -381,12 +381,31 @@
                     x:Name="Notestb"
                     Width="180"
                     Height="44"
-                    Text="{Binding Notes, FallbackValue=Husk, TargetNullValue=Husk, UpdateSourceTrigger=PropertyChanged}" />
-                <Label
-                    x:Name="Mærkelbl"
-                    Width="178"
-                    Height="23"
-                    Content="Mærke:" />
+                    Text="{Binding Notes, FallbackValue=Husk, TargetNullValue=Husk, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,5" />
+                <Grid Width="180" Height="auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="13*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+        
+        Grid.Column="0"
+        Grid.ColumnSpan="2"
+        x:Name="Mærke"
+        Width="178"
+        Height="23"
+        Content="Mærke:" Margin="1,0,1,0" Grid.RowSpan="2" />
+                    <ComboBox
+        x:Name="BadgeChoosercb"
+        ItemsSource="{Binding Badges}"
+        DisplayMemberPath="Name"
+        SelectedItem="{Binding SelectedBadge, Mode=TwoWay}" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="50,0,0,0"
+        />
+                </Grid>
                 <TextBox
                     x:Name="BadgeNametb"
                     Width="180"
@@ -407,48 +426,40 @@
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="Linktb" Text="{Binding BadgeLink, FallbackValue=Link, TargetNullValue=Link}" />
+                    <TextBox x:Name="Linktb" Text="{Binding BadgeLink, FallbackValue=Link, TargetNullValue=Link}" Margin="0,0,0,5" />
                     <Button
                         x:Name="Picturebtn"
                         Grid.Column="1"
                         Width="auto"
                         Height="auto"
                         Command="{Binding DownloadCommand}"
-                        Content="Billede" />
+                        Content="Billede" Margin="0,0,0,5" />
                 </Grid>
+
                 <Grid Width="180" Height="auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="13*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
                     <Label
-                        
-                        Grid.Column="0"
-                        Grid.ColumnSpan="2"
-                        x:Name="Mærke"
-                        Width="178"
-                        Height="23"
-                        Content="Mærke:" />
+
+Grid.Column="0"
+Grid.ColumnSpan="2"
+x:Name="gg"
+Width="178"
+Height="23"
+Content="Enhed:" Margin="1,0,1,0" Grid.RowSpan="2" />
                     <ComboBox
-                        x:Name="BadgeChoosercb"
-                        Margin="50,0,0,0"
-                        ItemsSource="{Binding Badges}"
-                        DisplayMemberPath="Name"
-                        SelectedItem="{Binding SelectedBadge, Mode=TwoWay}" Grid.ColumnSpan="2"
-                        />
+x:Name="BadgeChcb"
+ItemsSource="{Binding Units}"
+DisplayMemberPath="UnitName"
+SelectedItem="{Binding SelectedUnit, Mode=TwoWay}"  Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="50,0,0,0"
+/>
                 </Grid>
-                <Grid Width="180" Height="auto">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
-                </Grid>
-                <Label
-                    x:Name="Mærkelbl_Copy2"
-                    Width="178"
-                    Height="23"
-                    Content="Enhed:" />
                 <TextBox
                     x:Name="Unittb"
                     Width="180"
@@ -459,13 +470,6 @@
                     Width="180"
                     Height="auto"
                     Text="{Binding UnitDescription, FallbackValue=EnhedsBeskrivelse, TargetNullValue=EnhedsBeskrivelse}"/>
-                <ComboBox
-                    x:Name="UnitSelectercb"
-                    Width="180"
-                    Height="auto"
-                    ItemsSource="{Binding Units}"
-                    SelectedItem="{Binding SelectedUnit, Mode=TwoWay}"
-                    DisplayMemberPath="UnitName"/>
             </StackPanel>
         </Grid>
         <Image

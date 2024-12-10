@@ -39,10 +39,10 @@ namespace SpejderApplikation.Repository
             {
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@BadgeID", entity._badgeID);
-                command.Parameters.AddWithValue("@Name", entity.Name);
-                command.Parameters.AddWithValue("@Description", entity.Description);
-                command.Parameters.AddWithValue("@Picture", entity.Picture);
-                command.Parameters.AddWithValue("@Link", entity.Link);
+                command.Parameters.AddWithValue("@Name", entity.Name ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@Description", entity.Description ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@Picture", entity.Picture ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@Link", entity.Link ?? (object)DBNull.Value);
                 connection.Open();
                 command.ExecuteNonQuery();
             }

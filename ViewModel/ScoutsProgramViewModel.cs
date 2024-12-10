@@ -271,10 +271,13 @@ namespace SpejderApplikation.ViewModel
             {
                 _selectedActivity = value;
                 OnPropertyChanged();
-                ActivityTeaser = _selectedActivity.BriefDescription;
-                Activity = _selectedActivity.ActivityDescription;
-                Preparation = _selectedActivity.Preparation;
-                Notes = _selectedActivity.Notes;
+                if (_selectedActivity != null)
+                {
+                    ActivityTeaser = _selectedActivity.BriefDescription;
+                    Activity = _selectedActivity.ActivityDescription;
+                    Preparation = _selectedActivity.Preparation;
+                    Notes = _selectedActivity.Notes;
+                }
             }
         }
         private Badge _selectedBadge;
@@ -361,25 +364,62 @@ namespace SpejderApplikation.ViewModel
         }
         public void EditMeeting(ScoutsMeeting scoutmeeting)
         {
-
-            ActivityRepo.EditType(SelectedActivity);
-
-            if (SelectedBadge._badgeID != scoutmeeting.badgeID)
+            // Update Activity
+            if (SelectedActivity != null)
             {
-                BadgeRepo.ConnectTypes(SelectedBadge, scoutmeeting);
-            }
-            else { BadgeRepo.EditType(SelectedBadge); }
+               
 
-            if (SelectedMeeting._meetingID != scoutmeeting.meetingID)
-            {
-                MeetingRepo.ConnectTypes(SelectedMeeting, scoutmeeting);
+                if (SelectedActivity._activityID != scoutmeeting.activityID)
+                {
+                    ActivityRepo.ConnectTypes(SelectedActivity, scoutmeeting);
+                }
+                else
+                {
+                    ActivityRepo.EditType(SelectedActivity);
+                }
             }
-            else { MeetingRepo.EditType(SelectedMeeting); }
 
-            if (SelectedUnit._unitID != scoutmeeting.unitID)
+            // Update Badge
+            if (SelectedBadge != null)
             {
-                UnitRepo.ConnectTypes(SelectedUnit, scoutmeeting);
+                if (SelectedBadge._badgeID != scoutmeeting.badgeID)
+                {
+                    BadgeRepo.ConnectTypes(SelectedBadge, scoutmeeting);
+                }
+                else
+                {
+                    BadgeRepo.EditType(SelectedBadge);
+                }
             }
+
+            // Update Meeting
+            if (SelectedMeeting != null)
+            {
+                if (SelectedMeeting._meetingID != scoutmeeting.meetingID)
+                {
+                    MeetingRepo.ConnectTypes(SelectedMeeting, scoutmeeting);
+                }
+                else
+                {
+                    MeetingRepo.EditType(SelectedMeeting);
+                }
+            }
+
+            // Update Unit
+            if (SelectedUnit != null)
+            {
+                if (SelectedUnit._unitID != scoutmeeting.unitID)
+                {
+                    UnitRepo.ConnectTypes(SelectedUnit, scoutmeeting);
+                }
+                else
+                {
+                    UnitRepo.EditType(SelectedUnit);
+                }
+            }
+
+            // Update ScoutsMeeting
+            //ScoutMeetingRepo.EditType(scoutmeeting);
         }
 
         public void DeleteMeeting()
