@@ -16,6 +16,8 @@ namespace SpejderApplikation.Repository
     public class ScoutsMeetingRepository : IRepository<ScoutsMeeting>
     {
         private readonly string _connectionString;
+
+        // Constructor initializes connection string from a static class or passed argument
         public ScoutsMeetingRepository()
         {
             _connectionString = Connection.ConnectionString;
@@ -25,26 +27,30 @@ namespace SpejderApplikation.Repository
             _connectionString = connectionString;
         }
 
+        // EditType method is not implemented
         public void EditType(ScoutsMeeting entity)
         {
             throw new NotImplementedException();
         }
 
+        // GetAll retrieves all scout meetings from the database
         public IEnumerable<ScoutsMeeting> GetAll()
         {
-            var entities = new List<ScoutsMeeting>();
+            var entities = new List<ScoutsMeeting>(); // List to hold the retrieved entities
             string filePath = Directory.GetCurrentDirectory();
-            string fileName = "\\KFUM.png"; // har et basis KFUM mærke i projektets mappe
-            string query = "spGetAllScoutmeetings"; // indtast SQL query her.
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            string fileName = "\\KFUM.png"; // Path to default KFUM image
+            string query = "spGetAllScoutmeetings"; // SQL query to get all scout meetings
+            using (SqlConnection connection = new SqlConnection(_connectionString)) // SQL query to get all scout meetings
             {
-                SqlCommand command = new SqlCommand(query, connection);
-                connection.Open();
+                SqlCommand command = new SqlCommand(query, connection); // Execute query and read results
+                {
+                    connection.Open(); // Open the connection
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    while (reader.Read()) 
                     {
+                            // Read data from reader and handle potential null values
                         DateTime dateTime = (DateTime)reader["Date"];
                         TimeSpan start = (TimeSpan)reader["Start"];
                         TimeSpan stop = (TimeSpan)reader["Stop"];
@@ -83,10 +89,12 @@ namespace SpejderApplikation.Repository
                 }
             }
 
-            return entities;
+            return entities; // Return the list of scout meetings
+            }
         }
 
 
+        // GetByID retrieves a single scout meeting by its ID
         public ScoutsMeeting GetByID(int id)
         {
             ScoutsMeeting entity = null; // Ensure initialization.
@@ -98,14 +106,13 @@ namespace SpejderApplikation.Repository
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@ActivityID", id);
 
-                connection.Open();
+                connection.Open(); // Open connection to database
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        // Extracting values with null checks.
-                        
+                        // Read and map data to object fields
                         DateTime dateTime = reader.IsDBNull(reader.GetOrdinal("Date")) 
                             ? DateTime.MinValue 
                             : reader.GetDateTime(reader.GetOrdinal("Date"));
@@ -143,7 +150,7 @@ namespace SpejderApplikation.Repository
                             ? 0 
                             : reader.GetInt32(reader.GetOrdinal("ActivityID"));
 
-                        // Create the entity.
+                        // Create the entity object based on the fetched data
                         entity = new ScoutsMeeting(
                             DateOnly.FromDateTime(dateTime),
                             start,
@@ -164,11 +171,13 @@ namespace SpejderApplikation.Repository
             return entity ?? default; // Return default if no record found.
         }
 
+        // AddType method is not implemented
         public int AddType(ScoutsMeeting entity, int ID)
         {
             throw new NotImplementedException();
         }
 
+        // DeleteType deletes a scout meeting record from the database
         public void DeleteType(ScoutsMeeting entity)
         {
             string query = "spDeleteScoutMeeting @ActivityID, @MeetingID, @UnitID, @BadgeID";
@@ -190,6 +199,7 @@ namespace SpejderApplikation.Repository
             }
         }
 
+        // ConnectTypes method is not implemented
         public void ConnectTypes(ScoutsMeeting entity, ScoutsMeeting JoinedEntity)
         {
             throw new NotImplementedException();

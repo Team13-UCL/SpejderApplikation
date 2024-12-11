@@ -11,11 +11,12 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Repository
 {
+    // Repository for handling database interactions related to Badges
     public class BadgeRepository : IRepository<Badge>
     {
         private readonly string _connectionString;
         string filePath = Directory.GetCurrentDirectory();
-        string fileName = "\\KFUM.png"; // har et basis KFUM mærke i projektets mappe
+        string fileName = "\\KFUM.png"; // Default badge image
         public BadgeRepository()
         {
             _connectionString = Connection.ConnectionString;
@@ -37,6 +38,7 @@ namespace SpejderApplikation.Repository
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                // Adding parameters for the stored procedure
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@BadgeID", entity._badgeID);
                 command.Parameters.AddWithValue("@Name", entity.Name ?? (object)DBNull.Value);
@@ -62,6 +64,7 @@ namespace SpejderApplikation.Repository
                 {
                     while (reader.Read())
                     {
+                        // Attempt to load picture data
                         Byte[] picture;
                         if (reader["Picture"] != null)
                         { picture = reader["Picture"] as byte[]; }
@@ -74,7 +77,7 @@ namespace SpejderApplikation.Repository
                             picture = new byte[0];
                         }
 
-
+                        // Map database fields to Badge properties
                         entities.Add(new Badge((int)reader["BadgeID"],
                                                 (string)reader["BadgeName"],
                                                 (string)reader["Description"],
@@ -102,6 +105,7 @@ namespace SpejderApplikation.Repository
                 {
                     if (reader.Read())
                     {
+                        // Map database fields to Badge properties
                         int badgeID = reader.IsDBNull(reader.GetOrdinal("BadgeID")) ? 0 : reader.GetInt32(reader.GetOrdinal("BadgeID"));
                         string name = reader.IsDBNull(reader.GetOrdinal("BadgeName")) ? string.Empty : reader.GetString(reader.GetOrdinal("BadgeName"));
                         string description = reader.IsDBNull(reader.GetOrdinal("Description")) ? string.Empty : reader.GetString(reader.GetOrdinal("Description"));
@@ -126,11 +130,12 @@ namespace SpejderApplikation.Repository
             using (SqlConnection connection = new SqlConnection(_connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                // Tilføj input-parametre
+                // Adding input parameters
                 command.Parameters.AddWithValue("@ActivityID", ID);
                 command.Parameters.AddWithValue("@BadgeName", entity.Name);
                 command.Parameters.AddWithValue("@Description", entity.Description);
 
+                // Handle picture input
                 var pictureParam = new SqlParameter("@Picture", SqlDbType.VarBinary);
                 if (entity.Picture != null && entity.Picture.Length > 0)
                 {
@@ -155,12 +160,12 @@ namespace SpejderApplikation.Repository
                 connection.Open();
                 command.ExecuteNonQuery();
 
-                // Hent værdien fra output-parametret
+                // Retrieve output value
                 BadgeID = (int)outputParam.Value;
             }
 
             return BadgeID;
-        }
+        }   
 
         public void ConnectTypes(Badge entity, ScoutsMeeting JoinedEntity)
         {

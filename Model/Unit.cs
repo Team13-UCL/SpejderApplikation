@@ -8,15 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+// Unit class represents a unit or group within the application
 namespace SpejderApplikation.Model
 {
     public class Unit
     {
-        public int _unitID { get; private set; }
-        public string Description { get; set; }
-        public string UnitName { get; set; }
-        public string Link { get; set; }
-        //public byte[] Picture { get; set; }
+        public int _unitID { get; private set; } // Unique identifier for the unit
+        public string Description { get; set; } // Description of the unit
+        public string UnitName { get; set; } // Name of the unit
+        public string Link { get; set; } // Link to additional information about the unit
+
+        // Constructor to initialize all properties
         public Unit(int unitID, string unitName, string description, string link)
         {
             _unitID = unitID;
@@ -25,6 +27,8 @@ namespace SpejderApplikation.Model
             Link = link;
             //Picture = picture;
         }
+
+        // Default constructor with default values
         public Unit() : this(0, "Enhed", "", null) { }
 
         // Hjælpefunktion til at hente standardbilledet KFUM.PNG, hvilket er KFUMS logo
@@ -41,6 +45,8 @@ namespace SpejderApplikation.Model
                 return new byte[0];
             }
         }
+
+        // Updates the unit ID
         public void UpdateID(int ID)
         {
             _unitID = ID;
