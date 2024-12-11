@@ -87,10 +87,10 @@ namespace SpejderApplikation.Repository
                 SqlCommand command = new SqlCommand(query, connection);
 
                 // Tilføj input-parametre
-                command.Parameters.AddWithValue("@Activity", entity.BriefDescription);
-                command.Parameters.AddWithValue("@Description", entity.ActivityDescription);
-                command.Parameters.AddWithValue("@Preparation", entity.Preparation);
-                command.Parameters.AddWithValue("@Notes", entity.Notes);
+                command.Parameters.AddWithValue("@Activity", entity.BriefDescription ?? string.Empty);
+                command.Parameters.AddWithValue("@Description", entity.ActivityDescription ?? string.Empty);
+                command.Parameters.AddWithValue("@Preparation", entity.Preparation ?? string.Empty);
+                command.Parameters.AddWithValue("@Notes", entity.Notes ?? string.Empty);
                 SqlParameter outputParam = new SqlParameter("@ActivityID", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
