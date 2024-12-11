@@ -16,18 +16,23 @@ using System.Windows.Media;
 
 namespace SpejderApplikation.ViewModel
 {
+    // ViewModel responsible for managing and interacting with Scout Meetings
     public class ScoutsProgramViewModel : ViewModelBase
     {
+        // Repositories for managing data access
         IRepository<ScoutsMeeting> ScoutMeetingRepo;
         IRepository<Meeting> MeetingRepo;
         IRepository<Badge> BadgeRepo;
         IRepository<Activity> ActivityRepo;
         IRepository<Unit> UnitRepo;
         private readonly ImageHandling _imageHandling;
-        
+
+        // Collections used for binding to the UI
         public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
         public ObservableCollection<Badge> Badges { get; set; }
         public ObservableCollection<Unit> Units { get; set; }
+
+        // Date management properties
         private DateOnly _date;
         public DateOnly Date
         {
@@ -47,7 +52,8 @@ namespace SpejderApplikation.ViewModel
             }
         }
 
-        public DateTime DateTime // skal bruges fordi datepicker ikke kan binde til DateOnly
+        // DateTime property for UI binding compatibility with DatePicker
+        public DateTime DateTime
         {
             get { return new DateTime(_date.Year, _date.Month, _date.Day); }
             set
@@ -55,6 +61,8 @@ namespace SpejderApplikation.ViewModel
                 Date = DateOnly.FromDateTime(value);
             }
         }
+
+        // Time management properties
         private TimeOnly _start;
         public TimeOnly Start
         {
@@ -77,8 +85,9 @@ namespace SpejderApplikation.ViewModel
                 OnPropertyChanged();
             }
         }
-        private string _badgeName;
 
+        // Badge-related properties for managing badge details
+        private string _badgeName;
         public string BadgeName
         {
             get { return _badgeName; }
@@ -145,7 +154,7 @@ namespace SpejderApplikation.ViewModel
             }
         }
 
-
+        // Activity-related properties
         private string _activity;
         public string Activity
         {
@@ -179,8 +188,9 @@ namespace SpejderApplikation.ViewModel
                 OnPropertyChanged();
             }
         }
-        private string _unitName;
 
+        // Unit-related properties
+        private string _unitName;
         public string UnitName
         {
             get { return _unitName; }
@@ -231,7 +241,7 @@ namespace SpejderApplikation.ViewModel
                 }
                 else
                 {
-                    UnitName = string.Empty; // handler null case
+                    UnitName = string.Empty; // handle null cases
                     UnitDescription = string.Empty;
                     UnitLink = string.Empty;
                 }
@@ -240,8 +250,8 @@ namespace SpejderApplikation.ViewModel
             }
         }
 
+        // Meeting-related properties
         private Meeting _selectedMeeting;
-
         public Meeting SelectedMeeting
         {
             get { return _selectedMeeting; }
@@ -250,19 +260,24 @@ namespace SpejderApplikation.ViewModel
                 _selectedMeeting = value;
                 if (_selectedMeeting != null)
                 {
+                    // Assign the date and times from the selected meeting
                     Date = _selectedMeeting.Date;
                     Start = _selectedMeeting.Start;
                     Stop = _selectedMeeting.Stop;
                 }
                 else
                 {
+                    // Reset properties to default values if no meeting is selected
                     Date = default; // handler nullcase
                     Start = default;
                     Stop = default;
                 }
+                // Notify the UI about the property change
                 OnPropertyChanged();
             }
         }
+
+
         private Activity _selectedActivity;
         public Activity SelectedActivity
         {
@@ -289,8 +304,11 @@ namespace SpejderApplikation.ViewModel
             {
                 _selectedBadge = value;
                 OnPropertyChanged();
+
+
                 if (_selectedBadge != null)
                 {
+                    // Update related properties with the selected activity's data
                     BadgeName = _selectedBadge.Name;
                     BadgeDescription = _selectedBadge.Description;
                     BadgeLink = _selectedBadge.Link;
@@ -303,9 +321,6 @@ namespace SpejderApplikation.ViewModel
                     BadgeLink = string.Empty;
                     BadgeData = new byte[0];
                 }
-                
-
-
             }
         }
         

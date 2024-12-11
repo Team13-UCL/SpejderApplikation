@@ -5,18 +5,20 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
+// Badge class represents achievements or badges in the application
 namespace SpejderApplikation.Model
 {
     public class Badge
     {
-        public int _badgeID { get; private set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public byte[] Picture { get; set; } // Byte-array til billeder af gemte mærker
-        public string Link { get; set; }
+        public int _badgeID { get; private set; } // Unique identifier for the badge
+        public string Name { get; set; } // Name of the badge
+        public string Description { get; set; } // Description of the badge
+        public byte[] Picture { get; set; } // Byte-array for storing badge images
+        public string Link { get; set; } // Link for more information about the badge
 
         public Badge() { }
 
+        // Constructor to initialize all properties
         public Badge(int id, string name, string description, byte[] picture, string link)
         {
             _badgeID = id;
@@ -25,7 +27,7 @@ namespace SpejderApplikation.Model
             Picture = picture;
             Link = link;
         }
-        // Kopi Konstruktor
+        // Copy constructor for creating a duplicate badge
         public Badge(Badge badge)
         {
             if (badge == null) throw new ArgumentNullException(nameof(badge)); // Fejlhåndtering af Null
@@ -35,6 +37,8 @@ namespace SpejderApplikation.Model
             this.Picture = badge.Picture;
             this.Link = badge.Link;
         }
+
+        // Updates the badge ID
         public void UpdateID(int ID)
         {
             _badgeID = ID;
