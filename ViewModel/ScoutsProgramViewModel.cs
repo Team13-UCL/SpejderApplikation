@@ -26,8 +26,8 @@ namespace SpejderApplikation.ViewModel
         IRepository<Activity> ActivityRepo;
         IRepository<Unit> UnitRepo;
         private readonly ImageHandling _imageHandling;
-
-        // Collections used for binding to the UI
+        
+        
         public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
         public ObservableCollection<Badge> Badges { get; set; }
         public ObservableCollection<Unit> Units { get; set; }
@@ -45,6 +45,10 @@ namespace SpejderApplikation.ViewModel
                     if (SelectedScoutMeeting != null)
                     {
                         SelectedScoutMeeting.Date = value;
+                        if (SelectedMeeting != null)
+                        {
+                            SelectedMeeting.Date = value;
+                        }
                     }
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(DateTime)); // Notify that DateTime has changed
@@ -59,6 +63,7 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 Date = DateOnly.FromDateTime(value);
+
             }
         }
 
@@ -71,6 +76,11 @@ namespace SpejderApplikation.ViewModel
             {
                 _start = value;
                 SelectedScoutMeeting.Start = value;
+                
+                if (SelectedMeeting != null)
+                {
+                    SelectedMeeting.Start = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -82,6 +92,11 @@ namespace SpejderApplikation.ViewModel
             {
                 _stop = value;
                 SelectedScoutMeeting.Stop = value;
+                
+                if (SelectedMeeting != null)
+                {
+                    SelectedMeeting.Stop = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -94,6 +109,11 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _badgeName = value;
+                
+                if (SelectedBadge != null)
+                {
+                    SelectedBadge.Name = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -105,6 +125,11 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _badgeDescription = value;
+                
+                if (SelectedBadge != null)
+                {
+                    SelectedBadge.Description = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -116,6 +141,11 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _badgeLink = value;
+                
+                if (SelectedBadge != null)
+                {
+                    SelectedBadge.Link = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -126,6 +156,11 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _badgeData = value;
+               
+                if (SelectedBadge != null)
+                {
+                    SelectedBadge.Picture = value;
+                }
                 OnPropertyChanged();
 
             }
@@ -138,6 +173,7 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _picture = value;
+                //SelectedBadge.Picture = value;
                 OnPropertyChanged();
             }
         }
@@ -150,6 +186,12 @@ namespace SpejderApplikation.ViewModel
             { 
                 _activityTeaser = value;
                 SelectedScoutMeeting.Activity = value;
+                
+                if (SelectedActivity != null)
+                {
+                    SelectedActivity.BriefDescription = value;
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -162,6 +204,11 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _activity = value;
+                
+                if (SelectedActivity != null)
+                {
+                    SelectedActivity.ActivityDescription = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -173,6 +220,11 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _preparation = value;
+                
+                if (SelectedActivity != null)
+                {
+                    SelectedActivity.Preparation = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -185,6 +237,11 @@ namespace SpejderApplikation.ViewModel
             {
                 _notes = value;
                 SelectedScoutMeeting.Notes = value;
+                
+                if (SelectedActivity != null)
+                {
+                    SelectedActivity.Notes = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -197,6 +254,11 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _unitName = value;
+                
+                if (SelectedUnit != null)
+                {
+                    SelectedUnit.UnitName = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -208,6 +270,11 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _unitDescription = value;
+                
+                if (SelectedUnit != null)
+                {
+                    SelectedUnit.Description = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -220,6 +287,11 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _unitLink = value;
+                
+                if (SelectedUnit != null)
+                {
+                    SelectedUnit.Link = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -368,17 +440,22 @@ namespace SpejderApplikation.ViewModel
             _imageHandling = new ImageHandling();
             Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll()); // Henter alle mærker fra databasen
             Units = new ObservableCollection<Unit>(UnitRepo.GetAll()); // Henter alle enheder fra databasen
+            
             ShowOldActivities(); // Initialize the ScoutMeetings collection, kan måske ændres i metoden da vi allerede har scoutmeetings
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
         public void NewMeeting()
         {
            
-            SelectedScoutMeeting = new ScoutsMeeting();
+            SelectedScoutMeeting = new ScoutsMeeting();                       
+
             ScoutMeetings.Add(SelectedScoutMeeting);
             Date = DateOnly.FromDateTime(DateTime.Today); // Sætter datoen til i dag
         }
         public void EditMeeting(ScoutsMeeting scoutmeeting)
         {
+
+           
+
             // Update Activity
             if (SelectedActivity != null)
             {
@@ -423,24 +500,24 @@ namespace SpejderApplikation.ViewModel
             // Update Unit
             if (SelectedUnit != null)
             {
-                if (SelectedUnit._unitID != scoutmeeting.unitID)
-                {
-                    UnitRepo.ConnectTypes(SelectedUnit, scoutmeeting);
-                }
-                else
-                {
-                    UnitRepo.EditType(SelectedUnit);
-                }
+                //if (SelectedUnit._unitID != scoutmeeting.unitID)
+                //{
+                    UnitRepo.ConnectTypes(SelectedUnit, scoutmeeting); 
+                //}
+                //else
+                //{
+                //    UnitRepo.EditType(SelectedUnit);
+                //}
             }
-
-            // Update ScoutsMeeting
-            //ScoutMeetingRepo.EditType(scoutmeeting);
+                       
         }
 
+          
         public void DeleteMeeting()
         {
             if (SelectedScoutMeeting != null)
             {
+
                 MessageBoxResult result = MessageBox.Show(
                     "Er du sikker på, at du vil slette mødet?",
                     "Bekræft sletning",
@@ -460,6 +537,7 @@ namespace SpejderApplikation.ViewModel
 
                     // Eventuel opdatering af UI
                     MessageBox.Show("Mødet blev slettet.");
+
                 }
             }
             else
