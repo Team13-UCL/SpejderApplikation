@@ -108,12 +108,19 @@ namespace SpejderApplikation.Repository
                 }
             }
 
-            return entity; // If entity is null, the caller should handle the null value appropriately.
+            return entity ?? new Meeting();// If entity is null, the caller should handle the null value appropriately.
         }
 
         public int AddType(Meeting entity, int ID)
         {
             string query = "EXEC spAddMeeting @ActivityID, @Date, @Start, @Stop, @MeetingID, @NewMeetingID OUTPUT";
+
+            //if (entity.Date == null)
+            //    entity.Date = DateOnly.FromDateTime(DateTime.MinValue);
+            //if (entity.Start == null)
+            //    entity.Start = TimeOnly.FromDateTime(DateTime.MinValue);
+            //if (entity.Start == null)
+            //    entity.Stop = TimeOnly.FromDateTime(DateTime.MinValue);
 
             int MeetingID = 0;
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -121,8 +128,8 @@ namespace SpejderApplikation.Repository
                 SqlCommand command = new SqlCommand(query, connection);
 
                 // Tilføj input-parametre
-                command.Parameters.AddWithValue("@Date", entity.Date);
-                command.Parameters.AddWithValue("@Start", entity.Start);
+                command.Parameters.AddWithValue("@Date", entity.Date );
+                command.Parameters.AddWithValue("@Start", entity.Start );
                 command.Parameters.AddWithValue("@Stop", entity.Stop);
                 command.Parameters.AddWithValue("@MeetingID", entity._meetingID);
                 command.Parameters.AddWithValue("@ActivityID", ID);

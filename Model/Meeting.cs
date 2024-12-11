@@ -21,6 +21,13 @@ namespace SpejderApplikation.Model
             Start = start;
             Stop = stop;
         }
+        public Meeting(DateOnly date, TimeOnly start, TimeOnly stop)
+        {
+           
+            Date = date;
+            Start = start;
+            Stop = stop;
+        }
         public Meeting()
         {
             
