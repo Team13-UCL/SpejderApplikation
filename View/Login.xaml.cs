@@ -23,13 +23,13 @@ namespace SpejderApplikation.View
     public partial class Login : Window
     {
         LoginViewModel vm;
-        //public Login()
-        //{
-        //    var UserRepo = new Repository.UserRepo();
-        //    vm = new LoginViewModel(UserRepo);
-        //    InitializeComponent();
-        //    DataContext = vm;
-        //}
+        public Login()
+        {
+            var UserRepo = new Repository.UserRepo();
+            vm = new LoginViewModel(UserRepo);
+            InitializeComponent();
+            DataContext = vm;
+        }
 
         private void EmailTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

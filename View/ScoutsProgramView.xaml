@@ -60,11 +60,6 @@
 
 
         <!--  Badge Icons Row  -->
-
-
-
-
-        <!--  Badge Icons Row  -->
         <Image
             Grid.RowSpan="4"
             Width="278"
@@ -73,12 +68,14 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Source="/Images/tree.png"
-            Stretch="Fill" Grid.Row="1" />
+            Stretch="Fill"
+            Grid.Row="1" />
         <Image
             Grid.RowSpan="4"
             Margin="706,-110,-190,197"
             Source="/Images/bush.png"
-            Stretch="Fill" RenderTransformOrigin="0.5,0.5" >
+            Stretch="Fill" 
+            RenderTransformOrigin="0.5,0.5" >
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -227,13 +224,14 @@
 
 
             <!--  Checkbox  -->
-            <CheckBox
-                Margin="10,0"
-                VerticalAlignment="Center"
-                Content="Vis gamle møder" 
-                IsChecked="{Binding ShowOld}"/>
+            
             <StackPanel
                 Orientation="Horizontal" Width="427">
+                <CheckBox
+                    Margin="10,0"
+                    VerticalAlignment="Center"
+                    Content="Vis gamle møder" 
+                    IsChecked="{Binding ShowOld}"/>
                 <Button
                     Width="90"
                     Height="25"
@@ -248,13 +246,7 @@
                     Background="LightCoral"
                     Command="{Binding DeleteCommand}"
                     Content="Slet Opgave" />
-                <Button
-                    Width="130"
-                    Height="25"
-                    Margin="15,0"
-                    Background="LightBlue"
-                    Command="{Binding EditCommand}"
-                    Content="Gem alle ændringer" />
+                
             </StackPanel>
 
             <!--  Task Buttons  -->
@@ -277,7 +269,7 @@
                 ItemsSource="{Binding ScoutMeetings}"
                 
                 RowHeight="40"
-                SelectedItem="{Binding SelectedScoutMeeting}" AlternatingRowBackground="#FFD7E3BF" AlternationCount="2" Background="#FF9DBB61" RowBackground="#FFC4D6A0" Margin="10,0,333,0" HeadersVisibility="Column" VirtualizingPanel.ScrollUnit="Pixel" RenderOptions.CachingHint="Cache" VirtualizingPanel.CacheLength="50" VirtualizingPanel.CacheLengthUnit="Pixel" Grid.ColumnSpan="2"
+                SelectedItem="{Binding SelectedScoutMeeting, Mode=TwoWay}" AlternatingRowBackground="#FFD7E3BF" AlternationCount="2" Background="#FF9DBB61" RowBackground="#FFC4D6A0" Margin="10,0,333,0" HeadersVisibility="Column" VirtualizingPanel.ScrollUnit="Pixel" RenderOptions.CachingHint="Cache" VirtualizingPanel.CacheLength="50" VirtualizingPanel.CacheLengthUnit="Pixel" Grid.ColumnSpan="2"
 >
 
 
@@ -447,29 +439,34 @@
                     </Grid.ColumnDefinitions>
                     <Label
 
-Grid.Column="0"
-Grid.ColumnSpan="2"
-x:Name="gg"
-Width="178"
-Height="23"
-Content="Enhed:" Margin="1,0,1,0" Grid.RowSpan="2" />
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        x:Name="gg"
+                        Width="178"
+                        Height="23"
+                        Content="Enhed:" Margin="1,0,1,0" Grid.RowSpan="2" />
                     <ComboBox
-x:Name="BadgeChcb"
-ItemsSource="{Binding Units}"
-DisplayMemberPath="UnitName"
-SelectedItem="{Binding SelectedUnit, Mode=TwoWay}"  Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="50,0,0,0"
-/>
+                        x:Name="BadgeChcb"
+                        ItemsSource="{Binding Units}"
+                        DisplayMemberPath="UnitName"
+                        SelectedItem="{Binding SelectedUnit, Mode=TwoWay}"  
+                        Grid.ColumnSpan="2" 
+                        Grid.RowSpan="2" 
+                        Margin="50,0,0,0" />
                 </Grid>
-                <TextBox
-                    x:Name="Unittb"
-                    Width="180"
-                    Height="auto"
-                    Text="{Binding UnitName, FallbackValue=Enhed, TargetNullValue=Enhed}" />
+                
                 <TextBox
                     x:Name="UnitDescriptiontb"
                     Width="180"
                     Height="auto"
                     Text="{Binding UnitDescription, FallbackValue=EnhedsBeskrivelse, TargetNullValue=EnhedsBeskrivelse}"/>
+                <Button
+                    Width="130"
+                    Height="25"
+                    Margin="15,0"
+                    Background="LightBlue"
+                    Command="{Binding EditCommand}"
+                    Content="Gem alle ændringer" />
             </StackPanel>
         </Grid>
         <Image

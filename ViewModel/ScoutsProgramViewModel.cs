@@ -33,6 +33,7 @@ namespace SpejderApplikation.ViewModel
         public ObservableCollection<Unit> Units { get; set; }
 
         // Date management properties
+        private bool IsUpdate = false;
         private DateOnly _date;
         public DateOnly Date
         {
@@ -52,6 +53,7 @@ namespace SpejderApplikation.ViewModel
                     }
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(DateTime)); // Notify that DateTime has changed
+                    IsUpdate = true;
                 }
             }
         }
@@ -82,6 +84,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedMeeting.Start = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
         private TimeOnly _stop;
@@ -98,6 +101,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedMeeting.Stop = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
 
@@ -115,6 +119,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedBadge.Name = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
         private string _badgeDescription;
@@ -131,6 +136,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedBadge.Description = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
         private string _badgeLink;
@@ -147,6 +153,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedBadge.Link = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
         private byte[] _badgeData;
@@ -162,6 +169,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedBadge.Picture = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
 
             }
         }
@@ -175,6 +183,7 @@ namespace SpejderApplikation.ViewModel
                 _picture = value;
                 //SelectedBadge.Picture = value;
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
         private string _activityTeaser;
@@ -193,6 +202,7 @@ namespace SpejderApplikation.ViewModel
                 }
 
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
 
@@ -210,6 +220,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedActivity.ActivityDescription = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
         private string _preparation;
@@ -226,6 +237,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedActivity.Preparation = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
         private string _notes;
@@ -243,6 +255,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedActivity.Notes = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
 
@@ -260,6 +273,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedUnit.UnitName = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
         private string _unitDescription;
@@ -276,6 +290,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedUnit.Description = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
 
@@ -293,6 +308,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedUnit.Link = value;
                 }
                 OnPropertyChanged();
+                IsUpdate = true;
             }
         }
 
@@ -421,6 +437,7 @@ namespace SpejderApplikation.ViewModel
                     SelectedBadge = BadgeRepo.GetByID(_selectedScoutMeeting.badgeID);
                     SelectedUnit = UnitRepo.GetByID(_selectedScoutMeeting.unitID);
                     Date = _selectedScoutMeeting.Date;
+                    IsUpdate = false;
                 }
             }
         }
@@ -499,12 +516,17 @@ namespace SpejderApplikation.ViewModel
             else MeetingRepo.EditType(SelectedMeeting);
 
             // Update Unit
-            if (scoutmeeting.unitID != null || scoutmeeting.unitID != 0 || scoutmeeting.unitID != SelectedUnit._unitID)
+            if (scoutmeeting.unitID != SelectedUnit._unitID)
             {
-                int ID = UnitRepo.AddType(SelectedUnit, scoutmeeting.activityID);
-                SelectedUnit.UpdateID(ID);
                 UnitRepo.ConnectTypes(SelectedUnit, scoutmeeting);
+                SelectedScoutMeeting.unitID = SelectedUnit._unitID;
             }
+            SelectedActivity = null;
+            SelectedBadge = null;
+            SelectedScoutMeeting = new ScoutsMeeting();
+            SelectedUnit = null;
+            SelectedMeeting = null;
+
         }
 
 
@@ -660,10 +682,17 @@ namespace SpejderApplikation.ViewModel
             if(badge._badgeID == null || badge._badgeID == 0)
                 BadgeRepo.AddType(badge, ActivityID);
         }
+        public bool CanEdit()
+        {
+            bool areDateSet = Date != DateOnly.MinValue || Start != TimeOnly.MinValue || Stop != TimeOnly.MinValue;
+            bool areActivitySet = _activityTeaser != null || _activity != null || _preparation != null || _notes != null;
+
+            return (areDateSet && areActivitySet) && IsUpdate;
+        }
         public RelayCommand FilterMeetingsCommand => new RelayCommand(FilterMeetingsByUnit);
         public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen
-        public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(SelectedScoutMeeting)); // Tildeles til Edit knappen
+        public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(SelectedScoutMeeting), CanExecute => CanEdit()); // Tildeles til Edit knappen
         public RelayCommand NewCommand => new RelayCommand(execute => NewMeeting()); // tildeles til "Nyt Møde" knappen.
     }
 }

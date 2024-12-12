@@ -122,6 +122,8 @@ namespace SpejderApplikation.Repository
 
         public int AddType(Badge entity, int ID)
         {
+            if (entity.Name == null || entity.Name == "")
+                return 0;
 
             string query = "EXEC spAddBadge @ActivityID, @BadgeName, @Description, @Picture, @Link, @BadgeID, @NewBadgeID OUTPUT";
 
