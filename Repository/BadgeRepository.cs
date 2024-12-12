@@ -64,25 +64,23 @@ namespace SpejderApplikation.Repository
                 {
                     while (reader.Read())
                     {
-                        // Attempt to load picture data
-                        Byte[] picture;
-                        if (reader["Picture"] != null)
-                        { picture = reader["Picture"] as byte[]; }
-                        else if (File.Exists(filePath) == true)
-                        {
-                            picture = File.ReadAllBytes(string.Concat(filePath, fileName));
-                        }
-                        else
-                        {
-                            picture = new byte[0];
-                        }
+                        int badgeID = reader.IsDBNull(reader.GetOrdinal("BadgeID"))
+                            ? 0
+                            : reader.GetInt32(reader.GetOrdinal("BadgeID"));
+                        string name = reader.IsDBNull(reader.GetOrdinal("BadgeName")) 
+                            ? string.Empty 
+                            : reader.GetString(reader.GetOrdinal("BadgeName"));
+                        string description = reader.IsDBNull(reader.GetOrdinal("Description"))
+                            ? string.Empty 
+                            : reader.GetString(reader.GetOrdinal("Description"));
+                        Byte[] picture = reader.IsDBNull(reader.GetOrdinal("Picture")) ? 
+                            new byte[0] : 
+                            (byte[])reader["Picture"];
+                        string link = reader.IsDBNull(reader.GetOrdinal("Link")) 
+                            ? string.Empty 
+                            : reader.GetString(reader.GetOrdinal("Link"));
 
-                        // Map database fields to Badge properties
-                        entities.Add(new Badge((int)reader["BadgeID"],
-                                                (string)reader["BadgeName"],
-                                                (string)reader["Description"],
-                                                picture,
-                                                (string)reader["Link"]));
+                        entities.Add(new Badge(badgeID, name, description, picture, link));
                     }
                 }
             }
@@ -106,11 +104,21 @@ namespace SpejderApplikation.Repository
                     if (reader.Read())
                     {
                         // Map database fields to Badge properties
-                        int badgeID = reader.IsDBNull(reader.GetOrdinal("BadgeID")) ? 0 : reader.GetInt32(reader.GetOrdinal("BadgeID"));
-                        string name = reader.IsDBNull(reader.GetOrdinal("BadgeName")) ? string.Empty : reader.GetString(reader.GetOrdinal("BadgeName"));
-                        string description = reader.IsDBNull(reader.GetOrdinal("Description")) ? string.Empty : reader.GetString(reader.GetOrdinal("Description"));
-                        Byte[] picture = reader.IsDBNull(reader.GetOrdinal("Picture")) ? new byte[0] : (byte[])reader["Picture"];
-                        string link = reader.IsDBNull(reader.GetOrdinal("Link")) ? string.Empty : reader.GetString(reader.GetOrdinal("Link"));
+                        int badgeID = reader.IsDBNull(reader.GetOrdinal("BadgeID")) 
+                            ? 0
+                            : reader.GetInt32(reader.GetOrdinal("BadgeID"));
+                        string name = reader.IsDBNull(reader.GetOrdinal("BadgeName"))
+                            ? string.Empty 
+                            : reader.GetString(reader.GetOrdinal("BadgeName"));
+                        string description = reader.IsDBNull(reader.GetOrdinal("Description"))
+                            ? string.Empty 
+                            : reader.GetString(reader.GetOrdinal("Description"));
+                        Byte[] picture = reader.IsDBNull(reader.GetOrdinal("Picture"))
+                            ? new byte[0]
+                            : (byte[])reader["Picture"];
+                        string link = reader.IsDBNull(reader.GetOrdinal("Link"))
+                            ? string.Empty
+                            : reader.GetString(reader.GetOrdinal("Link"));
 
                         entity = new Badge(badgeID, name, description, picture, link);
                     }

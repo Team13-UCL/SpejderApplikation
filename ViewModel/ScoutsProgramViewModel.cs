@@ -491,11 +491,13 @@ namespace SpejderApplikation.ViewModel
             {
                 int ID = BadgeRepo.AddType(SelectedBadge, scoutmeeting.activityID);
                 SelectedBadge.UpdateID(ID);
+                SelectedScoutMeeting.badgeID = ID;
                 
             }
             else if (SelectedBadge._badgeID != scoutmeeting.badgeID)
             {
                 BadgeRepo.ConnectTypes(SelectedBadge, scoutmeeting);
+                SelectedScoutMeeting.badgeID = SelectedBadge._badgeID;
             }
             else
             {
@@ -507,6 +509,7 @@ namespace SpejderApplikation.ViewModel
             {
                 int ID = MeetingRepo.AddType(SelectedMeeting, scoutmeeting.activityID);
                 SelectedMeeting.UpdateID(ID);
+                SelectedScoutMeeting.meetingID = ID;
                 
             }
             else if (SelectedMeeting._meetingID != scoutmeeting.meetingID)
@@ -516,11 +519,17 @@ namespace SpejderApplikation.ViewModel
             else MeetingRepo.EditType(SelectedMeeting);
 
             // Update Unit
-            if (scoutmeeting.unitID != SelectedUnit._unitID)
+            if (scoutmeeting.unitID == 0 || scoutmeeting.unitID == null)
+            {
+                int ID = UnitRepo.AddType(SelectedUnit, scoutmeeting.activityID);
+                SelectedScoutMeeting.unitID = ID;
+            }
+            else if (scoutmeeting.unitID != SelectedUnit._unitID)
             {
                 UnitRepo.ConnectTypes(SelectedUnit, scoutmeeting);
                 SelectedScoutMeeting.unitID = SelectedUnit._unitID;
             }
+            else { }
             SelectedActivity = null;
             SelectedBadge = null;
             SelectedScoutMeeting = new ScoutsMeeting();

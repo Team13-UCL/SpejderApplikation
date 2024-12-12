@@ -26,7 +26,7 @@ namespace SpejderApplikation.Model
         // Parameterless constructor for default initialization
         public Meeting()
         {
-            
+            Date = DateOnly.FromDateTime(DateTime.Now);
         }
 
         // Updates the meeting ID

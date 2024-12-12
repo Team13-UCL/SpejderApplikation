@@ -99,6 +99,8 @@ namespace SpejderApplikation.Repository
         {
             string query = "EXEC spAddUnit @ActivityID, @UnitID";
 
+            if (entity._unitID == null || entity._unitID == 0)
+                return 0;
             int ActivityID = 0;
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
