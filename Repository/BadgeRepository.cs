@@ -12,11 +12,9 @@ using System.Threading.Tasks;
 namespace SpejderApplikation.Repository
 {
     // Repository for handling database interactions related to Badges
-    public class BadgeRepository : IRepository<Badge>
+    public class BadgeRepository : IRepository<Badge> //inherit from IRepository
     {
-        private readonly string _connectionString;
-        string filePath = Directory.GetCurrentDirectory();
-        string fileName = "\\KFUM.png"; // Default badge image
+        private readonly string _connectionString;        
         public BadgeRepository()
         {
             _connectionString = Connection.ConnectionString;
@@ -125,7 +123,7 @@ namespace SpejderApplikation.Repository
                 }
             }
 
-            return entity ?? new Badge(); // Returér en tom instans, hvis intet blev fundet.
+            return entity ?? new Badge(); // return entity or a new Badge object if entity is null
         }
 
         public int AddType(Badge entity, int ID)
@@ -179,7 +177,7 @@ namespace SpejderApplikation.Repository
 
         public void ConnectTypes(Badge entity, ScoutsMeeting JoinedEntity)
         {
-            string query = "spEditActivityBadge @BadgeID, @NewBadgeID, @ActivityID"; //indtast SQL query her.
+            string query = "spEditActivityBadge @BadgeID, @NewBadgeID, @ActivityID";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

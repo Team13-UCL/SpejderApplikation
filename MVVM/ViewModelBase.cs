@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.MVVM
 {
-    public class ViewModelBase : INotifyPropertyChanged // Abstraktion som implementere INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged // Abstraktion that implements INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        // [CallerMemberName] gør at man ikke behøver at skrive property name, når man kalder metoden.
+        
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

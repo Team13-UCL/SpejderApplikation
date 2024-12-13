@@ -17,7 +17,7 @@ using System.Windows.Media;
 namespace SpejderApplikation.ViewModel
 {
     // ViewModel responsible for managing and interacting with Scout Meetings
-    public class ScoutsProgramViewModel : ViewModelBase
+    public class ScoutsProgramViewModel : ViewModelBase 
     {
         // Repositories for managing data access
         IRepository<ScoutsMeeting> ScoutMeetingRepo;
@@ -28,7 +28,7 @@ namespace SpejderApplikation.ViewModel
         private readonly ImageHandling _imageHandling;
         
         
-        public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; }
+        public ObservableCollection<ScoutsMeeting> ScoutMeetings { get; set; } 
         public ObservableCollection<Badge> Badges { get; set; }
         public ObservableCollection<Unit> Units { get; set; }
 
@@ -53,7 +53,7 @@ namespace SpejderApplikation.ViewModel
                     }
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(DateTime)); // Notify that DateTime has changed
-                    IsUpdate = true;
+                    IsUpdate = true; 
                 }
             }
         }
@@ -248,9 +248,9 @@ namespace SpejderApplikation.ViewModel
             set
             {
                 _notes = value;
-                SelectedScoutMeeting.Notes = value;
+                SelectedScoutMeeting.Notes = value; 
                 
-                if (SelectedActivity != null)
+                if (SelectedActivity != null) // if an activity is selected
                 {
                     SelectedActivity.Notes = value;
                 }
@@ -268,7 +268,7 @@ namespace SpejderApplikation.ViewModel
             {
                 _unitName = value;
                 
-                if (SelectedUnit != null)
+                if (SelectedUnit != null)   // if a unit is selected
                 {
                     SelectedUnit.UnitName = value;
                 }
@@ -285,7 +285,7 @@ namespace SpejderApplikation.ViewModel
             {
                 _unitDescription = value;
                 
-                if (SelectedUnit != null)
+                if (SelectedUnit != null) // if a unit is selected
                 {
                     SelectedUnit.Description = value;
                 }
@@ -303,12 +303,23 @@ namespace SpejderApplikation.ViewModel
             {
                 _unitLink = value;
                 
-                if (SelectedUnit != null)
+                if (SelectedUnit != null) // if a unit is selected
                 {
                     SelectedUnit.Link = value;
                 }
                 OnPropertyChanged();
                 IsUpdate = true;
+            }
+        }
+
+        private bool _showOld;
+        public bool ShowOld
+        {
+            get { return _showOld; }
+            set
+            {
+                _showOld = value;
+                ShowOldActivities();
             }
         }
 
@@ -321,7 +332,7 @@ namespace SpejderApplikation.ViewModel
             {
                 _selectedUnit = value;
                 OnPropertyChanged();
-                if (_selectedUnit != null)
+                if (_selectedUnit != null) // if a unit is selected
                 {
                     UnitName = _selectedUnit.UnitName;
                     UnitLink = _selectedUnit.Link;
@@ -374,7 +385,7 @@ namespace SpejderApplikation.ViewModel
             {
                 _selectedActivity = value;
                 OnPropertyChanged();
-                if (_selectedActivity != null)
+                if (_selectedActivity != null) // if an activity is selected
                 {
                     ActivityTeaser = _selectedActivity.BriefDescription;
                     Activity = _selectedActivity.ActivityDescription;
@@ -419,9 +430,9 @@ namespace SpejderApplikation.ViewModel
             get { return _selectedScoutMeeting; }
             set
             {
-                if (_selectedScoutMeeting != null)
+                if (_selectedScoutMeeting != null) 
                 {
-                    if (SelectedActivity != null && SelectedMeeting != null && SelectedUnit != null && SelectedBadge != null)
+                    if (SelectedActivity != null && SelectedMeeting != null && SelectedUnit != null && SelectedBadge != null) // if all properties are set
                     {
                         Add(SelectedActivity, SelectedMeeting, SelectedUnit, SelectedBadge);
                     }
@@ -430,7 +441,7 @@ namespace SpejderApplikation.ViewModel
                 _selectedScoutMeeting = value;
                 OnPropertyChanged();
 
-                if (_selectedScoutMeeting != null)
+                if (_selectedScoutMeeting != null) // if a meeting is selected
                 {
                     SelectedMeeting = MeetingRepo.GetByID(_selectedScoutMeeting.meetingID);
                     SelectedActivity = ActivityRepo.GetByID(_selectedScoutMeeting.activityID);
@@ -442,44 +453,43 @@ namespace SpejderApplikation.ViewModel
             }
         }
 
-        public ScoutsProgramViewModel(IRepository<ScoutsMeeting> repository,
+        public ScoutsProgramViewModel(IRepository<ScoutsMeeting> repository, // Constructor injection of repositories
                                         IRepository<Meeting> meetingRepo,
                                         IRepository<Badge> BadgeRepo,
                                         IRepository<Activity> ActivityRepo,
                                         IRepository<Unit> UnitRepo)
         {
-            this.ScoutMeetingRepo = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.ScoutMeetingRepo = repository ?? throw new ArgumentNullException(nameof(repository)); // if repository is null, throw an exception
             ScoutMeetings = new ObservableCollection<ScoutsMeeting>(ScoutMeetingRepo.GetAll());
             this.MeetingRepo = meetingRepo ?? throw new ArgumentNullException(nameof(meetingRepo));
             this.BadgeRepo = BadgeRepo ?? throw new ArgumentNullException(nameof(BadgeRepo));
             this.ActivityRepo = ActivityRepo ?? throw new ArgumentNullException(nameof(ActivityRepo));
             this.UnitRepo = UnitRepo ?? throw new ArgumentNullException(nameof(UnitRepo));
-            _imageHandling = new ImageHandling();
-            Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll()); // Henter alle mærker fra databasen
-            Units = new ObservableCollection<Unit>(UnitRepo.GetAll()); // Henter alle enheder fra databasen
-            
+            _imageHandling = new ImageHandling(); // Initialize the ImageHandling object
+            Badges = new ObservableCollection<Badge>(BadgeRepo.GetAll()); // gets all badges from the database
+            Units = new ObservableCollection<Unit>(UnitRepo.GetAll()); // gets all units from the database
+
             ShowOldActivities(); // Initialize the ScoutMeetings collection, kan måske ændres i metoden da vi allerede har scoutmeetings
         }// ScoutMeetings og Meetings bliver initialiseret gennem ObserableCollections og flydt med data hentet fra vores respositories
-        public void NewMeeting()
+        public void NewMeeting() 
         {
            
-            SelectedScoutMeeting = new ScoutsMeeting();                       
+            SelectedScoutMeeting = new ScoutsMeeting();                        
 
-            ScoutMeetings.Add(SelectedScoutMeeting);
+            ScoutMeetings.Add(SelectedScoutMeeting); // add the new meeting to the ObservableCollection
 
-            Date = DateOnly.FromDateTime(DateTime.Today); // Sætter datoen til i dag
+            Date = DateOnly.FromDateTime(DateTime.Today); // set the date to today
         }
         public void EditMeeting(ScoutsMeeting scoutmeeting)
         {
 
 
             // Update Activity
-            if (SelectedActivity._activityID == null || SelectedActivity._activityID == 0)
+            if (SelectedActivity._activityID == 0) // if the activity is new
             {
-                int ID = ActivityRepo.AddType(SelectedActivity, 0);
-                scoutmeeting.activityID = ID;
-               // SelectedActivity.UpdateID(ID);
-                SelectedScoutMeeting.activityID = ID; 
+                int ID = ActivityRepo.AddType(SelectedActivity, 0); // Add the activity
+                scoutmeeting.activityID = ID; // Update the activityID               
+                SelectedScoutMeeting.activityID = ID; // set the activityID in the selected meeting
             }
             else
             {
@@ -487,25 +497,25 @@ namespace SpejderApplikation.ViewModel
             }
 
             // Update Badge
-            if (scoutmeeting.badgeID == null || scoutmeeting.badgeID == 0)
+            if (scoutmeeting.badgeID == 0) // if the badge is new
             {
-                int ID = BadgeRepo.AddType(SelectedBadge, scoutmeeting.activityID);
-                SelectedBadge.UpdateID(ID);
-                SelectedScoutMeeting.badgeID = ID;
-                
+                int ID = BadgeRepo.AddType(SelectedBadge, scoutmeeting.activityID); // Add the badge
+                SelectedBadge.UpdateID(ID); // Update the badgeid
+                SelectedScoutMeeting.badgeID = ID; // set the badgeID in the selected meeting
+
             }
             else if (SelectedBadge._badgeID != scoutmeeting.badgeID)
             {
-                BadgeRepo.ConnectTypes(SelectedBadge, scoutmeeting);
-                SelectedScoutMeeting.badgeID = SelectedBadge._badgeID;
+                BadgeRepo.ConnectTypes(SelectedBadge, scoutmeeting); // Connect the badge
+                SelectedScoutMeeting.badgeID = SelectedBadge._badgeID; // set the badgeID in the selected meeting
             }
             else
             {
-                BadgeRepo.EditType(SelectedBadge);
+                BadgeRepo.EditType(SelectedBadge); // Update the badge
             }
 
             // Update Meeting
-            if (scoutmeeting.meetingID == null || scoutmeeting.meetingID == 0)
+            if (scoutmeeting.meetingID == 0)  // if the meeting is new
             {
                 int ID = MeetingRepo.AddType(SelectedMeeting, scoutmeeting.activityID);
                 SelectedMeeting.UpdateID(ID);
@@ -519,7 +529,7 @@ namespace SpejderApplikation.ViewModel
             else MeetingRepo.EditType(SelectedMeeting);
 
             // Update Unit
-            if (scoutmeeting.unitID == 0 || scoutmeeting.unitID == null)
+            if (scoutmeeting.unitID == 0) // if the unit is new
             {
                 int ID = UnitRepo.AddType(SelectedUnit, scoutmeeting.activityID);
                 SelectedScoutMeeting.unitID = ID;
@@ -529,7 +539,7 @@ namespace SpejderApplikation.ViewModel
                 UnitRepo.ConnectTypes(SelectedUnit, scoutmeeting);
                 SelectedScoutMeeting.unitID = SelectedUnit._unitID;
             }
-            else { }
+            
             SelectedActivity = null;
             SelectedBadge = null;
             SelectedScoutMeeting = new ScoutsMeeting();
@@ -537,8 +547,6 @@ namespace SpejderApplikation.ViewModel
             SelectedMeeting = null;
 
         }
-
-
 
         public void DeleteMeeting()
         {
@@ -574,21 +582,9 @@ namespace SpejderApplikation.ViewModel
         }
 
 
-        private string link;
-        public string Link
+        private async Task DownloadImage() // Download the image from the BadgeLink
         {
-            get { return link; }
-            set
-            {
-                link = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        private async Task DownloadImage()
-        {
-            if (string.IsNullOrWhiteSpace(BadgeLink))
+            if (string.IsNullOrWhiteSpace(BadgeLink)) // Check if the BadgeLink is empty
             {
                 MessageBox.Show("manglende hjemmeside");
                 return;
@@ -597,7 +593,7 @@ namespace SpejderApplikation.ViewModel
             try
             {
                 // Download the SVG image
-                byte[] imageBytes = await _imageHandling.DownloadAndSaveImage(BadgeLink);
+                byte[] imageBytes = await _imageHandling.DownloadAndSaveImage(BadgeLink); // Download the image from the BadgeLink
 
                 if (imageBytes == null || imageBytes.Length == 0)
                 {
@@ -605,9 +601,9 @@ namespace SpejderApplikation.ViewModel
                     return;
                 }
 
-                //den displayer med badgedata men skal måske os gemme i picture i badge????
+               
                 SelectedBadge.Picture = imageBytes; // Save the image bytes to the Picture property in the Badge object
-                SelectedScoutMeeting.BadgeData = imageBytes;
+                SelectedScoutMeeting.BadgeData = imageBytes; // Save the image bytes to the BadgeData property in the ScoutMeeting object
 
 
             }
@@ -616,39 +612,26 @@ namespace SpejderApplikation.ViewModel
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
 
-        }
-
-        private bool _showOld;
-        public bool ShowOld
-        {
-            get { return _showOld; }
-            set
-            {
-                _showOld = value;                
-                ShowOldActivities();
-            }
-        }
+        }           
 
 
-        private void ShowOldActivities()
+        private void ShowOldActivities() // Show all activities or only future activities
         {
             try
-            {
-                var specificDate = new DateOnly(2024, 5, 10); // For testing
-                var today = DateOnly.FromDateTime(DateTime.Today); // For production
-
+            {               
+                var today = DateOnly.FromDateTime(DateTime.Today); 
                 var allMeetings = ScoutMeetingRepo.GetAll();
 
                 if (ShowOld == true)
                 {
-                    ScoutMeetings = new ObservableCollection<ScoutsMeeting>(allMeetings);
+                    ScoutMeetings = new ObservableCollection<ScoutsMeeting>(allMeetings); // Show all meetings
                 }
                 else
                 {                    
-                    ScoutMeetings = new ObservableCollection<ScoutsMeeting>(allMeetings.Where(meeting => meeting.Date >= today)); //skal skifte til today hvis vi går live
+                    ScoutMeetings = new ObservableCollection<ScoutsMeeting>(allMeetings.Where(meeting => meeting.Date >= today)); // Filter the meetings by date
                 }
 
-                SelectedScoutMeeting = ScoutMeetings.First(); // henter det første møde i listen ellers er det null og crasher         
+                SelectedScoutMeeting = ScoutMeetings.First(); // sets the first meeting to selected       
 
                 OnPropertyChanged(nameof(ScoutMeetings));
             }
@@ -658,17 +641,17 @@ namespace SpejderApplikation.ViewModel
             }
         }
 
-        private void FilterMeetingsByUnit(object unitName)
+        private void FilterMeetingsByUnit(object unitName) // filter meetings after which unit is selected
         {
            
 
-            if (unitName is string unit) // unitName er en object, så vi skal konvertere til string
+            if (unitName is string unit) // unitName is object and must be cast to string
             {
                 var filteredMeetings = ScoutMeetingRepo.GetAll().Where(meeting => meeting.Unit == unit); // Filter meetings by unit
                 ScoutMeetings = new ObservableCollection<ScoutsMeeting>(filteredMeetings); // Update the ObservableCollection
-                if (ScoutMeetings.Count > 0)    // Hvis der er møder i listen
+                if (ScoutMeetings.Count > 0)    // if there are meetings in the list
                 {
-                    SelectedScoutMeeting = ScoutMeetings.First(); // Sætter det første møde i listen som SelectedScoutMeeting
+                    SelectedScoutMeeting = ScoutMeetings.First(); // sets the first meeting to selected
                     OnPropertyChanged(nameof(ScoutMeetings)); 
                 }
                 else
@@ -678,7 +661,7 @@ namespace SpejderApplikation.ViewModel
             }
         }
 
-        public void Add(Activity activity, Meeting meeting, Unit unit, Badge badge)
+        public void Add(Activity activity, Meeting meeting, Unit unit, Badge badge) // Add the activity, meeting, unit and badge to the database
         {
             int ActivityID, MeetingID, UnitID, BadgeID;
             if (activity._activityID == null || activity._activityID == 0)
@@ -691,17 +674,19 @@ namespace SpejderApplikation.ViewModel
             if(badge._badgeID == null || badge._badgeID == 0)
                 BadgeRepo.AddType(badge, ActivityID);
         }
-        public bool CanEdit()
+        public bool CanEdit() // Check if the properties are set and the meeting is an update
         {
-            bool areDateSet = Date != DateOnly.MinValue || Start != TimeOnly.MinValue || Stop != TimeOnly.MinValue;
-            bool areActivitySet = _activityTeaser != null || _activity != null || _preparation != null || _notes != null;
+            bool areDateSet = Date != DateOnly.MinValue || Start != TimeOnly.MinValue || Stop != TimeOnly.MinValue; // Check if the date, start and stop properties are set
+            bool areActivitySet = _activityTeaser != null || _activity != null || _preparation != null || _notes != null; // Check if the activity properties are set
 
-            return (areDateSet && areActivitySet) && IsUpdate;
+            return (areDateSet && areActivitySet) && IsUpdate; // Return true if the properties are set and the meeting is an update
         }
-        public RelayCommand FilterMeetingsCommand => new RelayCommand(FilterMeetingsByUnit);
-        public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null);
-        public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // tildeles til Delete knappen
-        public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(SelectedScoutMeeting), CanExecute => CanEdit()); // Tildeles til Edit knappen
-        public RelayCommand NewCommand => new RelayCommand(execute => NewMeeting()); // tildeles til "Nyt Møde" knappen.
+
+        // RelayCommands for handling user interactions
+        public RelayCommand FilterMeetingsCommand => new RelayCommand(FilterMeetingsByUnit); // filter meetings button
+        public RelayCommand DownloadCommand => new RelayCommand(async execute => await DownloadImage(), canExecute => BadgeLink != null); // download image button
+        public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteMeeting(), CanExecute => SelectedMeeting != null); // delete button
+        public RelayCommand EditCommand => new RelayCommand(execute => EditMeeting(SelectedScoutMeeting), CanExecute => CanEdit()); // edit button
+        public RelayCommand NewCommand => new RelayCommand(execute => NewMeeting()); // new meeting button
     }
 }

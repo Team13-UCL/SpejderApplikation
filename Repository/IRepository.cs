@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Repository
 {
-    public interface IRepository<Type> 
+    public interface IRepository<Type>  // interface for the repository
     {
         // Retrieve all records of the specified type
         IEnumerable<Type> GetAll();

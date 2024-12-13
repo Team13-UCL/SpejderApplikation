@@ -24,27 +24,11 @@ namespace SpejderApplikation.Model
             _unitID = unitID;
             UnitName = unitName;
             Description = description;
-            Link = link;
-            //Picture = picture;
+            Link = link;           
         }
 
         // Default constructor with default values
-        public Unit() : this(0, "Enhed", "", null) { }
-
-        // Hjælpefunktion til at hente standardbilledet KFUM.PNG, hvilket er KFUMS logo
-        private static byte[] GetDefaultPicture()
-        {
-            string filePath = Directory.GetCurrentDirectory();
-            string fileName = "\\KFUM.png"; // har et basis KFUM mærke i projektets mappe
-            if (File.Exists(filePath) == true)
-            {
-                return File.ReadAllBytes(string.Concat(filePath, fileName));
-            }
-            else
-            {
-                return new byte[0];
-            }
-        }
+        public Unit() : this(0, "Enhed", "", null) { }        
 
         // Updates the unit ID
         public void UpdateID(int ID)

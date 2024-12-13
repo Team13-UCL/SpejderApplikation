@@ -44,9 +44,7 @@ namespace SpejderApplikation.ViewModel
                 OnPropertyChanged(nameof(Time)); // Notify Time property as it depends on Stop
             }
         }
-        //public string Time { get { return $"{Start:HH:mm} - {Stop:HH:mm}"; } }
-
-
+       
         private byte[] _badgeData; // Stores badge data in byte format
         public byte[] BadgeData
         {
@@ -159,7 +157,7 @@ namespace SpejderApplikation.ViewModel
         // Default constructor
         public ScoutsMeeting()
         {
-            // opret ny Meeting, med forud indtastet Unit hardcoded til sprint 1
+            
         }
 
         // Updates identifiers for the meeting

@@ -54,18 +54,7 @@ namespace SpejderApplikation.Repository
                         DateTime dateTime = (DateTime)reader["Date"];
                         TimeSpan start = (TimeSpan)reader["Start"];
                         TimeSpan stop = (TimeSpan)reader["Stop"];
-                        Byte[] picture = reader.IsDBNull(reader.GetOrdinal("Picture")) ? null : (Byte[])reader["Picture"];
-                        
-                        //if (reader["Picture"] != null)
-                        //{ picture = reader["Picture"] as byte[]; }
-                        //else if (File.Exists(filePath) == true)
-                        //{
-                        //    picture = File.ReadAllBytes(string.Concat(filePath, fileName));
-                        //}
-                        //else
-                        //{
-                        //    picture = new byte[0];
-                        //}
+                        Byte[] picture = reader.IsDBNull(reader.GetOrdinal("Picture")) ? null : (Byte[])reader["Picture"];           
                         string Activity = reader.IsDBNull(reader.GetOrdinal("Activity")) ? string.Empty : (string)reader["Activity"];
                         string Notes = reader.IsDBNull(reader.GetOrdinal("Notes")) ? string.Empty : (string)reader["Notes"];
                         string UnitName = reader.IsDBNull(reader.GetOrdinal("UnitName")) ? string.Empty : (string)reader["UnitName"];

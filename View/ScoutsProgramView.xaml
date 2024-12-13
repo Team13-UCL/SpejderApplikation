@@ -23,7 +23,7 @@
 
 
     <Window.Resources>
-        <!-- Define the DataGridColumnHeader style -->
+        <!--  Define the DataGridColumnHeader style  -->
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="#FF85A500" />
             <Setter Property="Foreground" Value="Black" />
@@ -33,11 +33,11 @@
             <Setter Property="Padding" Value="10,5" />
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="BorderThickness" Value="1" />
-            <!-- Make this uniform -->
+            <!--  Make this uniform  -->
 
         </Style>
 
-        <!-- Define the DataGrid style -->
+        <!--  Define the DataGrid style  -->
         <Style TargetType="DataGrid">
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="BorderBrush" Value="Transparent" />
@@ -53,7 +53,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="19*" />
-            <RowDefinition Height="185*"/>
+            <RowDefinition Height="185*" />
             <RowDefinition Height="310*" />
         </Grid.RowDefinitions>
         <Border BorderThickness="6" CornerRadius="8,8,0,8" />
@@ -61,6 +61,7 @@
 
         <!--  Badge Icons Row  -->
         <Image
+            Grid.Row="1"
             Grid.RowSpan="4"
             Width="278"
             Height="899"
@@ -68,20 +69,19 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Source="/Images/tree.png"
-            Stretch="Fill"
-            Grid.Row="1" />
+            Stretch="Fill" />
         <Image
             Grid.RowSpan="4"
             Margin="706,-110,-190,197"
+            RenderTransformOrigin="0.5,0.5"
             Source="/Images/bush.png"
-            Stretch="Fill" 
-            RenderTransformOrigin="0.5,0.5" >
+            Stretch="Fill">
             <Image.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-84.465"/>
-                    <TranslateTransform/>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform Angle="-84.465" />
+                    <TranslateTransform />
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
@@ -102,15 +102,21 @@
                 <ColumnDefinition Width="111*" />
             </Grid.ColumnDefinitions>
             <Image
+                Grid.RowSpan="2"
+                Grid.ColumnSpan="2"
+                Height="80"
+                Margin="0,0,530,0"
                 VerticalAlignment="Top"
                 Source="/Images/KFUMSpejderne.png"
-                Stretch="Uniform" Grid.ColumnSpan="2" Height="80" Margin="0,0,530,0" Grid.RowSpan="2" />
+                Stretch="Uniform" />
             <StackPanel
                 Grid.RowSpan="2"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
+                Width="608"
+                Margin="73,0,0,0"
                 HorizontalAlignment="Left"
-                Orientation="Horizontal" Width="608" Margin="73,0,0,0">
+                Orientation="Horizontal">
                 <!--  Placeholder rectangles for scout badge icons  -->
 
                 <Button
@@ -147,8 +153,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                        Command="{Binding FilterMeetingsCommand}"
-                        CommandParameter="Ulvene">
+                    Command="{Binding FilterMeetingsCommand}"
+                    CommandParameter="Ulvene">
                     <!--  ="OnWolfScoutClick"  -->
                     <Image
                         x:Name="UlveSpejder"
@@ -161,8 +167,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                        Command="{Binding FilterMeetingsCommand}"
-                        CommandParameter="Junior">
+                    Command="{Binding FilterMeetingsCommand}"
+                    CommandParameter="Junior">
                     <!--  Click="OnJuniorScoutClick">  -->
                     <Image
                         x:Name="JuniorSpejder"
@@ -175,8 +181,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                        Command="{Binding FilterMeetingsCommand}"
-                        CommandParameter="Trop">
+                    Command="{Binding FilterMeetingsCommand}"
+                    CommandParameter="Trop">
                     <!--  Click="OnTroopScoutClick">  -->
                     <Image
                         x:Name="TropSpejder"
@@ -189,8 +195,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                       Command="{Binding FilterMeetingsCommand}"
-                        CommandParameter="Senior">
+                    Command="{Binding FilterMeetingsCommand}"
+                    CommandParameter="Senior">
                     <!--  Click="OnSeniorScoutClick">  -->
                     <Image
                         x:Name="SeniorSpejder"
@@ -203,8 +209,8 @@
                     Margin="5"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                        Command="{Binding FilterMeetingsCommand}"
-                        CommandParameter="Rover">
+                    Command="{Binding FilterMeetingsCommand}"
+                    CommandParameter="Rover">
                     <!--  Click="OnRoverScoutClick">  -->
                     <Image
                         x:Name="RoverSpejder"
@@ -220,38 +226,43 @@
             Grid.Row="1"
             Margin="10,10,0,10"
             Orientation="Horizontal">
-            <!--  Placeholder for Logo  -->
-
-
             <!--  Checkbox  -->
-            
+
             <StackPanel
-                Orientation="Horizontal" Width="427">
-                <CheckBox
-                    Margin="10,0"
-                    VerticalAlignment="Center"
-                    Content="Vis gamle møder" 
-                    IsChecked="{Binding ShowOld}"/>
-                <Button
-                    Width="90"
-                    Height="25"
-                    Margin="15,0"
-                    Background="LightGreen"
-                    Command="{Binding NewCommand}"
-                    Content="Opret opgave" />
-                <Button
-                    Width="90"
-                    Height="25"
-                    Margin="15,0"
-                    Background="LightCoral"
-                    Command="{Binding DeleteCommand}"
-                    Content="Slet Opgave" />
-                
-            </StackPanel>
+                Grid.Row="1"
+                Margin="10,10,0,10"
+                Orientation="Horizontal">
+                <!--  Checkbox  -->
+                <StackPanel Width="240" Orientation="Horizontal">
+                    <CheckBox
+                        Margin="10,0"
+                        VerticalAlignment="Center"
+                        Content="Vis gamle møder"
+                        IsChecked="{Binding ShowOld}" />
+                </StackPanel>
 
-            <!--  Task Buttons  -->
-
-            <!--  Search Button  -->
+                <!--  Buttons  -->
+                <StackPanel
+                    Margin="-1,0,0,0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        Width="90"
+                        Height="25"
+                        Margin="15,0"
+                        Background="LightGreen"
+                        Command="{Binding NewCommand}"
+                        Content="Opret opgave"
+                        RenderTransformOrigin="-1.833,0.482" />
+                    <Button
+                        Width="90"
+                        Height="25"
+                        Margin="15,0"
+                        Background="LightCoral"
+                        Command="{Binding DeleteCommand}"
+                        Content="Slet Opgave" />
+                </StackPanel>
+            </StackPanel>           
         </StackPanel>
 
         <!--  DataGrid Section  -->
@@ -263,14 +274,22 @@
             <DataGrid
                 x:Name="ScoutDataGrid"
                 Grid.Column="0"
-                
+                Grid.ColumnSpan="2"
+                Margin="10,0,333,0"
+                AlternatingRowBackground="#FFD7E3BF"
+                AlternationCount="2"
                 AutoGenerateColumns="False"
+                Background="#FF9DBB61"
                 CanUserAddRows="False"
+                HeadersVisibility="Column"
                 ItemsSource="{Binding ScoutMeetings}"
-                
+                RenderOptions.CachingHint="Cache"
+                RowBackground="#FFC4D6A0"
                 RowHeight="40"
-                SelectedItem="{Binding SelectedScoutMeeting, Mode=TwoWay}" AlternatingRowBackground="#FFD7E3BF" AlternationCount="2" Background="#FF9DBB61" RowBackground="#FFC4D6A0" Margin="10,0,333,0" HeadersVisibility="Column" VirtualizingPanel.ScrollUnit="Pixel" RenderOptions.CachingHint="Cache" VirtualizingPanel.CacheLength="50" VirtualizingPanel.CacheLengthUnit="Pixel" Grid.ColumnSpan="2"
->
+                SelectedItem="{Binding SelectedScoutMeeting, Mode=TwoWay}"
+                VirtualizingPanel.CacheLength="50"
+                VirtualizingPanel.CacheLengthUnit="Pixel"
+                VirtualizingPanel.ScrollUnit="Pixel">
 
 
 
@@ -296,30 +315,32 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Header="Aktivitet" Width="1*">
+                    <DataGridTemplateColumn Width="1*" Header="Aktivitet">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Name="ActivityColumntb"
-                                         Text="{Binding Activity}"
-                                         TextWrapping="Wrap"
-                                         IsReadOnly="True"
-                                         Background="Transparent"
-                                         BorderBrush="Transparent"
-                                         Foreground="Black"/>
+                                <TextBox
+                                    Name="ActivityColumntb"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Foreground="Black"
+                                    IsReadOnly="True"
+                                    Text="{Binding Activity}"
+                                    TextWrapping="Wrap" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Header="Husk" Width="1*">
+                    <DataGridTemplateColumn Width="1*" Header="Husk">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Name="NotesColumntb"
-                                        Text="{Binding Notes}"
-                                        TextWrapping="Wrap"
-                                        IsReadOnly="True"
-                                        Background="Transparent"
-                                        BorderBrush="Transparent"
-                                        Foreground="Black"/>
+                                <TextBox
+                                    Name="NotesColumntb"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Foreground="Black"
+                                    IsReadOnly="True"
+                                    Text="{Binding Notes}"
+                                    TextWrapping="Wrap" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -327,8 +348,9 @@
             </DataGrid>
 
             <StackPanel
+                Grid.ColumnSpan="2"
                 Margin="551,147,10,-182"
-                Orientation="Vertical" Grid.ColumnSpan="2">
+                Orientation="Vertical">
                 <Label
                     x:Name="Mærkelbl_Copy"
                     Width="178"
@@ -338,14 +360,12 @@
                     x:Name="MeetingDP"
                     Width="180"
                     Height="auto"
-                        SelectedDate="{Binding DateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-
-                     />
+                    SelectedDate="{Binding DateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox
                     x:Name="StartTP"
                     Width="180"
                     Height="auto"
-                    Text="{Binding Start, FallbackValue=StartTid, StringFormat=\{0:HH:mm\}, TargetNullValue=StartTid, UpdateSourceTrigger=LostFocus}"/>
+                    Text="{Binding Start, FallbackValue=StartTid, StringFormat=\{0:HH:mm\}, TargetNullValue=StartTid, UpdateSourceTrigger=LostFocus}" />
                 <TextBox
                     x:Name="StopTP"
                     Width="180"
@@ -357,46 +377,55 @@
                     Height="23"
                     Content="Aktivitet:" />
                 <TextBox
-                Width="180" Text="{Binding ActivityTeaser, FallbackValue=Aktivitet, TargetNullValue=Aktivitet, UpdateSourceTrigger=PropertyChanged}" x:Name="ActivityTeasertb" Height="39"
-                    TextWrapping="Wrap"/>
+                    x:Name="ActivityTeasertb"
+                    Width="180"
+                    Height="39"
+                    Text="{Binding ActivityTeaser, FallbackValue=Aktivitet, TargetNullValue=Aktivitet, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap" />
                 <TextBox
                     x:Name="Activitytb"
                     Width="180"
                     Height="71"
-                    Text="{Binding Activity, FallbackValue=Uddybende Aktivitet, TargetNullValue=Uddybende Aktivitet}" TextWrapping="Wrap"/>
+                    Text="{Binding Activity, FallbackValue=Uddybende Aktivitet, TargetNullValue=Uddybende Aktivitet}"
+                    TextWrapping="Wrap" />
                 <TextBox
                     x:Name="Preparationtb"
                     Width="180"
                     Height="45"
-                    Text="{Binding Preparation, FallbackValue=Forberedelse, TargetNullValue=Forberedelse}" TextWrapping="Wrap" />
+                    Text="{Binding Preparation, FallbackValue=Forberedelse, TargetNullValue=Forberedelse}"
+                    TextWrapping="Wrap" />
                 <TextBox
                     x:Name="Notestb"
                     Width="180"
                     Height="44"
-                    Text="{Binding Notes, FallbackValue=Husk, TargetNullValue=Husk, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,5" />
+                    Margin="0,0,0,5"
+                    Text="{Binding Notes, FallbackValue=Husk, TargetNullValue=Husk, UpdateSourceTrigger=PropertyChanged}" />
                 <Grid Width="180" Height="auto">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="13*"/>
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="13*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
                     <Label
-        
-        Grid.Column="0"
-        Grid.ColumnSpan="2"
-        x:Name="Mærke"
-        Width="178"
-        Height="23"
-        Content="Mærke:" Margin="1,0,1,0" Grid.RowSpan="2" />
+                        x:Name="Mærke"
+                        Grid.RowSpan="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Width="178"
+                        Height="23"
+                        Margin="1,0,1,0"
+                        Content="Mærke:" />
                     <ComboBox
-        x:Name="BadgeChoosercb"
-        ItemsSource="{Binding Badges}"
-        DisplayMemberPath="Name"
-        SelectedItem="{Binding SelectedBadge, Mode=TwoWay}" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="50,0,0,0"
-        />
+                        x:Name="BadgeChoosercb"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Margin="50,0,0,0"
+                        DisplayMemberPath="Name"
+                        ItemsSource="{Binding Badges}"
+                        SelectedItem="{Binding SelectedBadge, Mode=TwoWay}" />
                 </Grid>
                 <TextBox
                     x:Name="BadgeNametb"
@@ -404,7 +433,7 @@
                     Height="auto"
                     Text="{Binding BadgeName, FallbackValue=Mærke, TargetNullValue=Mærke}"
                     TextWrapping="Wrap"
-                    VerticalScrollBarVisibility="Auto"/>
+                    VerticalScrollBarVisibility="Auto" />
                 <TextBox
                     x:Name="Descriptiontb"
                     Width="180"
@@ -418,48 +447,53 @@
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="Linktb" Text="{Binding BadgeLink, FallbackValue=Link, TargetNullValue=Link}" Margin="0,0,0,5" />
+                    <TextBox
+                        x:Name="Linktb"
+                        Margin="0,0,0,5"
+                        Text="{Binding BadgeLink, FallbackValue=Link, TargetNullValue=Link}" />
                     <Button
                         x:Name="Picturebtn"
                         Grid.Column="1"
                         Width="auto"
                         Height="auto"
+                        Margin="0,0,0,5"
                         Command="{Binding DownloadCommand}"
-                        Content="Billede" Margin="0,0,0,5" />
+                        Content="Billede" />
                 </Grid>
 
                 <Grid Width="180" Height="auto">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="13*"/>
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="13*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
                     <Label
-
+                        x:Name="gg"
+                        Grid.RowSpan="2"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        x:Name="gg"
                         Width="178"
                         Height="23"
-                        Content="Enhed:" Margin="1,0,1,0" Grid.RowSpan="2" />
+                        Margin="1,0,1,0"
+                        Content="Enhed:" />
                     <ComboBox
                         x:Name="BadgeChcb"
-                        ItemsSource="{Binding Units}"
+                        Grid.RowSpan="2"
+                        Grid.ColumnSpan="2"
+                        Margin="50,0,0,0"
                         DisplayMemberPath="UnitName"
-                        SelectedItem="{Binding SelectedUnit, Mode=TwoWay}"  
-                        Grid.ColumnSpan="2" 
-                        Grid.RowSpan="2" 
-                        Margin="50,0,0,0" />
+                        ItemsSource="{Binding Units}"
+                        SelectedItem="{Binding SelectedUnit, Mode=TwoWay}" />
                 </Grid>
-                
+
                 <TextBox
                     x:Name="UnitDescriptiontb"
                     Width="180"
                     Height="auto"
-                    Text="{Binding UnitDescription, FallbackValue=EnhedsBeskrivelse, TargetNullValue=EnhedsBeskrivelse}"/>
+                    Text="{Binding UnitDescription, FallbackValue=EnhedsBeskrivelse, TargetNullValue=EnhedsBeskrivelse}" />
                 <Button
                     Width="130"
                     Height="25"
@@ -483,38 +517,20 @@
             HorizontalAlignment="Left"
             Source="/Images/fire.png"
             Stretch="Fill" />
-        <Image Margin="876,83,26,137" Source="/Images/FugleBillede.png" Stretch="Fill" Grid.Row="3" RenderTransformOrigin="0.5,0.5">
+        <Image
+            Grid.Row="3"
+            Margin="876,83,26,137"
+            RenderTransformOrigin="0.5,0.5"
+            Source="/Images/FugleBillede.png"
+            Stretch="Fill">
             <Image.RenderTransform>
                 <TransformGroup>
-                    <ScaleTransform ScaleX="1"/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="24.072"/>
-                    <TranslateTransform/>
+                    <ScaleTransform ScaleX="1" />
+                    <SkewTransform />
+                    <RotateTransform Angle="24.072" />
+                    <TranslateTransform />
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-
-
-        <!--<ItemsControl Grid.Row="0"
-                      ItemsSource="{Binding Units}"
-                      Margin="10">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Content="{Binding UnitName}"
-                            Margin="5"
-                            Padding="10"
-                            Command="{Binding DataContext.SelectUnitCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                            CommandParameter="{Binding}" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>-->
-
-
-
     </Grid>
 </Window>

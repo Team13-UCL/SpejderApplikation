@@ -100,6 +100,7 @@ namespace SpejderApplikation.Repository
             return user;
         }
 
+        // Method to add a new user to the database, right now it is not implemented
         //public void Update(User entity)
         //{
         //    string query = "UPDATE Users " +

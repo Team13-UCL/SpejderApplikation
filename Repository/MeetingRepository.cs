@@ -35,7 +35,7 @@ namespace SpejderApplikation.Repository
         // Method to update an existing meeting in the database
         public void EditType(Meeting entity)
         {
-            string query = "spEditMeeting @MeetingID, @Date, @Start, @Stop"; //indtast SQL query her.
+            string query = "spEditMeeting @MeetingID, @Date, @Start, @Stop";
             int EntityID = 0;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -54,7 +54,7 @@ namespace SpejderApplikation.Repository
         public IEnumerable<Meeting> GetAll()
         {
             var entities = new List<Meeting>();
-            string query = "SELECT * FROM MEETING"; // indtast SQL query her.
+            string query = "SELECT * FROM MEETING";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);

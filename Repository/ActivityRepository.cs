@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SpejderApplikation.Repository
 {
-    public class ActivityRepository : IRepository<Activity>
+    public class ActivityRepository : IRepository<Activity> //inheritance from IRepository
     {
         private readonly string _connectionString;
 
@@ -62,7 +62,7 @@ namespace SpejderApplikation.Repository
         public Activity GetByID(int id)
         {
             Activity entity = new Activity();
-            string query = "spSelectActivity @ActivityId";// indtast SQL query her.
+            string query = "spSelectActivity @ActivityId";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -100,7 +100,7 @@ namespace SpejderApplikation.Repository
             {
                 SqlCommand command = new SqlCommand(query, connection);
 
-                // Tilføj input-parametre
+                // adding parameters for the stored procedure
                 command.Parameters.AddWithValue("@Activity", entity.BriefDescription ?? string.Empty);
                 command.Parameters.AddWithValue("@Description", entity.ActivityDescription ?? string.Empty);
                 command.Parameters.AddWithValue("@Preparation", entity.Preparation ?? string.Empty);
