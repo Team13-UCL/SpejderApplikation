@@ -11,11 +11,12 @@
 1) Create Local SQL server and Database
 2) GOTO YOUR FOLDER\SpejderApplikation\Database queries
 3) Copy opret database.txt into SSMS and execute
-4) copy stored procedures.txt into SSMS and execute one SP at a time.
-5) copy Test SP.txt into SSMS and execute one at a time
-6) GOTO YOUR FOLDER\SpejderApplikation\bin\Debug\net8.0-windows\appsettings.JSON
-7) change the connection string to your local db.
-8) now you should be able to start the program with a local db
+4) Copy Insert dummydata into SSMS and execute
+5) copy stored procedures.txt into SSMS and execute one SP at a time.
+6) copy Test SP.txt into SSMS and execute one at a time
+7) GOTO YOUR FOLDER\SpejderApplikation\bin\Debug\net8.0-windows\appsettings.JSON
+8) change the connection string to your local db.
+9) now you should be able to start the program with a local db
 
 ### Users:
 1) Username: Anders Password: 313
