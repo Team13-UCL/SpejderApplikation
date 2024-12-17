@@ -17,4 +17,8 @@
 7) change the connection string to your local db.
 8) now you should be able to start the program with a local db
 
+### Users:
+1) Username: Anders Password: 313
+2) Username: Mickey Password: pluto
+
 
