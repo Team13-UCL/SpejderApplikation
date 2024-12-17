@@ -1,0 +1,252 @@
+-- Deaktiver foreign key constraints
+    ALTER TABLE ActivityUnit NOCHECK CONSTRAINT ALL;
+    ALTER TABLE ActivityBadge NOCHECK CONSTRAINT ALL;
+    ALTER TABLE ActivityMeeting NOCHECK CONSTRAINT ALL;
+
+    -- Slet data med DELETE i stedet for TRUNCATE
+    DELETE FROM ActivityBadge;
+    DELETE FROM ActivityMeeting;
+    DELETE FROM ActivityUnit;
+    DELETE FROM Activity;
+    DELETE FROM Badge;
+	DELETE FROM Meeting;
+
+    -- Genaktiver foreign key constraints
+    ALTER TABLE ActivityUnit CHECK CONSTRAINT ALL;
+    ALTER TABLE ActivityBadge CHECK CONSTRAINT ALL;
+    ALTER TABLE ActivityMeeting CHECK CONSTRAINT ALL;
+
+    -- Nulstil IDENTITY-værdier
+    DBCC CHECKIDENT ('Activity', RESEED, 0);
+    DBCC CHECKIDENT ('Badge', RESEED, 0);
+    DBCC CHECKIDENT ('Meeting', RESEED, 0);
+
+-- Mødegange for de sidste 10 onsdage (for Bævere og Ulve)
+INSERT INTO Meeting (Date, Start, Stop) VALUES
+('2024-11-27', '17:00:00', '19:00:00'),
+('2024-11-20', '17:00:00', '19:00:00'),
+('2024-11-13', '17:00:00', '19:00:00'),
+('2024-11-06', '17:00:00', '19:00:00'),
+('2024-10-30', '17:00:00', '19:00:00'),
+('2024-10-23', '17:00:00', '19:00:00'),
+('2024-10-16', '17:00:00', '19:00:00'),
+('2024-10-09', '17:00:00', '19:00:00'),
+('2024-10-02', '17:00:00', '19:00:00'),
+('2024-09-25', '17:00:00', '19:00:00');
+
+-- Mødegange for de næste 10 onsdage (for Bævere og Ulve)
+INSERT INTO Meeting (Date, Start, Stop) VALUES
+('2024-12-04', '17:00:00', '19:00:00'),
+('2024-12-11', '17:00:00', '19:00:00'),
+('2024-12-18', '17:00:00', '19:00:00'),
+('2024-12-25', '17:00:00', '19:00:00'),
+('2025-01-01', '17:00:00', '19:00:00'),
+('2025-01-08', '17:00:00', '19:00:00'),
+('2025-01-15', '17:00:00', '19:00:00'),
+('2025-01-22', '17:00:00', '19:00:00'),
+('2025-01-29', '17:00:00', '19:00:00'),
+('2025-02-05', '17:00:00', '19:00:00');
+
+INSERT INTO Badge (
+    BadgeName,
+    [Description],
+    Picture,
+    Link
+)
+VALUES
+-- Bæver mærker
+    ('Navigatør', 
+    'Moral og etik.',
+    NULL, 
+    'https://kfumspejderne.dk/maerke/navigatoer/'),
+    
+    ('Der var engang', 
+    'Bæverne udvikler evnen til samarbejde og til at sætte sig i andres sted ved at lege sig ind i roller.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/der-var-engang/'),
+    
+    ('Du og jeg', 
+    'For bævere er venner og relationer vigtige. De øver sig på at få nye venner og samarbejde i flokken.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/du-og-jeg/'),
+    
+    ('Helligsansen', 
+    'Bæverne oplever kirkeårets højtider med sanserne: høre, se, lugte, smage og føle.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/helligsansen/'),
+    
+    ('Igen og igen', 
+    'Bæverne lærer om cyklusser fra opståen til genbrug og affald.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/igen-og-igen/'),
+    
+    ('Madeventyr', 
+    'Bæverne oplever glæden ved sund mad, kender forskel på sunde og usunde madvarer og bliver bevidste om deres valg.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/madeventyr/'),
+    
+    ('Superhelte', 
+    'Motoriske bevægelser og bevidsthed om egne styrker.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/superhelte/'),
+-- Ulvemærker
+    ('Hemmeligheder', 
+    'Ulvene taler om dilemmaer ved hemmeligheder og løgne og udforsker deres følelser.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/hemmeligheder/'),
+    
+    ('Flokken', 
+    'Ulvene oplever glæden ved fællesskab, ser styrker i hinanden og værdsætter samarbejdet.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/flokken/'),
+    
+    ('Lyn og torden', 
+    'Ulvene lærer om naturkræfter, deres risici og hvordan man klarer sig i uvejr.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/lyn-og-torden/'),
+    
+    ('Tro håb og historier', 
+    'Ulvene udtrykker tanker, lærer bibelhistorier og gengiver dem med eget udtryk.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/tro-haab-og-historier/'),
+    
+    ('Pionering', 
+    'Ulvene lærer grundlæggende pionerteknikker.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/pioner/'),
+    
+    ('Stifinder', 
+    'Ulvene lærer grundlæggende orientering.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/stifinder/'),
+    
+    ('På junglestien', 
+    'Ulvene bliver stærkere, modigere og udfordrer egne grænser med fysiske aktiviteter.', 
+    NULL, 
+    'https://kfumspejderne.dk/maerke/paa-junglestien/');
+
+INSERT INTO Activity (ActivityDescription, Preparation, Notes, Activity)
+VALUES
+-- Bæverne aktiviteter
+('Diskussion om ære og respekt i hverdagen. Bæverne lærer at diskutere og reflektere over etiske dilemmaer.', 'Forbered diskussionsemner.', NULL, 'Navigatør - Moral og etik'),
+('Rolleleg, hvor børnene skifter roller og lærer at forstå andres perspektiver.', 'Vælg roller og forbered replikker.', NULL, 'Der var engang - Samarbejde og empati'),
+('Gruppeøvelse, hvor børnene samarbejder om en opgave og lærer at kommunikere effektivt.', 'Forbered opgave og instruktør.', NULL, 'Du og jeg - Venskab og relationer'),
+('En tur til en kirke, hvor børnene oplever og beskriver forskellige sanseindtryk som lugt, smag, lyd og syn.', 'Sørg for transport og materialer til sensorisk opdagelse.', NULL, 'Helligsansen - Sanserne i kirken'),
+('Opret et mini-kompostområde, hvor børnene lærer om affald, genbrug og cyklusser i naturen.', 'Skaff materialer til kompost og planlæg aktivitet.', NULL, 'Igen og igen - Cykler og genbrug'),
+('Madlavning i grupper, hvor børnene tilbereder en sund snack og lærer om ernæring.', 'Køb ingredienser og forbered materialer.', NULL, 'Madeventyr - Sund mad'),
+('Skattejagt i skovområdet, hvor børnene samarbejder om at finde naturmaterialer og lærer om deres funktion i økosystemet.', 'Forbered skattekort og opgaver.', NULL, 'Skovlege - Natur og fællesskab'),
+('Byg et hus af naturmaterialer som pinde og blade for at lære om samarbejde og bygningskonstruktion.', 'Find materialer og planlæg byggeopgaven.', NULL, 'Kreativ samarbejde - Byg et hus'),
+('Venskabsøvelser, hvor børnene danner par og deler noget personligt om sig selv.', 'Forbered øvelser og instruktioner.', NULL, 'Venskabsbånd - Nye relationer'),
+('Leg med forskellige teksturer og materialer, hvor børnene blinder sig og gætter på hvad de rører ved for at aktivere deres sanser.', 'Find forskellige materialer og gør det klart til aktivitet.', NULL, 'Hygge og sanser - Sanselege');
+
+INSERT INTO Activity (ActivityDescription, Preparation, Notes, Activity)
+VALUES
+-- Ulvene aktiviteter
+('En forhindringsbane, hvor børnene skal bruge deres motoriske færdigheder til at klare forskellige udfordringer.', 'Forbered forhindringsbane og materialer.', NULL, 'Superhelte - Motoriske bevægelser'),
+('Rollerspil, hvor børnene skal optræde som karakterer, der deler hemmeligheder og lærer om konsekvenserne af løgne.', 'Forbered roller og scenarier.', NULL, 'Hemmeligheder - Hemmeligheder og løgne'),
+('Gruppespil, hvor børnene skal samarbejde for at løse en opgave, f.eks. at bygge en struktur sammen.', 'Find materialer til byggeri og planlæg spil.', NULL, 'Flokken - Fællesskab'),
+('Lav en mini-vulkanudbrud med bagepulver og eddike for at vise naturkræfter i aktion.', 'Skaff materialer til vulkanudbrud.', NULL, 'Lyn og torden - Naturkræfter'),
+('Læs og dramatiser en bibelhistorie, hvor børnene selv spiller rollerne og reflekterer over budskabet.', 'Vælg bibelhistorie og forbered rekvisitter.', NULL, 'Tro håb og historier - Bibelhistorier'),
+('Byg et sheltersystem med reb og pinde for at lære om pioneringsteknikker.', 'Skaff reb, pinde og materialer til shelterbygning.', NULL, 'Pionering - Grundlæggende pionering'),
+('En orienteringsleg, hvor børnene skal finde vej ved hjælp af kort og kompas i et skovområde.', 'Forbered kort og kompas til orientering.', NULL, 'Stifinder - Orientering'),
+('En junglebane med udfordringer som klatring, kravling og spring, hvor børnene kan presse deres fysiske grænser.', 'Opbyg fysisk forhindringsbane.', NULL, 'På junglestien - Fysiske udfordringer'),
+('Del børnene op i grupper og få dem til at bygge en bro af naturmaterialer for at styrke samarbejdet og fællesskabet.', 'Find materialer og forbered byggeaktiviteten.', NULL, 'Venskabstest - Byg en bro'),
+('Børnene skal krydse en “flod” (et markeret område) uden at røre jorden ved hjælp af pinde og samarbejde.', 'Find pinde og markér floden til aktivitet.', NULL, 'Rædsel og mod - Kryds floden');
+
+INSERT INTO ActivityBadge (ActivityID, BadgeID) 
+VALUES
+-- Bæver mærker
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 2),
+(9, 4),
+(10, 2),
+
+-- Ulve mærker
+(11, 14),
+(12, 8),
+(13, 9),
+(14, 10),
+(15, 11),
+(16, 12),
+(17, 13),
+(18, 14),
+(19, 12),
+(20, 9)
+
+INSERT INTO ActivityMeeting(ActivityID, MeetingID)
+VALUES
+--Bæver møder sidste halve år.
+(1,1),
+(2,2),
+(3,3),
+(4,4),
+(5,5),
+(6,6),
+(7,7),
+(8,8),
+(9,9),
+(10,10),
+-- Ulve møder sidste halve år.
+(11,1),
+(12,2),
+(13,3),
+(14,4),
+(15,5),
+(16,6),
+(17,7),
+(18,8),
+(19,9),
+(20,10),
+-- Bæver møder næste halve år.
+(1,11),
+(2,12),
+(3,13),
+(4,14),
+(5,15),
+(6,16),
+(7,17),
+(8,18),
+(9,19),
+(10,20),
+-- Ulve møder næste halve år
+(11,11),
+(12,12),
+(13,13),
+(14,14),
+(15,15),
+(16,16),
+(17,17),
+(18,18),
+(19,19),
+(20,20)
+
+INSERT INTO ActivityUnit(ActivityID, UnitID)
+VALUES
+-- Bæver aktiviteter
+(1,2),
+(2,2),
+(3,2),
+(4,2),
+(5,2),
+(6,2),
+(7,2),
+(8,2),
+(9,2),
+(10,2),
+-- Ulve aktiviteter
+(11,3),
+(12,3),
+(13,3),
+(14,3),
+(15,3),
+(16,3),
+(17,3),
+(18,3),
+(19,3),
+(20,3)

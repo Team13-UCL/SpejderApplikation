@@ -75,8 +75,7 @@ namespace SpejderApplikation.ViewModel
 
         // Method to check if authentication is successful
         public bool Authenticate()
-        {
-            bool authentication = false;
+        {            
             Login(Username, Password); // Perform login
             return AuthenticatedUser != null; // Return true if user is authenticated
         }

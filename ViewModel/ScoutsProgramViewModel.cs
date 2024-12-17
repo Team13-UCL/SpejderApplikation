@@ -480,6 +480,15 @@ namespace SpejderApplikation.ViewModel
 
             Date = DateOnly.FromDateTime(DateTime.Today); // set the date to today
         }
+
+
+
+
+
+
+
+
+
         public void EditMeeting(ScoutsMeeting scoutmeeting)
         {
 
